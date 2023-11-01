@@ -2,26 +2,328 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body{
+  @apply bg-gray-800;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+
+
+
+.btn {
+  position: relative;
+  display: block;
+  width: 100%; /* Ancho completo para que sea responsive */
+  max-width: 250px; /* Ancho máximo */
+  margin: 50px auto; /* Margen arriba y abajo (50px) y centrado horizontalmente (auto) */
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  color: #fff;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background-size: 400%;
+  border-radius: 30px;
+  z-index: 1;
+  animation: animate 8s linear infinite;
+}
+
+.btn:hover {
+  animation: animate 8s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 400%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.btn::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  left: -5px;
+  z-index: -1;
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background-size: 400%;
+  border-radius: 40px;
+  opacity: 0;
+  transition: .5s;
 }
+
+.btn:hover::before {
+  filter: blur(20px);
+  opacity: 1;
+  animation: none; /* Elimina la animación al hacer hover */
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s;
+}
+
+button:hover::before {
+  width: 100%;
+}
+
+
+
+              
+.float{
+  transition: .5s, color .10s;
+  -webkit-transition: .5s, color .10s;
+  -moz-transition: .5s, color .10s;
+}
+.float:hover{
+  box-shadow: 0 8px 8px 0 #000000,0 8px 8px 0 #000000;
+  transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+  -moz-transform:translate(0px,5px);
+}
+     
+
+/* Estilos con colores sugeridos para cada categoría */
+.border-comun {
+  border: 6px solid rgb(82, 4, 4); 
+  position: relative;
+  overflow: hidden; 
+  width: 90%;
+  border-image: linear-gradient(to right, transparent, rgb(25, 25, 25), transparent) 1 1;
+  animation: desplazamiento-borde-comun 2.5s linear infinite; 
+}
+
+.border-plata {
+  border: 6px solid #C0C0C0; 
+  position: relative;
+  overflow: hidden; 
+  width: 90%;
+  border-image: linear-gradient(to right, transparent, #C0C0C0, transparent) 1 1;
+  animation: desplazamiento-borde-plata 2.5s linear infinite; 
+}
+
+.border-oro {
+  border: 6px solid #FFD700; 
+  position: relative;
+  overflow: hidden; 
+  width: 90%;
+  border-image: linear-gradient(to right, transparent, #FFD700, transparent) 1 1;
+  animation: desplazamiento-borde-oro 2.5s linear infinite; 
+}
+
+.border-raro {
+  border: 6px solid #1ecf4d; 
+  position: relative;
+  overflow: hidden; 
+  width: 90%;
+  border-image: linear-gradient(to right, transparent, #1ecf4d, transparent) 1 1;
+  animation: desplazamiento-borde-raro 2.5s linear infinite; /* Animación para el borde */
+}
+
+.border-epico {
+  border: 6px solid #271ecf; 
+  position: relative;
+  overflow: hidden; 
+  width: 90%;
+  border-image: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent) 1 1;
+  animation: desplazamiento-borde-epico 2.5s linear infinite; /* Animación para el borde */
+}
+
+.border-mitico {
+  border: 6px solid rgb(255, 0, 242);
+  position: relative;
+  overflow: hidden; 
+  width: 90%;
+  border-image: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent) 1 1;
+  animation: desplazamiento-borde-mitico 2.5s linear infinite; /* Animación para el borde */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Animación para desplazar el borde */
+@keyframes desplazamiento-borde-comun {
+  0%, 100% {
+    border-image-source: linear-gradient(to right, transparent, rgb(82, 4, 4), transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  25% {
+    border-image-source: linear-gradient(to top, transparent, rgb(82, 4, 4), transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  50% {
+    border-image-source: linear-gradient(to right, transparent, rgb(82, 4, 4), transparent);
+    border-image-slice: 1;
+    border-image-offset: 100%;
+  }
+  75% {
+    border-image-source: linear-gradient(to bottom, transparent, rgb(82, 4, 4), transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+}
+
+
+@keyframes desplazamiento-borde-plata {
+  0%, 100% {
+    border-image-source: linear-gradient(to right, transparent, #7b7b7b, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  25% {
+    border-image-source: linear-gradient(to top, transparent, #7b7b7b, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  50% {
+    border-image-source: linear-gradient(to right, transparent, #7b7b7b, transparent);
+    border-image-slice: 1;
+    border-image-offset: 100%;
+  }
+  75% {
+    border-image-source: linear-gradient(to bottom, transparent, #7b7b7b, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+}
+
+
+
+@keyframes desplazamiento-borde-oro {
+  0%, 100% {
+    border-image-source: linear-gradient(to right, transparent, #FFD700, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  25% {
+    border-image-source: linear-gradient(to top, transparent, #FFD700, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  50% {
+    border-image-source: linear-gradient(to right, transparent, #FFD700, transparent);
+    border-image-slice: 1;
+    border-image-offset: 100%;
+  }
+  75% {
+    border-image-source: linear-gradient(to bottom, transparent, #FFD700, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+}
+
+
+@keyframes desplazamiento-borde-raro {
+  0%, 100% {
+    border-image-source: linear-gradient(to right, transparent, #1ecf4d, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  25% {
+    border-image-source: linear-gradient(to top, transparent, #1ecf4d, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  50% {
+    border-image-source: linear-gradient(to right, transparent, #1ecf4d, transparent);
+    border-image-slice: 1;
+    border-image-offset: 100%;
+  }
+  75% {
+    border-image-source: linear-gradient(to bottom, transparent, #1ecf4d, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+}
+
+
+@keyframes desplazamiento-borde-epico {
+  0%, 100% {
+    border-image-source: linear-gradient(to right, transparent, #271ecf, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  25% {
+    border-image-source: linear-gradient(to top, transparent, #271ecf, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  50% {
+    border-image-source: linear-gradient(to right, transparent, #271ecf, transparent);
+    border-image-slice: 1;
+    border-image-offset: 100%;
+  }
+  75% {
+    border-image-source: linear-gradient(to bottom, transparent, #271ecf, transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+}
+
+@keyframes desplazamiento-borde-mitico {
+  0%, 100% {
+    border-image-source: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  25% {
+    border-image-source: linear-gradient(to top, transparent, rgb(255, 0, 242), transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+  50% {
+    border-image-source: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent);
+    border-image-slice: 1;
+    border-image-offset: 100%;
+  }
+  75% {
+    border-image-source: linear-gradient(to bottom, transparent, rgb(255, 0, 242), transparent);
+    border-image-slice: 1;
+    border-image-offset: 0;
+  }
+}
+
+
+.footer{
+  width: 100%;
+  position: absolute;
+  top: 910px;
+}
+
