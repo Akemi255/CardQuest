@@ -5,14 +5,37 @@
 body{
   @apply bg-gray-800;
 
+
 }
 
+/*formulario login y registro*/
+.cl-rootBox {
+  margin: auto;
+  margin-top: 55px;
+}
+
+.cl-card {
+  background-color: #2d3748;
+  -webkit-text-fill-color: white;
+}
+
+.cl-socialButtonsIconButton{
+  background-color: white;
+}
+.cl-formFieldInput{
+  -webkit-text-fill-color: #2d3748;
+}
+/* Quitar el contorno al enfocar el modal */
+.modal-overlay:focus {
+  outline: none;
+}
 
 
 
 
 .btn {
   position: relative;
+  left: 10px;
   display: block;
   width: 100%; /* Ancho completo para que sea responsive */
   max-width: 250px; /* Ancho máximo */
@@ -78,7 +101,7 @@ button::before {
   transition: width 0.3s;
 }
 
-button:hover::before {
+.header-button:hover::before {
   width: 100%;
 }
 
@@ -153,10 +176,26 @@ button:hover::before {
   animation: desplazamiento-borde-mitico 2.5s linear infinite; /* Animación para el borde */
 }
 
+.modal{
+  height: 630px;
+  overflow-y: auto;
+  
+}
+.modal::-webkit-scrollbar {
+  width: 5px; /* Ancho de la barra de desplazamiento */
+  height: 5px; /* Grosor de la barra de desplazamiento */
+}
 
+/* Estilos adicionales de la barra de desplazamiento */
+.modal::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del "pulgar" (la parte que se arrastra) */
+  border-radius: 5px; /* Bordes redondeados */
+}
 
-
-
+.banner{
+  width: 580px;
+  height: 150px;
+}
 
 
 

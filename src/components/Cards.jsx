@@ -1,14 +1,17 @@
 "use client";
 
+import { decrementRetryCountdown } from "@/helpers/decrementRetryCountdown";
+import { getColorForRarity } from "@/helpers/getColorForRarity";
 import { getInitialButtonClickCount } from "@/helpers/getInitialButtonClickCount";
 import { getInitialCharacterData } from "@/helpers/getInitialCharacterData";
 import { getInitialRetryCountdown } from "@/helpers/getInitialRetryCountdown";
 import { getInitialShowRetryMessage } from "@/helpers/getInitialShowRetryMessage";
 import { getRandomNumberExcluding } from "@/helpers/getRandomNumberExcluding";
+import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
-import { AiOutlineLike } from "react-icons/ai";
-import { AiFillLike } from "react-icons/ai";
+import CharacterCard from "./CharacterCard";
 
+//declaración de estados
 const Cards = () => {
   const [isClient, setIsClient] = useState(false);
 
@@ -44,6 +47,14 @@ const Cards = () => {
   const [savedCardsCount, setSavedCardsCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likedCharacters, setLikedCharacters] = useState([]);
+  const { saveCharacter } = useCharacterSaver(
+    characterData,
+    likedCharacters,
+    setCharacterData,
+    setLikedCharacters,
+    setSavedCardsCount
+  );
+
 
   useEffect(() => {
     if (isClient) {
@@ -54,6 +65,12 @@ const Cards = () => {
     }
   }, [isClient, showRetryMessage]);
 
+//fin de declaración de estados
+
+
+
+
+
   //logica para recuperar datos de characters
   useEffect(() => {
     // Intenta recuperar datos de personajes guardados del almacenamiento local
@@ -62,36 +79,20 @@ const Cards = () => {
       setCharacterData(savedData);
     }
   }, []);
-
-  const decrementRetryCountdown = () => {
-    if (retryCountdown > 0) {
-      setRetryCountdown((prevCount) => prevCount - 1);
-    } else if (retryCountdown === 0) {
-      setRetryCountdown(24);
-    }
-  };
-
+  
   useEffect(() => {
     let interval;
 
-    if (retryCountdown === 0) {
-      setRetryCountdown(24);
-    }
+   
 
-    if (buttonClickCount >= 8 && !showRetryMessage) {
-      setShowRetryMessage(true);
-      setButtonDisabled(true);
-
-      interval = setInterval(() => {
-        decrementRetryCountdown();
-      }, 1000);
-    }
+   
 
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [buttonClickCount, showRetryMessage]);
 
+  
   useEffect(() => {
     localStorage.setItem("showRetryMessage", JSON.stringify(showRetryMessage));
   }, [showRetryMessage]);
@@ -122,6 +123,87 @@ const Cards = () => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
   }, [buttonClickCount]);
 
+
+
+  
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    if (isClient) {
+      const storedFutureTime = parseInt(localStorage.getItem('futureTime'), 10);
+      if (buttonClickCount >= 8 && !storedFutureTime) {
+        const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
+        localStorage.setItem('futureTime', futureTime);
+      }
+      
+      const interval = setInterval(() => {
+      
+
+        const storedFutureTime = parseInt(localStorage.getItem('futureTime'), 10);
+        console.log(retryCountdown);
+        if (storedFutureTime > retryCountdown) {
+          setShowRetryMessage(true);
+        } else if (storedFutureTime < retryCountdown){
+          setShowRetryMessage(false);
+          localStorage.clear();
+          window.location.reload()
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isClient, buttonClickCount]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function getColorForRarity(rareza) {
+    switch (rareza.toLowerCase()) {
+      case "comun":
+        return "border-red-800"; // Color RGB(82, 4, 4)
+      case "plata":
+        return "border-gray-300";
+      case "oro":
+        return "border-yellow-500"; // Color #FFD700
+      case "raro":
+        return "border-green-500"; // Color #1ecf4d
+      case "epico":
+        return "border-indigo-600"; // Color #271ecf
+      case "mitico":
+        return "border-pink-500"; // Color RGB(255, 0, 242)
+      default:
+        return "border-blue-500"; // Color por defecto
+    }
+  }
+  
+
+
+
   const fetchCharacterData = async () => {
     try {
       if (isLoading || buttonDisabled) return;
@@ -132,16 +214,7 @@ const Cards = () => {
         setShowRetryMessage(true);
         setButtonDisabled(true);
   
-        const interval = setInterval(() => {
-         
-         
-            setShowRetryMessage(false);
-            setButtonDisabled(false);
-            setButtonClickCount(0);
-  
-            clearInterval(interval);
-          
-        }, 1000);
+       
       }
   
       const randomNumbers = [];
@@ -244,97 +317,6 @@ const Cards = () => {
     }
   };
 
-  function getColorForRarity(rareza) {
-    switch (rareza.toLowerCase()) {
-      case "comun":
-        return "border-red-800"; // Color RGB(82, 4, 4)
-      case "plata":
-        return "border-gray-300";
-      case "oro":
-        return "border-yellow-500"; // Color #FFD700
-      case "raro":
-        return "border-green-500"; // Color #1ecf4d
-      case "epico":
-        return "border-indigo-600"; // Color #271ecf
-      case "mitico":
-        return "border-pink-500"; // Color RGB(255, 0, 242)
-      default:
-        return "border-blue-500"; // Color por defecto
-    }
-  }
-
-  useEffect(() => {
-    if (buttonClickCount >= 8 && !showRetryMessage) {
-      setShowRetryMessage(true);
-      setButtonDisabled(true);
-
-      const interval = setInterval(() => {
-        setRetryCountdown((prevCount) => {
-          if (prevCount > 0) {
-            const newCount = prevCount - 1;
-            console.log(newCount);
-            localStorage.setItem("retryCountdown", newCount);
-            return newCount; // Retorna el nuevo valor actualizado
-          } else {
-            setShowRetryMessage(false);
-            setButtonDisabled(false);
-            setButtonClickCount(0);
-            setCharacterData([]);
-
-            if (typeof window !== "undefined") {
-              localStorage.removeItem("savedCharacterData");
-              localStorage.removeItem("buttonClickCount");
-              localStorage.removeItem("retryCountdown");
-            }
-
-            clearInterval(interval);
-            return 0; // Retorna 0 al finalizar el intervalo
-          }
-        });
-      }, 1000);
-
-      return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
-    }
-  }, [buttonClickCount]);
-
-  const saveCharacter = (character, index) => {
-    let cardsInCurrentSet = 0;
-    console.log("Character:", character);
-    for (const char of characterData) {
-      if (char.saved) {
-        cardsInCurrentSet++;
-      }
-    }
-
-    if (cardsInCurrentSet % 5 === 0) {
-      setLikedCharacters([]); // Reiniciar la lista de personajes guardados
-    }
-
-    const cardsSavedInCurrentSet = cardsInCurrentSet % 5;
-
-    if (cardsSavedInCurrentSet < 1) {
-      if (!likedCharacters.includes(character.name)) {
-        localStorage.setItem(
-          `savedCard_${cardsInCurrentSet}`,
-          JSON.stringify(character)
-        );
-        setSavedCardsCount(cardsInCurrentSet + 1);
-        setLikedCharacters([...likedCharacters, character.name]);
-
-        const updatedCharacterData = [...characterData];
-        updatedCharacterData[index] = {
-          ...updatedCharacterData[index],
-          saved: true,
-        };
-        setCharacterData(updatedCharacterData);
-      } else {
-        alert("Este personaje ya ha sido guardado.");
-      }
-    } else {
-      alert("Solo puedes guardar una carta por cada conjunto de cinco.");
-    }
-  };
-
   return (
     <div>
       <button
@@ -347,63 +329,20 @@ const Cards = () => {
 
       {showRetryMessage && (
         <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
-          <p>{`Límite de intentos superados, vuelva a intentar en ${retryCountdown} segundos.`}</p>
+          <p>{`Límite de intentos superados, regrese en 24 horas.`}</p>
         </div>
       )}
 
       {characterData.length > 0 && (
         <div className="flex flex-wrap">
           {characterData.map((character, index) => (
-            <div key={index} className={`w-1/5 p-4`}>
-              <div
-                className={`${character.borderColorClass} border-animado bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 cursor-pointer`}
-              >
-                {character.images && character.images.jpg && (
-                  <img
-                    src={character.images.jpg.image_url}
-                    alt={character.name}
-                    className="w-full hover:shadow-lg"
-                  />
-                )}
-
-                <div className="p-4">
-                  <h3 className="text-xl font-bold">{character.name}</h3>
-                  {character.anime && character.anime[0] && (
-                    <p>Anime: {character.anime[0].anime.title}</p>
-                  )}
-                  <p className="flex items-center">
-                    <span
-                      className={`w-full border-b-2 ${getColorForRarity(
-                        character.rareza
-                      )}`}
-                    ></span>
-                    <span className="mx-2">{character.rareza}</span>
-                    <span
-                      className={`w-full border-b-2 ${getColorForRarity(
-                        character.rareza
-                      )}`}
-                    ></span>
-                  </p>
-                  {character.saved ? (
-                    <button
-                      className="mt-2 bg-gray-500 text-white py-2 px-4 rounded cursor-not-allowed"
-                      disabled
-                    >
-                      Guardado en el perfil{" "}
-                      <AiFillLike className="inline-block mb-1" />
-                    </button>
-                  ) : (
-                    <button
-                      className="mt-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-                      onClick={() => saveCharacter(character, index)}
-                    >
-                      Guardar en el perfil{" "}
-                      <AiOutlineLike className="inline-block mb-1" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
+            <CharacterCard
+              key={index}
+              character={character}
+              index={index}
+              getColorForRarity={getColorForRarity}
+              saveCharacter={saveCharacter}
+            />
           ))}
         </div>
       )}

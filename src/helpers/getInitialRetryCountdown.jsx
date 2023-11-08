@@ -1,12 +1,16 @@
 export const getInitialRetryCountdown = () => {
-    if (typeof window !== 'undefined') {
-      let storedValue = localStorage.getItem('retryCountdown');
-      if (!storedValue) {
-        storedValue = 24; // Valor por defecto si no hay ninguno en el localStorage
-        localStorage.setItem('retryCountdown', storedValue);
-      }
-      return parseInt(storedValue, 10);
+  if (typeof window !== 'undefined') {
+    const now = parseInt(Date.now() / 1000, 10); // Obtiene el tiempo actual en milisegundos
+    const storedValue = localStorage.getItem('retryCountdown');
+    
+    if (!storedValue) {
+      const initialRetryCountdown = parseInt(Date.now() / 1000, 10);// Convierte milisegundos a segundos (número entero)
+      
+      return initialRetryCountdown;
     }
-    return 24;
-  };
-  
+
+    return now;
+  }
+
+  return 24; // Valor por defecto si no es posible obtener la hora actual
+};
