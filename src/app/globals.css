@@ -25,14 +25,12 @@ body{
 .cl-formFieldInput{
   -webkit-text-fill-color: #2d3748;
 }
-/* Quitar el contorno al enfocar el modal */
-.modal-overlay:focus {
-  outline: none;
-}
 
 
 
 
+
+/*estilos boton*/
 .btn {
   position: relative;
   left: 10px;
@@ -121,7 +119,7 @@ button::before {
 }
      
 
-/* Estilos con colores sugeridos para cada categoría */
+/* Estilos para los bordes de las cartas */
 .border-comun {
   border: 6px solid rgb(82, 4, 4); 
   position: relative;
@@ -176,6 +174,21 @@ button::before {
   animation: desplazamiento-borde-mitico 2.5s linear infinite; /* Animación para el borde */
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Estilos css para el modal*/
 .modal{
   height: 630px;
   overflow-y: auto;
@@ -196,7 +209,9 @@ button::before {
   width: 580px;
   height: 150px;
 }
-
+.modal-overlay:focus {
+  outline: none;
+}
 
 
 

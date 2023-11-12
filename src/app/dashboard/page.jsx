@@ -1,40 +1,83 @@
 "use client";
 import Header from "@/components/Header";
 import { useUser } from "@clerk/nextjs";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import { BsPencilSquare } from "react-icons/bs";
 import Footer from "@/components/footer";
 import EditProfileModal from "@/components/EditProfileModal";
+import fetchCharacterData from "@/helpers/fetchCharacterData";
 
 const DashboardPage = () => {
-  const user = useUser();
-  let email = "";
-
-  let userProfile = {
-    name: "John Doe",
-    username: "johndoe123",
-    emailAddress: "johndoe@example.com",
-    profileImage: "https://media.tenor.com/XrKq6FDwUJMAAAAC/emilia.gif",
-    profileBanner:
-      "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/586bd591-59c0-428c-9b0c-697263cf4ae2/d95cau2-80d70b88-0d16-41f4-857e-fdaf6da65b92.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzU4NmJkNTkxLTU5YzAtNDI4Yy05YjBjLTY5NzI2M2NmNGFlMlwvZDk1Y2F1Mi04MGQ3MGI4OC0wZDE2LTQxZjQtODU3ZS1mZGFmNmRhNjViOTIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.WNB2VDYos5lzYb-ZL6L0QRJaVHFXwLFy1VA0u1zj7jk",
-    bio: "hola este es un texto de prueba para mi bio",
-  };
-
-  if (user && user.user && user.user.primaryEmailAddress) {
-    email = user.user.primaryEmailAddress.emailAddress;
-    console.log("Email:", email);
-  } else {
-    console.log(
-      "Email not available. User might not be authenticated or email data is missing."
-    );
-  }
-
-  const [profileImage, setProfileImage] = useState("");
-  const [bannerImage, setBannerImage] = useState("");
+  const [email, setEmail] = useState('');
+  const [userProfile, setUserProfile] = useState({
+    name: "User",
+    nick: "undefined",
+    emailAddress: "",
+    image: "https://via.placeholder.com/150",
+    banner: "https://via.placeholder.com/1200x250",
+    bio: "undefined",
+  });
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedEmail = localStorage.getItem('email');
+      if (storedEmail) {
+        setEmail(storedEmail);
+      }
+
+      const storedProfile = localStorage.getItem('userProfile');
+      if (storedProfile) {
+        setUserProfile(JSON.parse(storedProfile));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch("http://localhost:3002/api/users/profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUserProfile((prevUserProfile) => ({
+            ...prevUserProfile,
+            name: data.user.name,
+            nick: data.user.nick,
+            emailAddress: data.user.email,
+            image: data.user.image,
+            banner: data.user.banner,
+            bio: data.user.bio,
+          }));
+          localStorage.setItem('userProfile', JSON.stringify({
+            name: data.user.name,
+            nick: data.user.nick,
+            emailAddress: data.user.email,
+            image: data.user.image,
+            banner: data.user.banner,
+            bio: data.user.bio,
+          }));
+         
+          
+        } else {
+          
+        }
+      } catch (error) {
+        console.error("Error fetching user profile", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [email]);
+
  
+
   return (
     <>
       <Header />
@@ -43,17 +86,17 @@ const DashboardPage = () => {
         <div
           className="relative rounded-t-md"
           style={{
-            backgroundImage: `url(${userProfile.profileBanner})`,
+            backgroundImage: `url(${userProfile.banner})`,
             height: "250px",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            width: "100%" // Evita que se repita la imagen si no ocupa todo el contenedor
+            width: "100%", // Evita que se repita la imagen si no ocupa todo el contenedor
           }}
         >
           {/* Profile Image */}
           <img
-            src={userProfile.profileImage}
+            src={userProfile.image}
             alt="Profile"
             className="w-24 h-24 rounded-full border-4 border-white shadow-lg absolute bottom-0 transform -translate-x-1/2 translate-y-1/2"
             style={{
@@ -73,18 +116,15 @@ const DashboardPage = () => {
               <BsPencilSquare size={20} color="white" />
             </button>
           </h2>
-          <p className="text-gray-500">@{userProfile.username}</p>
+          <p className="text-gray-500">@{userProfile.nick}</p>
           <p className="mt-2">{userProfile.emailAddress}</p>
           <p className="mt-2">{userProfile.bio}</p>
         </div>
-      
+
         <EditProfileModal
           isOpen={modalIsOpen}
           closeModal={() => setModalIsOpen(false)}
-          
         />
-
-
       </div>
       <Footer />
     </>
