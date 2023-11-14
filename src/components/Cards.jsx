@@ -10,6 +10,7 @@ import { getRandomNumberExcluding } from "@/helpers/getRandomNumberExcluding";
 import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
+import { getEmail } from "@/helpers/getEmail";
 
 //declaración de estados
 const Cards = () => {
@@ -54,7 +55,7 @@ const Cards = () => {
     setLikedCharacters,
     setSavedCardsCount
   );
-
+ 
 
   useEffect(() => {
     if (isClient) {
@@ -111,13 +112,7 @@ const Cards = () => {
     }
   }, []);
 
-  //logica para guardar boton en local storage
-  useEffect(() => {
-    const savedCount = parseInt(localStorage.getItem("buttonClickCount"), 10);
-    if (!isNaN(savedCount)) {
-      setButtonClickCount(savedCount);
-    }
-  }, []);
+ 
 
   useEffect(() => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
@@ -155,7 +150,7 @@ const Cards = () => {
       
 
         const storedFutureTime = parseInt(localStorage.getItem('futureTime'), 10);
-        console.log(retryCountdown);
+        
         if (storedFutureTime > retryCountdown) {
           setShowRetryMessage(true);
         } else if (storedFutureTime < retryCountdown){

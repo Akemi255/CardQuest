@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import { IoClose } from "react-icons/io5";
 import { useUser } from "@clerk/nextjs";
 
 const EditProfileModal = ({ isOpen, closeModal }) => {
@@ -183,7 +182,7 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
         <textarea
           name="bio"
           placeholder="Biografía"
-          className="p-2 border rounded-md mt-2 w-1/2"
+          className="p-2 border rounded-md mt-2 w-1/2 textArea resize-none outline-none"
           rows="4"
           value={formValues.bio}
           onChange={handleInputChange}

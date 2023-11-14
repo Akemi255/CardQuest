@@ -381,3 +381,7 @@ button::before {
   top: 910px;
 }
 
+.textArea{
+  height: 60px;
+}
+

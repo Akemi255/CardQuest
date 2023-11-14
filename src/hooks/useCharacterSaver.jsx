@@ -1,6 +1,7 @@
+import { getEmail } from "@/helpers/getEmail";
 
 const useCharacterSaver = (characterData, likedCharacters, setCharacterData, setLikedCharacters, setSavedCardsCount) => {
-  const saveCharacter = (character, index) => {
+  const saveCharacter = async (character, index) => {
     let cardsInCurrentSet = 0;
 
     for (const char of characterData) {
@@ -17,6 +18,11 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
 
     if (cardsSavedInCurrentSet < 1) {
       if (!likedCharacters.includes(character.name)) {
+
+        const userEmail = getEmail();
+        console.log(userEmail);
+        console.log("hola"); 
+       
         localStorage.setItem(`savedCard_${cardsInCurrentSet}`, JSON.stringify(character));
         setSavedCardsCount(cardsInCurrentSet + 1);
         setLikedCharacters([...likedCharacters, character.name]);
@@ -27,6 +33,28 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
           saved: true,
         };
         setCharacterData(updatedCharacterData);
+        console.log(character);
+        // Enviar la carta al backend
+        try {
+          const response = await fetch('http://localhost:3002/api/cards/saveCard', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Cambiado a JSON
+          },
+          body: JSON.stringify({
+            email: userEmail, // Reemplaza con la lógica para obtener el email del usuario
+            content: character, // Utiliza el objeto character directamente
+          }),
+        });
+
+          if (response.ok) {
+            console.log('Carta guardada exitosamente en el backend.');
+          } else {
+            console.error('Error al guardar la carta en el backend.');
+          }
+        } catch (error) {
+          console.error('Error al enviar la carta al backend:', error);
+        }
       } else {
         alert("Este personaje ya ha sido guardado.");
       }
