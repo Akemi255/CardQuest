@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import { BiSolidTrashAlt } from "react-icons/bi";
 import { ProfileSavedCards } from "./ProfileSavedCards";
 import { sampleCards } from "@/helpers/samplecards";
-import Footer from "./footer";
+import Footer from "../Layout/footer";
 
 const SavedCardsSection = () => {
   const [userCards, setUserCards] = useState([]);

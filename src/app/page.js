@@ -1,7 +1,7 @@
 "use client";
-import Cards from "@/components/Cards";
-import Header from "@/components/Header";
-import Footer from "@/components/footer";
+import Cards from "@/components/Cards/Cards";
+import Header from "@/components/Layout/Header";
+import Footer from "@/components/Layout/footer";
 import { useUser } from "@clerk/nextjs";
 
 

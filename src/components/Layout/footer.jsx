@@ -1,4 +1,4 @@
-import { BiUser } from 'react-icons/bi';
+
 
 const Footer = () => {
     return (

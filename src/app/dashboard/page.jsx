@@ -1,10 +1,12 @@
 "use client";
-import Header from "@/components/Header";
+import Header from "@/components/Layout/Header";
 import { useState } from "react";
-import Footer from "@/components/footer";
-import UserProfile from "@/components/UserProfile";
-import UserProfileCard from "@/components/UserProfileCard";
-import SavedCardsSection from "@/components/SavedCardsSection";
+import Footer from "@/components/Layout/footer";
+import UserProfile from "@/components/UserProfile/UserProfile";
+import UserProfileCard from "@/components/UserProfile/UserProfileCard";
+import SavedCardsSection from "@/components/SavedCards/SavedCardsSection";
+
+
 
 const DashboardPage = () => {
   const { userProfile, loading, email } = UserProfile();

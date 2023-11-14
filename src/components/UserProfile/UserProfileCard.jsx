@@ -1,5 +1,5 @@
 import React from "react";
-import EditProfileModal from "@/components/EditProfileModal";
+import EditProfileModal from "@/components/UserProfile/EditProfileModal";
 import { BsPencilSquare } from "react-icons/bs";
 
 const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
