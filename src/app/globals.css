@@ -88,7 +88,7 @@ body{
   animation: none; /* Elimina la animación al hacer hover */
 }
 
-button::before {
+.header-button::before {
   content: '';
   position: absolute;
   bottom: -2px;
@@ -98,12 +98,23 @@ button::before {
   background-color: #fff;
   transition: width 0.3s;
 }
-
 .header-button:hover::before {
   width: 100%;
 }
 
-
+.new-header-button::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #000000;
+  transition: width 0.3s;
+}
+.new-header-button:hover::before {
+  width: 100%;
+}
 
               
 .float{
@@ -385,3 +396,14 @@ button::before {
   height: 60px;
 }
 
+/*botón de las 3 opciones de filtrado de cartas*/
+.grouping-button {
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s;
+}

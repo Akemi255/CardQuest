@@ -5,12 +5,16 @@ import { ProfileSavedCards } from "./ProfileSavedCards";
 import Footer from "../Layout/footer";
 import { getEmail } from "@/helpers/getEmail";
 import Modal from "react-modal";
+import OrderOptions from "../Cards/OrderOptions";
 
 const SavedCardsSection = () => {
   const [userCards, setUserCards] = useState([]);
   const [visibleCards, setVisibleCards] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [groupBy, setGroupBy] = useState("recientes");
+  const [showOrderOptions, setShowOrderOptions] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("recientes");
 
   const userEmail = getEmail();
 
@@ -35,31 +39,55 @@ const SavedCardsSection = () => {
         }
 
         const data = await response.json();
-        setUserCards(data); // Almacena los datos en el estado
+        switch (groupBy) {
+          case "recientes":
+            setUserCards([...data].reverse());
+            break;
+          case "masAntiguos":
+            setUserCards(data);
+            break;
+          case "rareza":
+            const rarityOrder = [
+              "Mitico",
+              "epico",
+              "Raro",
+              "Oro",
+              "Plata",
+              "Comun",
+            ];
+
+            setUserCards(
+              [...data].sort((a, b) => {
+                const rarezaA = rarityOrder.indexOf(a.content.rareza);
+                const rarezaB = rarityOrder.indexOf(b.content.rareza);
+
+                return rarezaA - rarezaB;
+              })
+            );
+            break;
+          default:
+            setUserCards(data);
+        }
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [groupBy]);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Verificar si el usuario ha llegado al final de la página
       if (
         window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 100
       ) {
-        // Si ha llegado al final, cargar más cartas
         setVisibleCards((prevVisibleCards) => prevVisibleCards + 10);
       }
     };
 
-    // Agregar el event listener para el evento de scroll
     window.addEventListener("scroll", handleScroll);
 
-    // Limpiar el event listener al desmontar el componente
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -74,12 +102,10 @@ const SavedCardsSection = () => {
   );
 
   const handleDeleteCards = async () => {
-    // Abre el modal al hacer clic en "Borrar cartas"
     setIsModalOpen(true);
   };
 
   const confirmDelete = async () => {
-    // Cerrar el modal
     setIsModalOpen(false);
 
     try {
@@ -101,9 +127,8 @@ const SavedCardsSection = () => {
           "Error al realizar la petición de eliminación de cartas"
         );
       }
-      
+
       console.log("peticion delete ejecutada correctamente");
-      // Actualiza el estado para reflejar que las cartas han sido eliminadas
       setUserCards([]);
     } catch (error) {
       console.error("Error:", error);
@@ -111,18 +136,27 @@ const SavedCardsSection = () => {
   };
 
   const cancelDelete = () => {
-    // Cierra el modal sin realizar la eliminación
     setIsModalOpen(false);
   };
 
   return (
     <>
       <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md">
-        <div className="flex items-center justify-between mx-auto">
-          <h2 className="ml-2 text-2xl font-bold text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor-pointer">
-            Cartas guardadas
-          </h2>
-          <div className="flex items-center">
+        <h1 className=" flex justify-center items-center text-2xl font-bold text-white">
+          Cartas guardadas
+        </h1>
+        <div className="flex items-center justify-between mx-auto mt-7">
+          <div className="flex items-center text-2xl font-bold text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor-pointer">
+            {/* Utiliza el componente OrderOptions */}
+            <OrderOptions
+              setGroupBy={setGroupBy}
+              showOrderOptions={showOrderOptions}
+              setShowOrderOptions={setShowOrderOptions}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+            />
+          </div>
+          <div className="flex items-center relative left-9">
             <input
               type="text"
               value={searchTerm}
@@ -135,7 +169,7 @@ const SavedCardsSection = () => {
             </button>
           </div>
           <h2
-            className="flex items-center mr-2 text-2xl font-bold text-white cursor-pointer hover:text-red-700 relative transition duration-300 ease-in-out"
+            className="flex items-center mr-9 text-2xl font-bold text-white cursor-pointer hover:text-red-700 relative transition duration-300 ease-in-out"
             onClick={handleDeleteCards}
           >
             Borrar cartas <BiSolidTrashAlt size={32} color="red" />
@@ -151,8 +185,6 @@ const SavedCardsSection = () => {
           ))}
         </div>
       </div>
-      {/* Modal */}
-      
       <Modal
         isOpen={isModalOpen}
         onRequestClose={cancelDelete}
@@ -166,13 +198,13 @@ const SavedCardsSection = () => {
         </h2>
         <p className="mb-4">Esta acción no tiene vuelta atrás.</p>
         <button
-          className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+          className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded mr-2"
           onClick={confirmDelete}
         >
           Sí
         </button>
         <button
-          className="bg-slate-800 text-white px-4 py-2 rounded"
+          className="bg-slate-800 text-white px-4 py-2 rounded hover:bg-slate-700"
           onClick={cancelDelete}
         >
           Cancelar
