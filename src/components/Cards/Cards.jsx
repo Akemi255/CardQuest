@@ -10,7 +10,6 @@ import { getRandomNumberExcluding } from "@/helpers/getRandomNumberExcluding";
 import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
-import { getEmail } from "@/helpers/getEmail";
 
 //declaración de estados
 const Cards = () => {
