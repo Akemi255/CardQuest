@@ -1,12 +1,12 @@
 "use client";
 
-import { decrementRetryCountdown } from "@/helpers/decrementRetryCountdown";
-import { getColorForRarity } from "@/helpers/getColorForRarity";
-import { getInitialButtonClickCount } from "@/helpers/getInitialButtonClickCount";
-import { getInitialCharacterData } from "@/helpers/getInitialCharacterData";
-import { getInitialRetryCountdown } from "@/helpers/getInitialRetryCountdown";
-import { getInitialShowRetryMessage } from "@/helpers/getInitialShowRetryMessage";
-import { getRandomNumberExcluding } from "@/helpers/getRandomNumberExcluding";
+import { decrementRetryCountdown } from "@/helpers/Cards/decrementRetryCountdown";
+import { getColorForRarity } from "@/helpers/Cards/getColorForRarity";
+import { getInitialButtonClickCount } from "@/helpers/Cards/getInitialButtonClickCount";
+import { getInitialCharacterData } from "@/helpers/Cards/getInitialCharacterData";
+import { getInitialRetryCountdown } from "@/helpers/Cards/getInitialRetryCountdown";
+import { getInitialShowRetryMessage } from "@/helpers/Cards/getInitialShowRetryMessage";
+import { getRandomNumberExcluding } from "@/helpers/Cards/getRandomNumberExcluding";
 import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";

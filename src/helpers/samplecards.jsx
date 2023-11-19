@@ -1,3 +1,4 @@
+//ejemplo de carta para trabajar 
 export const sampleCards = [
     {
       "user": {

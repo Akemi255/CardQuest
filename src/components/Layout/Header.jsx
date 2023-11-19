@@ -8,9 +8,12 @@ const Header = () => {
     <div className="bg-gray-700 text-white flex justify-between items-center">
       <div className="flex items-center ml-8">
         <button className="header-button text-lg font-bold hover:text-gray-300 relative transition duration-300 ease-in-out flex items-center">
+        <Link href={"/users"} className="flex items-center">
           <AiOutlineSearch />
           Explorar usuarios
+          </Link>
         </button>
+        
       </div>
 
       <div className="text-xl font-bold flex items-center justify-center ">

@@ -8,6 +8,7 @@ import SavedCardsSection from "@/components/SavedCards/SavedCardsSection";
 
 
 
+
 const DashboardPage = () => {
   const { userProfile, loading, email } = UserProfile();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -16,7 +17,8 @@ const DashboardPage = () => {
     return (
       <>
         <Header />
-        <Footer />
+       
+        
       </>
     );
   }
@@ -29,6 +31,7 @@ const DashboardPage = () => {
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
       />
+
       <SavedCardsSection />
       
     </>

@@ -1,14 +1,16 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { BiSolidTrashAlt } from "react-icons/bi";
-import { ProfileSavedCards } from "./ProfileSavedCards";
-import Footer from "../Layout/footer";
 import { getEmail } from "@/helpers/getEmail";
+import { FetchUsersCards } from "@/helpers/ViewUsersCards/FetchUsersCards";
+import { ProfileSavedCards } from "../SavedCards/ProfileSavedCards";
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+import OrderOptions from "../SavedCards/OrderOptions";
 import Modal from "react-modal";
-import OrderOptions from "./OrderOptions";
-import { fetchUserCards } from "@/helpers/FavCards/fetchUserCards";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
+import { FaCheck } from "react-icons/fa6";
 
-const SavedCardsSection = () => {
+const ViewFavCards = ({ user }) => {
   const [userCards, setUserCards] = useState([]);
   const [visibleCards, setVisibleCards] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,13 +18,15 @@ const SavedCardsSection = () => {
   const [groupBy, setGroupBy] = useState("recientes");
   const [showOrderOptions, setShowOrderOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState("recientes");
+  const [reportMessage, setReportMessage] = useState("");
+  const [reportMessageColor, setReportMessageColor] = useState("");
 
   const userEmail = getEmail();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchUserCards(userEmail, groupBy);
+        const data = await FetchUsersCards(user, groupBy);
         setUserCards(data);
       } catch (error) {
         console.error("Error:", error);
@@ -49,6 +53,10 @@ const SavedCardsSection = () => {
     };
   }, []);
 
+  const handleDeleteCards = async () => {
+    setIsModalOpen(true);
+  };
+
   const filteredCards = userCards.filter(
     (card) =>
       card.content.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -57,37 +65,45 @@ const SavedCardsSection = () => {
       )
   );
 
-  const handleDeleteCards = async () => {
-    setIsModalOpen(true);
-  };
-
-  const confirmDelete = async () => {
-    setIsModalOpen(false);
-
+  const confirmReport = async () => {
     try {
+      const cause = document.getElementById("causeInput").value;
+
+      const formData = new URLSearchParams();
+      formData.append("reporterEmail", userEmail);
+      formData.append("cause", cause);
+      formData.append("id", user);
+
       const response = await fetch(
-        "http://localhost:3002/api/cards/deleteCards",
+        "http://localhost:3002/api/users/reportUser",
         {
-          method: "DELETE",
+          method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: JSON.stringify({
-            email: userEmail,
-          }),
+          body: formData,
         }
       );
 
       if (!response.ok) {
-        throw new Error(
-          "Error al realizar la petición de eliminación de cartas"
-        );
+        setReportMessage("Ha ocurrido un error");
+        setReportMessageColor("red");
       }
 
-      console.log("peticion delete ejecutada correctamente");
-      setUserCards([]);
+      console.log("Petición de reporte ejecutada correctamente");
+      // Si la petición fue exitosa, actualiza el mensaje del reporte y su color
+      setReportMessage("Reporte enviado correctamente");
+      setReportMessageColor("green");
+      setTimeout(() => {
+        setReportMessage("");
+        setReportMessageColor("");
+        setIsModalOpen(false);
+      }, 3000);
     } catch (error) {
       console.error("Error:", error);
+      // Si hay un error, actualiza el mensaje del reporte y su color
+      setReportMessage("Ha ocurrido un error");
+      setReportMessageColor("red");
     }
   };
 
@@ -127,20 +143,23 @@ const SavedCardsSection = () => {
             className="flex items-center mr-9 text-2xl font-bold text-white cursor-pointer hover:text-red-700 relative transition duration-300 ease-in-out"
             onClick={handleDeleteCards}
           >
-            Borrar cartas <BiSolidTrashAlt size={32} color="red" />
+            Reportar usuario{" "}
+            <MdOutlineReportGmailerrorred size={32} color="red" />
           </h2>
         </div>
         <div className="flex flex-wrap mt-5 ">
-          
-          {filteredCards.slice(0, visibleCards).map((card, index) => (
-            <ProfileSavedCards
-              key={index}
-              character={card.content}
-              index={index}
-            />
-          ))}
+          <div className="flex flex-wrap mt-5 ">
+            {filteredCards.slice(0, visibleCards).map((card, index) => (
+              <ProfileSavedCards
+                key={index}
+                character={card.content}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
       </div>
+
       <Modal
         isOpen={isModalOpen}
         onRequestClose={cancelDelete}
@@ -150,14 +169,30 @@ const SavedCardsSection = () => {
         ariaHideApp={false}
       >
         <h2 className="text-xl font-bold mb-4">
-          ¿Está seguro que desea eliminar todas sus cartas?
+          Escriba la razón por la que desea reportar a este usuario
         </h2>
-        <p className="mb-4">Esta acción no tiene vuelta atrás.</p>
+        <input
+          type="text"
+          id="causeInput"
+          placeholder="Causa del reporte"
+          className="mb-4 w-full text-black"
+        />
+
+        <p style={{ backgroundColor: reportMessageColor }} className="flex justify-center items-center">
+          {reportMessage === "Reporte enviado correctamente" ? (
+            <>
+              <FaCheck />&nbsp;
+              {reportMessage}
+            </>
+          ) : (
+            reportMessage
+          )}
+        </p>
         <button
           className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded mr-2"
-          onClick={confirmDelete}
+          onClick={confirmReport}
         >
-          Sí
+          Enviar
         </button>
         <button
           className="bg-slate-800 text-white px-4 py-2 rounded hover:bg-slate-700"
@@ -170,4 +205,4 @@ const SavedCardsSection = () => {
   );
 };
 
-export default SavedCardsSection;
+export default ViewFavCards;
