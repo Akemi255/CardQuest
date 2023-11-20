@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EditProfileModal from "@/components/UserProfile/EditProfileModal";
 import { BsPencilSquare } from "react-icons/bs";
+import { getEmail } from "@/helpers/getEmail";
 
 const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
+  const [followData, setFollowData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedEmail = getEmail();
+
+        const response = await fetch(
+          "http://localhost:3002/api/follows/getFollowData",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: storedEmail }),
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setFollowData(data);
+        } else {
+          const errorData = await response.json();
+          console.error(
+            "Error obteniendo datos de seguimiento:",
+            errorData.message || "Error desconocido"
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Error obteniendo datos de seguimiento:",
+          error.message || "Error desconocido"
+        );
+      }
+    };
+
+    fetchData(); // Llama a la función al montar el componente
+  }, []);
+
   return (
     <div className="mx-auto w-5/5 mt-4 p-4 bg-gray-700 shadow-md rounded-md">
       {/* Profile Banner */}
@@ -40,8 +80,14 @@ const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
           </button>
         </h2>
         <p className="text-gray-500 ">@{userProfile.nick}</p>
-        <p className="mt-2 text-white">{userProfile.bio}</p>
+        <p className="text-white">{userProfile.bio}</p>
       </div>
+      {followData && (
+        <p className="text-gray-500 text-center">
+          Siguiendo: {followData.followingCount} | Seguidores:{" "}
+          {followData.followersCount}
+        </p>
+      )}
 
       <EditProfileModal
         isOpen={modalIsOpen}

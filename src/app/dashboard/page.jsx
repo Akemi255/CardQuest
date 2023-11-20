@@ -5,12 +5,14 @@ import Footer from "@/components/Layout/footer";
 import UserProfile from "@/components/UserProfile/UserProfile";
 import UserProfileCard from "@/components/UserProfile/UserProfileCard";
 import SavedCardsSection from "@/components/SavedCards/SavedCardsSection";
+import { SetEmail } from "@/helpers/SetEmail";
 
 
 
 
 const DashboardPage = () => {
-  const { userProfile, loading, email } = UserProfile();
+  let email = SetEmail();
+  const { userProfile, loading } = UserProfile();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   if (loading) {

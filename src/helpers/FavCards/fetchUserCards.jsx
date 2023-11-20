@@ -16,6 +16,11 @@ export const fetchUserCards = async (email, groupBy) => {
     }
 
     const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      return [];
+    }
+    
     switch (groupBy) {
       case "recientes":
         return [...data].reverse();

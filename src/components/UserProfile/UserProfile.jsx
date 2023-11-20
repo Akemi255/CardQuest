@@ -1,3 +1,4 @@
+import { getEmail } from "@/helpers/getEmail";
 import { useEffect, useState } from "react";
 
 const UserProfile = () => {
@@ -11,6 +12,8 @@ const UserProfile = () => {
     bio: "undefined",
   });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -20,6 +23,11 @@ const UserProfile = () => {
           setEmail(storedEmail);
         }
 
+        if (!email.trim()) {
+          // Si email está vacío o solo contiene espacios en blanco, no hagas la solicitud
+          return;
+        }
+        
         const storedProfile = localStorage.getItem("userProfile");
         if (storedProfile) {
           setUserProfile(JSON.parse(storedProfile));
@@ -56,14 +64,17 @@ const UserProfile = () => {
             })
           );
         } else {
-          // Handle error
+          const errorData = await response.json();
+          setError(errorData.message || "Error desconocido");
         }
       } catch (error) {
-        console.error("Error fetching user profile", error);
+        setError("Error desconocido");
       } finally {
         setLoading(false);
       }
     };
+
+   
 
     fetchUserProfile();
   }, [email]);

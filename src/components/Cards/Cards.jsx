@@ -10,10 +10,14 @@ import { getRandomNumberExcluding } from "@/helpers/Cards/getRandomNumberExcludi
 import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
+import { SetEmail } from "@/helpers/SetEmail";
 
 //declaración de estados
 const Cards = () => {
   const [isClient, setIsClient] = useState(false);
+
+  let Email = SetEmail();
+  
 
   useEffect(() => {
     setIsClient(true);
@@ -43,6 +47,33 @@ const Cards = () => {
     return getInitialButtonClickCount();
   });
 
+
+  //algoritmos para detectar trampas 
+  useEffect(() => {
+    const checkLocalStorage = () => {
+     
+      const localStorageCleared = localStorage.getItem("trappedState");
+
+      
+      if (buttonClickCount >= 1 && buttonClickCount <= 7) {
+        const savedCount = parseInt(localStorage.getItem("buttonClickCount"), 10);
+       
+        if (buttonClickCount === 1 && !localStorageCleared && (isNaN(savedCount) || savedCount === 0)) {
+          console.log("hiciste trampa");
+          sendReportOfficial(Email);
+        }
+        if (buttonClickCount === 1){
+          localStorage.removeItem("trappedState");
+        }
+       
+      }
+    };
+  
+    checkLocalStorage();
+  }, [buttonClickCount]);
+  //fin de algoritmos de detección de trampas
+
+
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [savedCardsCount, setSavedCardsCount] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -54,7 +85,6 @@ const Cards = () => {
     setLikedCharacters,
     setSavedCardsCount
   );
- 
 
   useEffect(() => {
     if (isClient) {
@@ -65,11 +95,7 @@ const Cards = () => {
     }
   }, [isClient, showRetryMessage]);
 
-//fin de declaración de estados
-
-
-
-
+  //fin de declaración de estados
 
   //logica para recuperar datos de characters
   useEffect(() => {
@@ -79,20 +105,15 @@ const Cards = () => {
       setCharacterData(savedData);
     }
   }, []);
-  
+
   useEffect(() => {
     let interval;
-
-   
-
-   
 
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [buttonClickCount, showRetryMessage]);
 
-  
   useEffect(() => {
     localStorage.setItem("showRetryMessage", JSON.stringify(showRetryMessage));
   }, [showRetryMessage]);
@@ -111,70 +132,37 @@ const Cards = () => {
     }
   }, []);
 
- 
-
   useEffect(() => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
   }, [buttonClickCount]);
 
-
-
-  
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   useEffect(() => {
     if (isClient) {
-      const storedFutureTime = parseInt(localStorage.getItem('futureTime'), 10);
+      const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
       if (buttonClickCount >= 8 && !storedFutureTime) {
         const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
-        localStorage.setItem('futureTime', futureTime);
+        localStorage.setItem("futureTime", futureTime);
       }
-      
-      const interval = setInterval(() => {
-      
 
-        const storedFutureTime = parseInt(localStorage.getItem('futureTime'), 10);
-        
+      const interval = setInterval(() => {
+        const storedFutureTime = parseInt(
+          localStorage.getItem("futureTime"),
+          10
+        );
+
         if (storedFutureTime > retryCountdown) {
           setShowRetryMessage(true);
-        } else if (storedFutureTime < retryCountdown){
+        } else if (storedFutureTime < retryCountdown) {
           setShowRetryMessage(false);
           localStorage.clear();
-          window.location.reload()
+          window.location.reload();
+          localStorage.setItem("trappedState", true);
         }
       }, 1000);
 
       return () => clearInterval(interval);
     }
   }, [isClient, buttonClickCount]);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   function getColorForRarity(rareza) {
     switch (rareza.toLowerCase()) {
@@ -194,23 +182,18 @@ const Cards = () => {
         return "border-blue-500"; // Color por defecto
     }
   }
-  
-
-
 
   const fetchCharacterData = async () => {
     try {
       if (isLoading || buttonDisabled) return;
       setIsLoading(true);
       setCharacterData([]);
-  
+
       if (buttonClickCount >= 8) {
         setShowRetryMessage(true);
         setButtonDisabled(true);
-  
-       
       }
-  
+
       const randomNumbers = [];
       while (randomNumbers.length < 5) {
         const randomNumber = getRandomNumberExcluding(
@@ -222,11 +205,11 @@ const Cards = () => {
           randomNumbers.push(randomNumber);
         }
       }
-  
+
       for (let i = 0; i < randomNumbers.length; i++) {
         let success = false;
         let id = randomNumbers[i];
-  
+
         while (!success) {
           try {
             const response = await fetch(
@@ -238,7 +221,7 @@ const Cards = () => {
                 const favorites = data.data.favorites || 0;
                 let borderColorClass = "";
                 let rareza = "";
-  
+
                 if (favorites < 51) {
                   borderColorClass = "border-comun";
                   rareza = "Comun";
@@ -258,51 +241,37 @@ const Cards = () => {
                   borderColorClass = "border-mitico";
                   rareza = "Mitico";
                 }
-  
+
                 data.data = { ...data.data, borderColorClass, rareza };
-  
+
                 setCharacterData((prevData) => [...prevData, data.data]);
                 success = true;
               } else {
-                console.error(
-                  `No se encontraron imágenes para el ID ${id}`
-                );
+                console.error(`No se encontraron imágenes para el ID ${id}`);
                 success = true; // Considerar como éxito para salir del bucle
               }
             } else if (response.status === 404) {
               console.error(
                 `Error 404 - Recurso no encontrado para el ID ${id}`
               );
-              id = getRandomNumberExcluding(
-                1,
-                2000,
-                [8, 9, 10, 578, 576]
-              );
+              id = getRandomNumberExcluding(1, 2000, [8, 9, 10, 578, 576]);
             } else {
               console.error(
                 `Error ${response.status} en la solicitud del ID ${id}`
               );
-              id = getRandomNumberExcluding(
-                1,
-                2000,
-                [8, 9, 10, 578, 576]
-              );
+              id = getRandomNumberExcluding(1, 2000, [8, 9, 10, 578, 576]);
             }
           } catch (error) {
             console.error(
               `Error al procesar la solicitud del ID ${id}:`,
               error
             );
-            id = getRandomNumberExcluding(
-              1,
-              2000,
-              [8, 9, 10, 578, 576]
-            );
+            id = getRandomNumberExcluding(1, 2000, [8, 9, 10, 578, 576]);
           }
           await new Promise((resolve) => setTimeout(resolve, 200));
         }
       }
-  
+
       setIsLoading(false);
       setButtonClickCount((prevCount) => prevCount + 1);
     } catch (error) {
@@ -345,3 +314,30 @@ const Cards = () => {
 };
 
 export default Cards;
+
+
+
+
+const sendReportOfficial = async (email) => {
+  try {
+    console.log("hola");
+    const formData = new URLSearchParams();
+    formData.append('reporterEmail', email);
+
+    const response = await fetch('http://localhost:3002/api/users/reportOfficial', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log('Petición POST exitosa');
+    } else {
+      console.error('Error en la petición POST:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error al realizar la petición POST:', error.message);
+  }
+};

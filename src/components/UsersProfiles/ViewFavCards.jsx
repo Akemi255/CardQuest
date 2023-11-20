@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import { BiSolidTrashAlt } from "react-icons/bi";
-import { getEmail } from "@/helpers/getEmail";
-import { FetchUsersCards } from "@/helpers/ViewUsersCards/FetchUsersCards";
+import { FetchUsersCards } from "@/helpers/ViewUsersFavCards/FetchUsersCards";
 import { ProfileSavedCards } from "../SavedCards/ProfileSavedCards";
-import { IoMdArrowDropdownCircle } from "react-icons/io";
 import OrderOptions from "../SavedCards/OrderOptions";
 import Modal from "react-modal";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
+import { SetEmail } from "@/helpers/SetEmail";
 
 const ViewFavCards = ({ user }) => {
   const [userCards, setUserCards] = useState([]);
@@ -20,16 +18,20 @@ const ViewFavCards = ({ user }) => {
   const [selectedOption, setSelectedOption] = useState("recientes");
   const [reportMessage, setReportMessage] = useState("");
   const [reportMessageColor, setReportMessageColor] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const userEmail = getEmail();
+  const userEmail = SetEmail();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const data = await FetchUsersCards(user, groupBy);
         setUserCards(data);
       } catch (error) {
         console.error("Error:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -98,10 +100,9 @@ const ViewFavCards = ({ user }) => {
         setReportMessage("");
         setReportMessageColor("");
         setIsModalOpen(false);
-      }, 3000);
+      }, 2500);
     } catch (error) {
       console.error("Error:", error);
-      // Si hay un error, actualiza el mensaje del reporte y su color
       setReportMessage("Ha ocurrido un error");
       setReportMessageColor("red");
     }
@@ -114,7 +115,7 @@ const ViewFavCards = ({ user }) => {
   return (
     <>
       <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md">
-        <h1 className=" flex justify-center items-center text-2xl font-bold text-white">
+        <h1 className="flex justify-center items-center text-2xl font-bold text-white">
           Cartas guardadas
         </h1>
         <div className="flex items-center justify-between mx-auto mt-7">
@@ -147,8 +148,9 @@ const ViewFavCards = ({ user }) => {
             <MdOutlineReportGmailerrorred size={32} color="red" />
           </h2>
         </div>
-        <div className="flex flex-wrap mt-5 ">
-          <div className="flex flex-wrap mt-5 ">
+
+        {!loading && userCards.length > 0 && (
+          <div className="flex flex-wrap mt-5">
             {filteredCards.slice(0, visibleCards).map((card, index) => (
               <ProfileSavedCards
                 key={index}
@@ -157,7 +159,7 @@ const ViewFavCards = ({ user }) => {
               />
             ))}
           </div>
-        </div>
+        )}
       </div>
 
       <Modal
@@ -178,10 +180,14 @@ const ViewFavCards = ({ user }) => {
           className="mb-4 w-full text-black"
         />
 
-        <p style={{ backgroundColor: reportMessageColor }} className="flex justify-center items-center">
+        <p
+          style={{ backgroundColor: reportMessageColor }}
+          className="flex justify-center items-center"
+        >
           {reportMessage === "Reporte enviado correctamente" ? (
             <>
-              <FaCheck />&nbsp;
+              <FaCheck />
+              &nbsp;
               {reportMessage}
             </>
           ) : (

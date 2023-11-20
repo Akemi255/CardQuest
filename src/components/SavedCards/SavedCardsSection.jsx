@@ -1,8 +1,7 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { BiSolidTrashAlt } from "react-icons/bi";
 import { ProfileSavedCards } from "./ProfileSavedCards";
-import Footer from "../Layout/footer";
 import { getEmail } from "@/helpers/getEmail";
 import Modal from "react-modal";
 import OrderOptions from "./OrderOptions";
@@ -16,16 +15,20 @@ const SavedCardsSection = () => {
   const [groupBy, setGroupBy] = useState("recientes");
   const [showOrderOptions, setShowOrderOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState("recientes");
+  const [loading, setLoading] = useState(true); 
 
   const userEmail = getEmail();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true); 
         const data = await fetchUserCards(userEmail, groupBy);
         setUserCards(data);
       } catch (error) {
         console.error("Error:", error);
+      } finally {
+        setLoading(false); 
       }
     };
 
@@ -98,7 +101,7 @@ const SavedCardsSection = () => {
   return (
     <>
       <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md">
-        <h1 className=" flex justify-center items-center text-2xl font-bold text-white">
+        <h1 className="flex justify-center items-center text-2xl font-bold text-white">
           Cartas guardadas
         </h1>
         <div className="flex items-center justify-between mx-auto mt-7">
@@ -130,16 +133,17 @@ const SavedCardsSection = () => {
             Borrar cartas <BiSolidTrashAlt size={32} color="red" />
           </h2>
         </div>
-        <div className="flex flex-wrap mt-5 ">
-          
-          {filteredCards.slice(0, visibleCards).map((card, index) => (
-            <ProfileSavedCards
-              key={index}
-              character={card.content}
-              index={index}
-            />
-          ))}
-        </div>
+        {!loading && userCards.length > 0 && (
+          <div className="flex flex-wrap mt-5">
+            {filteredCards.slice(0, visibleCards).map((card, index) => (
+              <ProfileSavedCards
+                key={index}
+                character={card.content}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <Modal
         isOpen={isModalOpen}
@@ -150,7 +154,7 @@ const SavedCardsSection = () => {
         ariaHideApp={false}
       >
         <h2 className="text-xl font-bold mb-4">
-          ¿Está seguro que desea eliminar todas sus cartas?
+          ¿Está seguro de que desea eliminar todas sus cartas?
         </h2>
         <p className="mb-4">Esta acción no tiene vuelta atrás.</p>
         <button

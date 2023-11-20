@@ -2,7 +2,7 @@
 import { useUser } from '@clerk/nextjs';
 import React from 'react'
 
-export const Email = () => {
+export const SetEmail = () => {
     const user = useUser();
     let email = "";
   
@@ -11,9 +11,9 @@ export const Email = () => {
       localStorage.setItem("email", email);
     }
   
-    return {
-      email,
-      user,
-    };
-  };
+    return email 
+  }
+      
+    
+  
 
