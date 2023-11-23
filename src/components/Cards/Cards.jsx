@@ -154,9 +154,22 @@ const Cards = () => {
           setShowRetryMessage(true);
         } else if (storedFutureTime < retryCountdown) {
           setShowRetryMessage(false);
-          localStorage.clear();
-          window.location.reload();
+          // Eliminar elementos uno por uno
+          localStorage.removeItem("futureTime");
+          localStorage.removeItem("showRetryMessage");
+
+          for (let i = 0; i < characterData.length; i++) {
+            localStorage.removeItem(`characterData_${i}`);
+          }
+
+          localStorage.removeItem("buttonClickCount");
+          localStorage.removeItem("savedCharacterData");
+          localStorage.removeItem("savedCardsCount");
+          localStorage.removeItem("liked");
+          localStorage.removeItem("likedCharacters");
+
           localStorage.setItem("trappedState", true);
+          window.location.reload();
         }
       }, 1000);
 

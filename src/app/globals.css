@@ -56,6 +56,19 @@ body{
   animation: animate 8s linear infinite;
 }
 
+.float{
+  transition: .5s, color .10s;
+  -webkit-transition: .5s, color .10s;
+  -moz-transition: .5s, color .10s;
+}
+.float:hover{
+  box-shadow: 0 8px 8px 0 #000000,0 8px 8px 0 #000000;
+  transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+  -moz-transform:translate(0px,5px);
+}
+
+
 @keyframes animate {
   0% {
     background-position: 0%;
@@ -115,17 +128,7 @@ body{
 }
 
               
-.float{
-  transition: .5s, color .10s;
-  -webkit-transition: .5s, color .10s;
-  -moz-transition: .5s, color .10s;
-}
-.float:hover{
-  box-shadow: 0 8px 8px 0 #000000,0 8px 8px 0 #000000;
-  transform: translate(0px,5px);
-  -webkit-transform: translate(0px,5px);
-  -moz-transform:translate(0px,5px);
-}
+
      
 
 /* Estilos para los bordes de las cartas */
