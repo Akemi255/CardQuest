@@ -1,50 +1,50 @@
+import React from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 
 const CharacterCard = ({ character, index, getColorForRarity, saveCharacter }) => {
   return (
-    <div key={index} className="w-1/5 p-4">
+    <div key={index} className="flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 relative">
       <div
-        className={`${character.borderColorClass} border-animado bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 cursor-pointer h-full`}
-        style={{ minWidth: '200px' }} // Establecer un ancho mínimo para todas las cartas
+        className={`${character.borderColorClass} border-animado bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 cursor-pointer h-full flex flex-col justify-center items-center`}
       >
         {character.images && character.images.jpg && (
           <img
             src={character.images.jpg.image_url}
             alt={character.name}
-            className="w-full h-50 object-cover hover:shadow-lg" // Establecer una altura específica y 'object-cover' para ajustar la imagen al contenedor
+            className="w-full h-48 sm:h-64 object-cover hover:shadow-lg"
           />
         )}
 
-        <div className="p-4 h-full">
+        <div className="p-4 text-center">
           <h3 className="text-xl font-bold">{character.name}</h3>
           {character.anime && character.anime[0] && (
             <p>Anime: {character.anime[0].anime.title}</p>
           )}
-          <p className="flex items-center">
+          <p className="flex items-center justify-center mt-2">
             <span
-              className={`w-full border-b-2 ${getColorForRarity(character.rareza)}`}
+              className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
             ></span>
             <span className="mx-2">{character.rareza}</span>
             <span
-              className={`w-full border-b-2 ${getColorForRarity(character.rareza)}`}
+              className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
             ></span>
           </p>
           {character.saved ? (
             <button
-              className="mt-2 bg-gray-500 text-white py-2 px-4 rounded cursor-not-allowed"
+              className="mt-2 bg-gray-500 text-white py-2 px-4 rounded cursor-not-allowed flex items-center justify-center"
               disabled
             >
               Guardado en el perfil{' '}
-              <AiFillLike className="inline-block mb-1" />
+              <AiFillLike className="ml-1" />
             </button>
           ) : (
             <button
-              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded flex items-center justify-center"
               onClick={() => saveCharacter(character, index)}
             >
               Guardar en el perfil{' '}
-              <AiOutlineLike className="inline-block mb-1" />
+              <AiOutlineLike className="ml-1" />
             </button>
           )}
         </div>

@@ -1,11 +1,12 @@
 "use client";
 import Header from "@/components/Layout/Header";
 import { useState } from "react";
-import Footer from "@/components/Layout/footer";
-import UserProfile from "@/components/UserProfile/UserProfile";
+
+import UserProfile from "@/hooks/UserProfile";
 import UserProfileCard from "@/components/UserProfile/UserProfileCard";
 import SavedCardsSection from "@/components/SavedCards/SavedCardsSection";
 import { SetEmail } from "@/helpers/SetEmail";
+import Footer from "@/components/Layout/Footer";
 
 
 
@@ -35,7 +36,8 @@ const DashboardPage = () => {
       />
 
       <SavedCardsSection />
-      
+      <br />
+      <Footer/>
     </>
   );
 };

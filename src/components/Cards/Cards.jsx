@@ -17,7 +17,6 @@ const Cards = () => {
   const [isClient, setIsClient] = useState(false);
 
   let Email = SetEmail();
-  
 
   useEffect(() => {
     setIsClient(true);
@@ -47,32 +46,33 @@ const Cards = () => {
     return getInitialButtonClickCount();
   });
 
-
-  //algoritmos para detectar trampas 
+  //algoritmos para detectar trampas
   useEffect(() => {
     const checkLocalStorage = () => {
-     
       const localStorageCleared = localStorage.getItem("trappedState");
 
-      
       if (buttonClickCount >= 1 && buttonClickCount <= 7) {
-        const savedCount = parseInt(localStorage.getItem("buttonClickCount"), 10);
-       
-        if (buttonClickCount === 1 && !localStorageCleared && (isNaN(savedCount) || savedCount === 0)) {
-          console.log("hiciste trampa");
+        const savedCount = parseInt(
+          localStorage.getItem("buttonClickCount"),
+          10
+        );
+
+        if (
+          buttonClickCount === 1 &&
+          !localStorageCleared &&
+          (isNaN(savedCount) || savedCount === 0)
+        ) {
           sendReportOfficial(Email);
         }
-        if (buttonClickCount === 1){
+        if (buttonClickCount === 1) {
           localStorage.removeItem("trappedState");
         }
-       
       }
     };
-  
+
     checkLocalStorage();
   }, [buttonClickCount]);
   //fin de algoritmos de detección de trampas
-
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [savedCardsCount, setSavedCardsCount] = useState(0);
@@ -315,29 +315,22 @@ const Cards = () => {
 
 export default Cards;
 
-
-
-
 const sendReportOfficial = async (email) => {
   try {
-    console.log("hola");
     const formData = new URLSearchParams();
-    formData.append('reporterEmail', email);
+    formData.append("reporterEmail", email);
 
-    const response = await fetch('http://localhost:3002/api/users/reportOfficial', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData,
-    });
-
-    if (response.ok) {
-      console.log('Petición POST exitosa');
-    } else {
-      console.error('Error en la petición POST:', response.statusText);
-    }
+    const response = await fetch(
+      "http://localhost:3002/api/users/reportOfficial",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData,
+      }
+    );
   } catch (error) {
-    console.error('Error al realizar la petición POST:', error.message);
+    console.error("Error al realizar la petición POST:", error.message);
   }
 };

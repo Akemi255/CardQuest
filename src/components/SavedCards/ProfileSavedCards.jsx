@@ -1,11 +1,7 @@
-
-
 export const ProfileSavedCards = ({ character, index }) => {
-  // Definición local de getColorForRarity
   const getColorForRarity = (rareza) => {
-    // Verifica si rareza es undefined o nulo antes de llamar a toLowerCase
-    const lowerCasedRareza = (rareza || '').toLowerCase();
-  
+    const lowerCasedRareza = (rareza || "").toLowerCase();
+
     switch (lowerCasedRareza) {
       case "comun":
         return "border-red-800";
@@ -25,38 +21,32 @@ export const ProfileSavedCards = ({ character, index }) => {
   };
 
   return (
-    <div key={index} className="w-1/5 p-4">
+    <div key={index} className="flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4">
       <div
-        className={`${character.borderColorClass} border-animado bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 cursor-pointer h-full`}
-        style={{ minWidth: "200px" }}
+        className={`${character.borderColorClass} border-animado bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 cursor-pointer h-full flex flex-col justify-center items-center`}
       >
         {character.images && character.images.jpg && (
           <img
             src={character.images.jpg.image_url}
             alt={character.name}
-            className="w-full h-50 object-cover hover:shadow-lg"
+            className="w-full h-48 sm:h-64 object-cover hover:shadow-lg"
           />
         )}
 
-        <div className="p-4 h-full">
-          <h3 className="text-xl font-bold">{character.name}</h3>
+        <div className="p-4 text-center">
+          <h3 className="text-lg sm:text-xl font-bold">{character.name}</h3>
           {character.anime && character.anime[0] && (
             <p>Anime: {character.anime[0].anime.title}</p>
           )}
-          <p className="flex items-center">
+          <p className="flex items-center justify-center mt-2">
             <span
-              className={`w-full border-b-2 ${getColorForRarity(
-                character.rareza
-              )}`}
+              className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
             ></span>
             <span className="mx-2">{character.rareza}</span>
             <span
-              className={`w-full border-b-2 ${getColorForRarity(
-                character.rareza
-              )}`}
+              className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
             ></span>
           </p>
-          {/* Otros detalles de la carta */}
         </div>
       </div>
     </div>

@@ -2,21 +2,19 @@ import Link from "next/link";
 import { BiUser } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 
-
 const Header = () => {
   return (
-    <div className="bg-gray-700 text-white flex justify-between items-center">
-      <div className="flex items-center ml-8">
+    <div className="bg-gray-700 text-white flex justify-between items-center w-full">
+      <div className="flex items-center ml-4 sm:ml-8"> {/* Ajuste de margen para el primer elemento */}
         <button className="header-button text-lg font-bold hover:text-gray-300 relative transition duration-300 ease-in-out flex items-center">
-        <Link href={"/users"} className="flex items-center">
-          <AiOutlineSearch />
-          Explorar usuarios
+          <Link href={"/users"} className="flex items-center">
+            <AiOutlineSearch className="text-2xl sm:text-lg sm:mr-2" />
+            <span className="hidden sm:inline-block">Explorar</span>
           </Link>
         </button>
-        
       </div>
 
-      <div className="text-xl font-bold flex items-center justify-center ">
+      <div className="text-xl font-bold flex items-center justify-center">
         <Link href={"/"}>
           <img
             src="/assets/logo.png"
@@ -26,10 +24,11 @@ const Header = () => {
         </Link>
       </div>
 
-      <div className="flex justify-center items-center mr-20 gap-3">
+      <div className="flex justify-end items-center mr-4 sm:mr-8"> {/* Ajuste de margen para el último elemento */}
         <button className="header-button text-lg font-bold hover:text-gray-300 relative transition duration-300 ease-in-out flex items-center">
           <Link href="/dashboard" className="flex items-center">
-            <BiUser /> Mi perfil
+            <BiUser className="text-2xl sm:text-lg mr-2 sm:mr-2" />
+            <span className="hidden sm:inline-block">Mi perfil</span>
           </Link>
         </button>
       </div>

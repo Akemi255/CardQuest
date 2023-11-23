@@ -17,6 +17,35 @@ const ViewProfile = ({ user }) => {
   const [followData, setFollowData] = useState(null);
 
   const loggedInUserEmail = SetEmail();
+
+
+  const fetchFollowDataById = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3002/api/follows/getFollowDataById`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos de seguimiento por ID");
+      }
+
+      const result = await response.json();
+      setFollowData(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -53,9 +82,7 @@ const ViewProfile = ({ user }) => {
           }
         );
 
-        if (!response.ok) {
-          throw new Error("Error al verificar si estás siguiendo al usuario");
-        }
+      
 
         const result = await response.json();
         setIsFollowing(result.isFollowing);
@@ -80,9 +107,7 @@ const ViewProfile = ({ user }) => {
           }
         );
 
-        if (!response.ok) {
-          throw new Error("Error al verificar si eres el usuario");
-        }
+     
 
         const result = await response.json();
         setIsItMe(result.result);
@@ -91,31 +116,7 @@ const ViewProfile = ({ user }) => {
       }
     };
 
-    const fetchFollowDataById = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3002/api/follows/getFollowDataById`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId: user,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Error al obtener los datos de seguimiento por ID");
-        }
-
-        const result = await response.json();
-        setFollowData(result);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+   
 
     fetchUserProfile();
     checkIfFollowing();
@@ -155,7 +156,9 @@ const ViewProfile = ({ user }) => {
         );
       }
 
-      // Actualizar el estado después de la acción
+      fetchFollowDataById();
+
+      
       setIsFollowing(!isFollowing);
     } catch (error) {
       console.error(error);
@@ -200,7 +203,7 @@ const ViewProfile = ({ user }) => {
               Siguiendo: {followData.followingCount} | Seguidores: {followData.followersCount}
             </p>
           )}
-          <div className="flex justify-center items-centers">
+          <div className="flex justify-center items-centers mt-2">
             {!isItMe && (
                 <button
                   className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full"

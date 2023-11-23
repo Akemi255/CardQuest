@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
 
   return (
     <ClerkProvider localization={esES}>
-      <html lang="en">
+     <html lang="es"  translate="no">
         <body className={inter.className}>
           {children}</body>
       </html>

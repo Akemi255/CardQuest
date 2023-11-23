@@ -40,7 +40,7 @@ const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
       }
     };
 
-    fetchData(); // Llama a la función al montar el componente
+    fetchData(); 
   }, []);
 
   return (

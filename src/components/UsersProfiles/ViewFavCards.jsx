@@ -118,8 +118,8 @@ const ViewFavCards = ({ user }) => {
         <h1 className="flex justify-center items-center text-2xl font-bold text-white">
           Cartas guardadas
         </h1>
-        <div className="flex items-center justify-between mx-auto mt-7">
-          <div className="flex items-center text-2xl font-bold text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor-pointer">
+        <div className="flex flex-col md:flex-row items-center justify-between mx-auto mt-7">
+          <div className="flex items-center text-2xl font-bold text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor-pointer mb-4 md:mb-0">
             <OrderOptions
               setGroupBy={setGroupBy}
               showOrderOptions={showOrderOptions}
@@ -128,23 +128,23 @@ const ViewFavCards = ({ user }) => {
               setSelectedOption={setSelectedOption}
             />
           </div>
-          <div className="flex items-center relative left-9">
+          <div className="flex items-center md:relative  mb-4 md:mb-0">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border rounded-l bg-gray-800 text-white"
+              className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
               placeholder="Buscar cartas..."
             />
-            <button className="px-4 py-2 rounded-r">
+            <button className="px-2 py-2 rounded-r  ">
               <FiSearch size={25} />
             </button>
           </div>
           <h2
-            className="flex items-center mr-9 text-2xl font-bold text-white cursor-pointer hover:text-red-700 relative transition duration-300 ease-in-out"
+            className="flex items-center md:mr-7 text-2xl font-bold text-white cursor-pointer hover:text-red-700 relative transition duration-300 ease-in-out"
             onClick={handleDeleteCards}
           >
-            Reportar usuario{" "}
+            Reportar
             <MdOutlineReportGmailerrorred size={32} color="red" />
           </h2>
         </div>
