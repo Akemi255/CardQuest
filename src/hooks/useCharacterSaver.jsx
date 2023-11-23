@@ -36,7 +36,7 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
         console.log(character);
         // Enviar la carta al backend
         try {
-          const response = await fetch('http://localhost:3002/api/cards/saveCard', {
+          const response = await fetch('https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/saveCard', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json', // Cambiado a JSON

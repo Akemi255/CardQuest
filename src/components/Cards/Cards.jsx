@@ -321,7 +321,7 @@ const sendReportOfficial = async (email) => {
     formData.append("reporterEmail", email);
 
     const response = await fetch(
-      "http://localhost:3002/api/users/reportOfficial",
+      "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/reportOfficial",
       {
         method: "POST",
         headers: {

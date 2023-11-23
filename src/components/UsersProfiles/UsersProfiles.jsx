@@ -17,7 +17,7 @@ const UsersProfiles = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "http://localhost:3002/api/users/getAllUsers"
+          "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/getAllUsers"
         );
         const data = await response.json();
         setUsers(data.users);

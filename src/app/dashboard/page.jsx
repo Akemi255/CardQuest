@@ -6,7 +6,8 @@ import UserProfile from "@/hooks/UserProfile";
 import UserProfileCard from "@/components/UserProfile/UserProfileCard";
 import SavedCardsSection from "@/components/SavedCards/SavedCardsSection";
 import { SetEmail } from "@/helpers/SetEmail";
-import Footer from "@/components/Layout/Footer";
+import Footer from "@/components/Layout/footer";
+
 
 
 

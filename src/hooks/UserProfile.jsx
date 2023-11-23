@@ -33,7 +33,7 @@ const UserProfile = () => {
           setUserProfile(JSON.parse(storedProfile));
         }
 
-        const response = await fetch("http://localhost:3002/api/users/profile", {
+        const response = await fetch("https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/profile", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

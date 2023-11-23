@@ -1,5 +1,5 @@
+import Footer from '@/components/Layout/footer'
 import Header from '@/components/Layout/Header'
-import Footer from '@/components/Layout/Mainfooter'
 import React from 'react'
 
 const loading = () => {

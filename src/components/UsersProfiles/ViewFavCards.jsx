@@ -77,7 +77,7 @@ const ViewFavCards = ({ user }) => {
       formData.append("id", user);
 
       const response = await fetch(
-        "http://localhost:3002/api/users/reportUser",
+        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/reportUser",
         {
           method: "POST",
           headers: {

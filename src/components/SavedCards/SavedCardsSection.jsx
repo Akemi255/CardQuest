@@ -69,7 +69,7 @@ const SavedCardsSection = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3002/api/cards/deleteCards",
+        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/deleteCards",
         {
           method: "DELETE",
           headers: {

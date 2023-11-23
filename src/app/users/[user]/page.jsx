@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import Header from '@/components/Layout/Header';
 import ViewProfile from '@/components/UsersProfiles/ViewProfile';
 import ViewFavCards from '@/components/UsersProfiles/ViewFavCards';
-import Footer from '@/components/Layout/Footer';
+import Footer from '@/components/Layout/footer';
 
 
 const User = () => {
