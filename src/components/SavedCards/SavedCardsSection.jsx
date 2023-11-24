@@ -87,7 +87,7 @@ const SavedCardsSection = () => {
         );
       }
 
-      console.log("peticion delete ejecutada correctamente");
+      
       setUserCards([]);
     } catch (error) {
       console.error("Error:", error);

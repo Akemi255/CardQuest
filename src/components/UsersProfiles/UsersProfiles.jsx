@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const UsersProfiles = () => {
   const [users, setUsers] = useState([]);
-  const [visibleUsers, setVisibleUsers] = useState(8);
+  const [visibleUsers, setVisibleUsers] = useState(12);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +37,7 @@ const UsersProfiles = () => {
         window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 100
       ) {
-        setVisibleUsers((prevVisibleUsers) => prevVisibleUsers + 8);
+        setVisibleUsers((prevVisibleUsers) => prevVisibleUsers + 12);
       }
     };
 
