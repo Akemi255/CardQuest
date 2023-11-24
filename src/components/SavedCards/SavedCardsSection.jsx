@@ -9,7 +9,7 @@ import { fetchUserCards } from "@/helpers/FavCards/fetchUserCards";
 
 const SavedCardsSection = () => {
   const [userCards, setUserCards] = useState([]);
-  const [visibleCards, setVisibleCards] = useState(10);
+  const [visibleCards, setVisibleCards] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [groupBy, setGroupBy] = useState("recientes");
@@ -41,7 +41,7 @@ const SavedCardsSection = () => {
         window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 100
       ) {
-        setVisibleCards((prevVisibleCards) => prevVisibleCards + 10);
+        setVisibleCards((prevVisibleCards) => prevVisibleCards + 12);
       }
     };
 

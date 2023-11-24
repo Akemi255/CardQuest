@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const UsersProfiles = () => {
   const [users, setUsers] = useState([]);
-  const [visibleUsers, setVisibleUsers] = useState(12);
+  const [visibleUsers, setVisibleUsers] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
