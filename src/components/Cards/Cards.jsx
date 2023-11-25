@@ -28,9 +28,16 @@ const Cards = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [showRetryMessage, setShowRetryMessage] = useState(
-    isClient ? getInitialShowRetryMessage() : false
-  );
+  const [showRetryMessage, setShowRetryMessage] = useState(() => {
+  if (isClient) {
+    if (typeof window !== 'undefined') {
+      const storedShowRetryMessage = JSON.parse(localStorage.getItem("showRetryMessage"));
+      return storedShowRetryMessage !== null ? storedShowRetryMessage : getInitialShowRetryMessage();
+    } else {
+      return getInitialShowRetryMessage();
+    }
+  } 
+});
 
   const [retryCountdown, setRetryCountdown] = useState(
     isClient
@@ -50,7 +57,10 @@ const Cards = () => {
   useEffect(() => {
     const checkLocalStorage = () => {
       const localStorageCleared = localStorage.getItem("trappedState");
-
+      if (buttonClickCount >= 0 && buttonClickCount <= 7) {
+        setButtonDisabled(false)
+      }
+      
       if (buttonClickCount >= 1 && buttonClickCount <= 7) {
         const savedCount = parseInt(
           localStorage.getItem("buttonClickCount"),
@@ -74,7 +84,7 @@ const Cards = () => {
   }, [buttonClickCount]);
   //fin de algoritmos de detección de trampas
 
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [savedCardsCount, setSavedCardsCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likedCharacters, setLikedCharacters] = useState([]);
@@ -136,46 +146,95 @@ const Cards = () => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
   }, [buttonClickCount]);
 
-  useEffect(() => {
-    if (isClient) {
-      const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
-      if (buttonClickCount >= 8 && !storedFutureTime) {
-        const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
-        localStorage.setItem("futureTime", futureTime);
+  
+
+  
+
+// ...
+
+useEffect(() => {
+  if (isClient) {
+    const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
+
+    if (buttonClickCount >= 8 && !storedFutureTime) {
+      const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
+      localStorage.setItem("futureTime", futureTime);
+    }
+
+    const interval = setInterval(() => {
+      // Lógica para comprobar el tiempo actual
+      checkTime();
+
+      const storedFutureTime = parseInt(
+        localStorage.getItem("futureTime"),
+        10
+      );
+
+      if (storedFutureTime > retryCountdown) {
+        setShowRetryMessage(true);
+      } else if (storedFutureTime < retryCountdown) {
+        setShowRetryMessage(false);
+        // Eliminar elementos uno por uno
+        localStorage.removeItem("futureTime");
+        localStorage.removeItem("showRetryMessage");
+
+        for (let i = 0; i < characterData.length; i++) {
+          localStorage.removeItem(`characterData_${i}`);
+        }
+
+        localStorage.removeItem("buttonClickCount");
+        localStorage.removeItem("savedCharacterData");
+        localStorage.removeItem("savedCardsCount");
+        localStorage.removeItem("liked");
+        localStorage.removeItem("likedCharacters");
+
+        localStorage.setItem("trappedState", true);
+        window.location.reload();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }
+}, [isClient, buttonClickCount, retryCountdown, characterData]);
+
+// ...
+
+const checkTime = () => {
+  // Lógica para comprobar el tiempo en tiempo real
+  const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
+
+  if (storedFutureTime) {
+    const currentTime = parseInt(Date.now() / 1000, 10);
+
+    if (currentTime > storedFutureTime) {
+      console.log("Tiempo actual es mayor que el tiempo futuro");
+      setShowRetryMessage(false);
+      // Eliminar elementos uno por uno
+      localStorage.removeItem("futureTime");
+      localStorage.removeItem("showRetryMessage");
+
+      for (let i = 0; i < characterData.length; i++) {
+        localStorage.removeItem(`characterData_${i}`);
       }
 
-      const interval = setInterval(() => {
-        const storedFutureTime = parseInt(
-          localStorage.getItem("futureTime"),
-          10
-        );
+      localStorage.removeItem("buttonClickCount");
+      localStorage.removeItem("savedCharacterData");
+      localStorage.removeItem("savedCardsCount");
+      localStorage.removeItem("liked");
+      localStorage.removeItem("likedCharacters");
 
-        if (storedFutureTime > retryCountdown) {
-          setShowRetryMessage(true);
-        } else if (storedFutureTime < retryCountdown) {
-          setShowRetryMessage(false);
-          // Eliminar elementos uno por uno
-          localStorage.removeItem("futureTime");
-          localStorage.removeItem("showRetryMessage");
-
-          for (let i = 0; i < characterData.length; i++) {
-            localStorage.removeItem(`characterData_${i}`);
-          }
-
-          localStorage.removeItem("buttonClickCount");
-          localStorage.removeItem("savedCharacterData");
-          localStorage.removeItem("savedCardsCount");
-          localStorage.removeItem("liked");
-          localStorage.removeItem("likedCharacters");
-
-          localStorage.setItem("trappedState", true);
-          window.location.reload();
-        }
-      }, 1000);
-
-      return () => clearInterval(interval);
+      localStorage.setItem("trappedState", true);
+      window.location.reload();
     }
-  }, [isClient, buttonClickCount]);
+  }
+};
+
+
+
+
+
+// ...
+
 
   function getColorForRarity(rareza) {
     switch (rareza.toLowerCase()) {
@@ -295,13 +354,13 @@ const Cards = () => {
 
   return (
     <div>
-      <button
-        className="btn float"
-        onClick={fetchCharacterData}
-        disabled={showRetryMessage && retryCountdown > 0}
-      >
-        {"Cargar Cartas"}
-      </button>
+       <button
+      className="btn float"
+      onClick={fetchCharacterData}
+      disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
+    >
+      {"Cargar Cartas"}
+    </button>
 
       {showRetryMessage && (
         <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
