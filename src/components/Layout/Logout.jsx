@@ -24,7 +24,7 @@ const Logout = () => {
       className="cursor-pointer text-lg font-bold hover:text-gray-300 transition duration-300 ease-in-out"
       onClick={handleLogout}
     >
-      <IoLogOutOutline />
+      <IoLogOutOutline size={28}/>
     </div>
   );
 };
