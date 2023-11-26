@@ -409,3 +409,9 @@ body{
   transition: color 0.3s;
 }
 
+.cl-formFieldInfoText__password {
+  display: none;
+}
+.cl-formFieldErrorText{
+  display: none;
+}

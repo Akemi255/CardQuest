@@ -1,24 +1,31 @@
-// Logout.js
 "use client";
-import Link from "next/link";
+import { useClerk } from "@clerk/clerk-react";
+import { useRouter } from "next/navigation";
+import { IoLogOutOutline } from "react-icons/io5";
+
 
 const Logout = () => {
-  
+  const { signOut } = useClerk();
+  const router = useRouter();
 
   const handleLogout = async () => {
-    if (typeof window !== 'undefined') {
-    localStorage.removeItem("clerk-db-jwt");
+    try {
+      await signOut();
+      localStorage.removeItem("clerk-db-jwt");
+      window.location.reload();
+      router.push("/sign-in");
+    } catch (error) {
+      console.error("Error during logout:", error);
     }
-   
   };
 
   return (
-    <button
-      className="header-button text-lg font-bold hover:text-gray-300 relative transition duration-300 ease-in-out flex items-center"
+    <div
+      className="cursor-pointer text-lg font-bold hover:text-gray-300 transition duration-300 ease-in-out"
       onClick={handleLogout}
     >
-     <Link href="/sign-in">Logout</Link>
-    </button>
+      <IoLogOutOutline />
+    </div>
   );
 };
 

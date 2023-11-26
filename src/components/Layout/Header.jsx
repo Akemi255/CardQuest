@@ -2,7 +2,8 @@ import Link from "next/link";
 import { BiUser } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import Logout from "./Logout";
-import { UserButton } from "@clerk/nextjs";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
+
 
 const Header = () => {
   return (
@@ -30,13 +31,12 @@ const Header = () => {
         {/* Ajuste de margen para el último elemento */}
         <button className="header-button text-lg font-bold hover:text-gray-300 relative transition duration-300 ease-in-out flex items-center">
           <Link href="/dashboard" className="flex items-center">
-            <span className="sm:inline-block">Perfil</span>
+          <BiUser className="text-2xl sm:text-lg mr-2 sm:mr-2" />
+          <span className="hidden sm:inline-block">Mi perfil</span>
           </Link>
         </button>
 
-        <div className="relative bottom-7 header-button text-lg font-bold hover:text-gray-300 transition duration-300 ease-in-out">
-       <UserButton />
-       </div>
+        <Logout/>
       </div>
     </div>
   );

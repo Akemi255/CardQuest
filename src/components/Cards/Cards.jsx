@@ -88,6 +88,14 @@ const Cards = () => {
   const [savedCardsCount, setSavedCardsCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likedCharacters, setLikedCharacters] = useState([]);
+  const [remainingAttempts, setRemainingAttempts] = useState(0);
+
+useEffect(() => {
+  setIsClient(true);
+   
+  setRemainingAttempts(8 - buttonClickCount);
+}, [isClient, buttonClickCount]);
+
   const { saveCharacter } = useCharacterSaver(
     characterData,
     likedCharacters,
@@ -95,7 +103,7 @@ const Cards = () => {
     setLikedCharacters,
     setSavedCardsCount
   );
-
+  
   useEffect(() => {
     if (isClient) {
       localStorage.setItem(
@@ -270,7 +278,7 @@ const checkTime = () => {
       while (randomNumbers.length < 5) {
         const randomNumber = getRandomNumberExcluding(
           1,
-          10000,
+          169000,
           [8, 9, 10, 578, 576]
         );
         if (!randomNumbers.includes(randomNumber)) {
@@ -351,9 +359,10 @@ const checkTime = () => {
       setIsLoading(false);
     }
   };
-
+  
   return (
     <div>
+      <div className="text-center mt-3 bg-slate-700 text-white font-bold py-2 px-4 rounded">{`Intentos restantes: ${remainingAttempts}`}</div>
        <button
       className="btn float"
       onClick={fetchCharacterData}
