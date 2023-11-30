@@ -21,10 +21,10 @@ const Logout = () => {
 
   return (
     <div
-      className="cursor-pointer text-lg font-bold hover:text-gray-300 transition duration-300 ease-in-out"
+      className="flex justify-center items-center cursor-pointer"
       onClick={handleLogout}
     >
-      <IoLogOutOutline size={28}/>
+      <IoLogOutOutline className="text-2xl sm:text-lg mr-2 sm:mr-2" size={28}/>Cerrar sesión
     </div>
   );
 };

@@ -7,7 +7,7 @@ const loading = () => {
     <>
      <>
       <Header />
-      <Footer />
+      
     </>
     </>
   )

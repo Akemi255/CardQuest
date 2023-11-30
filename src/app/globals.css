@@ -415,3 +415,10 @@ body{
 .cl-formFieldErrorText{
   display: none;
 }
+
+/*boton del menu*/
+.close-button{
+  position: relative;
+  left: 210px;
+  top: -520px;
+}
