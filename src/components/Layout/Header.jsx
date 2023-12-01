@@ -22,7 +22,7 @@ const Header = () => {
 
       <div className="flex justify-end items-center mr-4 gap-3">
         {/* Ajuste de margen para el último elemento */}
-        <button className="header-button text-lg font-bold hover:text-gray-300 transition duration-300 ease-in-out flex items-center">
+        <button className="text-lg font-bold hover:text-gray-300 transition duration-300 ease-in-out flex items-center">
           <Link href="/dashboard" className="flex items-center">
           <BiUser className="text-2xl sm:text-lg mr-1 sm:mr-1" />
           <span className="sm:inline-block">Perfil</span>
