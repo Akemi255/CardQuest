@@ -1,7 +1,8 @@
 import React from 'react';
 import ReceivedRequests from './ReceivedRequests';
 import AwaitingRequests from './AwaitingRequests';
-import UsersMarket from './usersMarket';
+import UsersMarket from './UsersMarket';
+
 
 const MarketSection = () => {
   return (
