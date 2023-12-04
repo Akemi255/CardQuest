@@ -422,3 +422,19 @@ body{
   left: 210px;
   top: -520px;
 }
+
+/* Agrega esta clase personalizada para estilizar el scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #a0aec0; /* Color del thumb */
+  border-radius: 6px;
+  border: 3px solid #2d3748; /* Color del borde del thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #2d3748; /* Color del track */
+  border-radius: 6px;
+}

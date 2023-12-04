@@ -113,7 +113,7 @@ const Menu = () => {
             </li>
             <li>
               <Link
-                href="#"
+                href="/mercado"
                 className={`flex justify-center items-center text-white text-lg py-2 hover:opacity-75`}
                 onClick={closeMenu}
               >
