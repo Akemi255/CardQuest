@@ -5,7 +5,7 @@ const AwaitingRequests = () => {
     <>
       {/* Solicitudes pendientes */}
       <div className='bg-slate-700 p-4 mt-4 rounded-lg shadow-md'>
-        <h2 className="text-lg font-bold mb-4 text-white">Solicitudes Pendientes</h2>
+        <h2 className="text-lg font-bold mb-4 text-white">Solicitudes Pendientes de aceptar</h2>
         <div className="custom-scrollbar overflow-y-auto max-h-60">
           {/* Lista de solicitudes pendientes */}
           <ul className="divide-y divide-gray-300">
