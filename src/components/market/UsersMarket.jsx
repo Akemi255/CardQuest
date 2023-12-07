@@ -73,7 +73,7 @@ const UsersMarket = () => {
          {!loading && (
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5">
              {filteredUsers.slice(0, visibleUsers).map((user) => (
-               <Link key={user._id} href={`/users/${user._id}`}>
+               <Link key={user._id} href={`/mercado/${user._id}`}>
                  <div
                    key={user._id}
                    className="bg-slate-700 cursor-pointer border border-slate-900 rounded-md shadow-md transition duration-300 transform hover:scale-105 relative"

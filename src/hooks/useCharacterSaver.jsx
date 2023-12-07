@@ -1,4 +1,6 @@
 import { getEmail } from "@/helpers/getEmail";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const useCharacterSaver = (characterData, likedCharacters, setCharacterData, setLikedCharacters, setSavedCardsCount) => {
   const saveCharacter = async (character, index) => {
@@ -48,7 +50,7 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
         });
 
           if (response.ok) {
-            console.log('Carta guardada exitosamente en el backend.');
+            toast.success('Carta guardada exitosamente');
           } else {
             console.error('Error al guardar la carta en el backend.');
           }
@@ -56,10 +58,10 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
           console.error('Error al enviar la carta al backend:', error);
         }
       } else {
-        alert("Este personaje ya ha sido guardado.");
+        toast.error("Este personaje ya ha sido guardado.");
       }
     } else {
-      alert("Solo puedes guardar una carta por cada conjunto de cinco.");
+      toast.error("Solo puedes guardar una carta por cada conjunto de cinco.");
     }
   };
 
