@@ -11,7 +11,7 @@ const ReceivedRequests = () => {
     const fetchTradeRequests = async () => {
       try {
         const response = await fetch(
-          "https:/api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getTradeRequests",
+          "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getTradeRequests",
           {
             method: "POST",
             headers: {
