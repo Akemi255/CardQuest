@@ -17,6 +17,8 @@ const StartingTrade = ({ user }) => {
   const [selectedOption, setSelectedOption] = useState("recientes");
   const [loading, setLoading] = useState(true);
   const [addedCards, setAddedCards] = useState([]);
+  const [isRequestSent, setIsRequestSent] = useState(false);
+
   const email = getEmail();
 
   const handleCardAddedToTrade = (cardId) => {
@@ -34,6 +36,10 @@ const StartingTrade = ({ user }) => {
 
   const handleSendRequestClick = async () => {
     try {
+      if (isRequestSent) {
+        toast.error("La solicitud ya ha sido enviada.");
+        return;
+      }
       // Realizar la solicitud POST
       const response = await fetch(
         "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/sendTradeRequest",
@@ -53,7 +59,11 @@ const StartingTrade = ({ user }) => {
       if (response.ok) {
         const data = await response.json();
         toast.success("Solicitud de intercambio enviada exitosamente");
-        console.log("Respuesta del servidor:", data);
+        setIsRequestSent(true);
+        // Esperar 2 segundos antes de redirigir
+        setTimeout(() => {
+          window.location.href = "/mercado";
+        }, 5000);
       } else {
         console.error("Error en la solicitud:", response.status);
       }
