@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const StartingTrade = ({ user }) => {
   const [userName, setUserName] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
   const [userCards, setUserCards] = useState([]);
   const [visibleCards, setVisibleCards] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,6 +41,17 @@ const StartingTrade = ({ user }) => {
         toast.error("La solicitud ya ha sido enviada.");
         return;
       }
+
+      if (userEmail === email) {
+        toast.error("No puedes iniciar un intercambio contigo mismo.");
+        return;
+      }
+
+      if (addedCards.length === 0) {
+        toast.error("Selecciona al menos una carta antes de enviar la petición.");
+        return;
+      }
+
       // Realizar la solicitud POST
       const response = await fetch(
         "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/sendTradeRequest",
@@ -87,6 +99,8 @@ const StartingTrade = ({ user }) => {
           // Obtener el nombre del usuario desde la respuesta
           const fetchedUserName = data.user.name;
 
+          setUserEmail(data.user.email); 
+         
           // Establecer el nombre del usuario en el estado
           setUserName(fetchedUserName);
         } else {

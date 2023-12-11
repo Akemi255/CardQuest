@@ -11,7 +11,8 @@ const ReceivedTrade = (ReceivedRequest) => {
   const id = ReceivedRequest.ReceivedRequest;
   const email = getEmail();
   const [tradeData, setTradeData] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTermOffered, setSearchTermOffered] = useState("");
+  const [searchTermReceived, setSearchTermReceived] = useState("");
   const [addedCards, setAddedCards] = useState([]);
   const [groupBy, setGroupBy] = useState("recientes");
   const [loading, setLoading] = useState(true);
@@ -41,6 +42,11 @@ const ReceivedTrade = (ReceivedRequest) => {
             return;
           }
 
+          if (addedCards.length === 0) {
+            toast.error("Selecciona al menos una carta antes de enviar la petición.");
+            return;
+          }
+          
       // Realizar la solicitud POST
       const response = await fetch(
         "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/editTradeRequest",
@@ -88,11 +94,12 @@ const ReceivedTrade = (ReceivedRequest) => {
     fetchUserCardsForOffering();
   }, [email, groupBy]);
 
-  const filteredUserCards = userCards.filter(
+  // Filtrar cartas de la derecha en tiempo real
+   const filteredUserCards = userCards.filter(
     (card) =>
-      card.content.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card.content.name.toLowerCase().includes(searchTermOffered.toLowerCase()) ||
       card.content.anime.some((anime) =>
-        anime.anime.title.toLowerCase().includes(searchTerm.toLowerCase())
+        anime.anime.title.toLowerCase().includes(searchTermOffered.toLowerCase())
       )
   );
 
@@ -112,15 +119,15 @@ const ReceivedTrade = (ReceivedRequest) => {
     fetchData();
   }, [ReceivedRequest]);
 
-  // Filtrar cartas en tiempo real
+  // Filtrar cartas de la izquierda en tiempo real
   const filteredCards =
-    tradeData?.tradeRequest?.requester?.cardsOffered?.filter(
-      (card) =>
-        card.content.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        card.content.anime.some((anime) =>
-          anime.anime.title.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-    );
+  tradeData?.tradeRequest?.requester?.cardsOffered?.filter(
+    (card) =>
+      card.content.name.toLowerCase().includes(searchTermReceived.toLowerCase()) ||
+      card.content.anime.some((anime) =>
+        anime.anime.title.toLowerCase().includes(searchTermReceived.toLowerCase())
+      )
+  );
 
   useEffect(() => {
     const handleOfferedScroll = () => {
@@ -187,8 +194,8 @@ const ReceivedTrade = (ReceivedRequest) => {
             <div className="flex items-center md:relative mb-4 md:mb-0 mx-auto">
               <input
                 type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTermOffered}
+                onChange={(e) => setSearchTermOffered(e.target.value)}
                 className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
                 placeholder="Buscar cartas..."
               />
@@ -224,8 +231,8 @@ const ReceivedTrade = (ReceivedRequest) => {
             <div className="flex items-center md:relative mb-4 md:mb-0 mx-auto">
               <input
                 type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTermReceived}
+                onChange={(e) => setSearchTermReceived(e.target.value)}
                 className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
                 placeholder="Buscar cartas..."
               />
