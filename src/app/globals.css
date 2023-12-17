@@ -23,7 +23,9 @@ body{
 .cl-formFieldInput{
   -webkit-text-fill-color: #2d3748;
 }
-
+.cl-headerTitle{
+  display: none;
+}
 
 
 

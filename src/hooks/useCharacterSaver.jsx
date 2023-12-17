@@ -22,8 +22,7 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
       if (!likedCharacters.includes(character.name)) {
 
         const userEmail = getEmail();
-        console.log(userEmail);
-        console.log("hola"); 
+        
        
         localStorage.setItem(`savedCard_${cardsInCurrentSet}`, JSON.stringify(character));
         setSavedCardsCount(cardsInCurrentSet + 1);
@@ -35,7 +34,7 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
           saved: true,
         };
         setCharacterData(updatedCharacterData);
-        console.log(character);
+     
         // Enviar la carta al backend
         try {
           const response = await fetch('https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/saveCard', {

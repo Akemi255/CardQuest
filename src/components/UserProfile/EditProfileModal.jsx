@@ -79,7 +79,9 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
 
         if (response.ok) {
           closeModal();
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
           // Puedes realizar alguna acción adicional después de la actualización exitosa
         } else {
           const data = await response.json();

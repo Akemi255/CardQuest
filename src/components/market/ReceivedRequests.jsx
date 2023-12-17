@@ -35,6 +35,34 @@ const ReceivedRequests = () => {
     fetchTradeRequests();
   }, [email]);
 
+   // Función para eliminar una solicitud por ID
+   const handleDeleteRequest = async (requestId) => {
+    try {
+      const response = await fetch(
+        `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/deleteTrade/${requestId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al eliminar la solicitud");
+      }
+
+     
+      // Actualizar el estado local después de la eliminación exitosa
+      setTradeRequests((prevRequests) =>
+        prevRequests.filter((request) => request._id !== requestId)
+      );
+    } catch (error) {
+      console.error("Error al eliminar la solicitud:", error);
+    }
+  };
+
+
   return (
     <>
     {/* Solicitudes recibidas */}
@@ -70,7 +98,9 @@ const ReceivedRequests = () => {
                     <button className="bg-slate-700 text-white px-2 py-1 mr-2 rounded hover:bg-slate-800 text-xs md:text-sm">
                       <a href={`/mercado/SolicitudesRecibidas/${request._id}`}>Ver Solicitud</a>
                     </button>
-                    <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs md:text-sm">
+                    <button 
+                    onClick={() => handleDeleteRequest(request._id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs md:text-sm">
                       <MdDelete size={20} />
                     </button>
                   </div>
