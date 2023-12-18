@@ -7,35 +7,46 @@ const AwaitingRequests = () => {
   const [tradeRequests, setTradeRequests] = useState([]);
   const email = getEmail();
 
-  useEffect(() => {
-    const fetchTradeRequests = async () => {
-      try {
-        const response = await fetch(
-          "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getAwaitingRequests",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Error al obtener las solicitudes");
+  const fetchTradeRequests = async () => {
+    try {
+      const response = await fetch(
+        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getAwaitingRequests",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
         }
+      );
 
-        const data = await response.json();
-        setTradeRequests(data.awaitingRequests);
-      } catch (error) {
-        console.error("Error:", error);
+      if (!response.ok) {
+        throw new Error("Error al obtener las solicitudes");
       }
+
+      const data = await response.json();
+      setTradeRequests(data.awaitingRequests);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Función para realizar la llamada a la API
+    const fetchData = async () => {
+      await fetchTradeRequests();
     };
 
-    fetchTradeRequests();
+    // Llamar a la función inicialmente
+    fetchData();
+
+    // Configurar el intervalo para realizar la llamada cada segundo
+    const intervalId = setInterval(fetchData, 1000);
+
+    // Limpiar el intervalo al desmontar el componente
+    return () => clearInterval(intervalId);
   }, [email]);
 
-  // Función para eliminar una solicitud por ID
   const handleDeleteRequest = async (requestId) => {
     try {
       const response = await fetch(
@@ -52,8 +63,6 @@ const AwaitingRequests = () => {
         throw new Error("Error al eliminar la solicitud");
       }
 
-     
-      // Actualizar el estado local después de la eliminación exitosa
       setTradeRequests((prevRequests) =>
         prevRequests.filter((request) => request._id !== requestId)
       );
