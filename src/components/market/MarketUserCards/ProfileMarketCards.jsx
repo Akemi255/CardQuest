@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 
 export const ProfileMarketCards = ({
   character,
@@ -6,18 +7,11 @@ export const ProfileMarketCards = ({
   isSelected,
   setSelectedCards,
 }) => {
-  const handleAddToTradeClick = () => {
-    if (!isSelected) {
-      // Llama a la función proporcionada por el componente padre para agregar la carta al estado global
-      onCardAddedToTrade(id);
-    }
+  const [isCardSelected, setIsCardSelected] = useState(isSelected);
 
-    // Alternar el estado de isSelected
-    setSelectedCards((prevSelectedCards) =>
-      isSelected
-        ? prevSelectedCards.filter((cardId) => cardId !== id)
-        : [...prevSelectedCards, id]
-    );
+  const handleToggleTradeStatus = () => {
+    onCardAddedToTrade(id);
+    setIsCardSelected((prevIsSelected) => !prevIsSelected);
   };
 
   const getColorForRarity = (rareza) => {
@@ -78,13 +72,17 @@ export const ProfileMarketCards = ({
               ></span>
             </p>
             <button
-              onClick={handleAddToTradeClick}
-              className={`mt-2 bg-slate-600 text-white rounded-md hover:bg-slate-800 focus:outline-none ${
-                isSelected ? "cursor-not-allowed opacity-50" : ""
-              }`}
-              disabled={isSelected}
+              onClick={handleToggleTradeStatus}
+              className={`mt-2 ${
+                isCardSelected
+                  ? "bg-red-500 text-white hover:bg-red-700"
+                  : "bg-slate-600 text-white hover:bg-slate-800"
+              } rounded-md focus:outline-none`}
+              style={{ height: isCardSelected ? "45px" : "45px" }}
             >
-              {isSelected ? "Carta agregada a intercambio" : "Agregar carta a intercambio"}
+              {isCardSelected
+                ? "Eliminar de intercambio"
+                : "Agregar carta a intercambio"}
             </button>
           </div>
         </div>

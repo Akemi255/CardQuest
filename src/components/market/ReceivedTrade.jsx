@@ -26,9 +26,11 @@ const ReceivedTrade = (ReceivedRequest) => {
     setAddedCards((prevAddedCards) => {
       // Verificar si la carta ya está en la lista
       if (prevAddedCards.includes(cardId)) {
-        return prevAddedCards;
+        // Eliminar la carta si ya está en la lista
+        const updatedCards = prevAddedCards.filter((id) => id !== cardId);
+        return updatedCards;
       }
-
+  
       // Agregar la nueva carta a la lista
       const newAddedCards = [...prevAddedCards, cardId];
       return newAddedCards;
