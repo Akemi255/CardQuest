@@ -52,7 +52,7 @@ const AwaitingTrade = (AwaitingRequest) => {
 
       if (response.ok) {
         const data = await response.json();
-        toast.success("Solicitud de intercambio enviada exitosamente");
+        toast.success("Intercambio completado exitosamente");
         setIsRequestSent(true);
         // Esperar 2 segundos antes de redirigir
       setTimeout(() => {

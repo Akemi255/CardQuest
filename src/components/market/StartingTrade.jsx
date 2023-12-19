@@ -19,6 +19,7 @@ const StartingTrade = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [addedCards, setAddedCards] = useState([]);
   const [isRequestSent, setIsRequestSent] = useState(false);
+  const [selectedCards, setSelectedCards] = useState([]);
 
   const email = getEmail();
 
@@ -48,7 +49,9 @@ const StartingTrade = ({ user }) => {
       }
 
       if (addedCards.length === 0) {
-        toast.error("Selecciona al menos una carta antes de enviar la petición.");
+        toast.error(
+          "Selecciona al menos una carta antes de enviar la petición."
+        );
         return;
       }
 
@@ -99,8 +102,8 @@ const StartingTrade = ({ user }) => {
           // Obtener el nombre del usuario desde la respuesta
           const fetchedUserName = data.user.name;
 
-          setUserEmail(data.user.email); 
-         
+          setUserEmail(data.user.email);
+
           // Establecer el nombre del usuario en el estado
           setUserName(fetchedUserName);
         } else {
@@ -198,13 +201,14 @@ const StartingTrade = ({ user }) => {
 
         {!loading && userCards.length > 0 && (
           <div className="flex flex-wrap mt-5">
-            {filteredCards.slice(0, visibleCards).map((card, index) => (
+            {filteredCards.slice(0, visibleCards).map((card) => (
               <ProfileMarketCards
-                key={index}
+                key={card._id}
                 character={card.content}
-                index={index}
                 id={card._id}
                 onCardAddedToTrade={handleCardAddedToTrade}
+                isSelected={selectedCards.includes(card._id)}
+                setSelectedCards={setSelectedCards}
               />
             ))}
           </div>

@@ -20,6 +20,7 @@ const ReceivedTrade = (ReceivedRequest) => {
   const [visibleOfferedCards, setVisibleOfferedCards] = useState(20);
   const [visibleReceivedCards, setVisibleReceivedCards] = useState(20);
   const [isRequestSent, setIsRequestSent] = useState(false);
+  const [selectedCards, setSelectedCards] = useState([]);
 
   const handleCardAddedToTrade = (cardId) => {
     setAddedCards((prevAddedCards) => {
@@ -211,11 +212,12 @@ const ReceivedTrade = (ReceivedRequest) => {
                 .slice(0, visibleOfferedCards)
                 .map((card, index) => (
                   <TargetReceivedCards
-                    key={index}
-                    character={card.content}
-                    index={index}
-                    id={card._id}
-                    onCardAddedToTrade={handleCardAddedToTrade}
+                  key={card._id}
+                character={card.content}
+                id={card._id}
+                onCardAddedToTrade={handleCardAddedToTrade}
+                isSelected={selectedCards.includes(card._id)}
+                setSelectedCards={setSelectedCards}
                   />
                 ))}
             </div>

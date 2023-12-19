@@ -5,20 +5,23 @@ export const TargetReceivedCards = ({
   index,
   id,
   onCardAddedToTrade,
+  setSelectedCards,
+  isSelected,
 }) => {
   const [isAddedToTrade, setIsAddedToTrade] = useState(false);
   const [buttonText, setButtonText] = useState("Agregar carta a intercambio");
   const handleAddToTradeClick = () => {
-    // Si ya se agregó la carta al intercambio, no hacer nada
-    if (isAddedToTrade) {
-      return;
+    if (!isSelected) {
+      // Llama a la función proporcionada por el componente padre para agregar la carta al estado global
+      onCardAddedToTrade(id);
     }
 
-    // Llama a la función proporcionada por el componente padre para agregar la carta al estado global
-    onCardAddedToTrade(id);
-
-    setButtonText("Carta agregada a intercambio");
-    setIsAddedToTrade(true);
+    // Alternar el estado de isSelected
+    setSelectedCards((prevSelectedCards) =>
+      isSelected
+        ? prevSelectedCards.filter((cardId) => cardId !== id)
+        : [...prevSelectedCards, id]
+    );
   };
   const getColorForRarity = (rareza) => {
     const lowerCasedRareza = (rareza || "").toLowerCase();
@@ -79,11 +82,11 @@ export const TargetReceivedCards = ({
           <button
               onClick={handleAddToTradeClick}
               className={`mt-2 bg-slate-600 text-white rounded-md hover:bg-slate-800 focus:outline-none ${
-                isAddedToTrade ? "cursor-not-allowed opacity-50" : ""
+                isSelected ? "cursor-not-allowed opacity-50" : ""
               }`}
-              disabled={isAddedToTrade}
+              disabled={isSelected}
             >
-              {buttonText}
+              {isSelected ? "Carta agregada a intercambio" : "Agregar carta a intercambio"}
             </button>
         </div>
       </div>
