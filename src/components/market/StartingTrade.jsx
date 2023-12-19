@@ -17,27 +17,26 @@ const StartingTrade = ({ user }) => {
   const [showOrderOptions, setShowOrderOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState("recientes");
   const [loading, setLoading] = useState(true);
-  const [addedCards, setAddedCards] = useState([]);
   const [isRequestSent, setIsRequestSent] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
 
   const email = getEmail();
 
   const handleCardAddedToTrade = (cardId) => {
-    setAddedCards((prevAddedCards) => {
+    setSelectedCards((prevSelectedCards) => {
       // Verificar si la carta ya está en la lista
-      if (prevAddedCards.includes(cardId)) {
-        // Eliminar la carta si ya está en la lista
-        const updatedCards = prevAddedCards.filter((id) => id !== cardId);
+      if (prevSelectedCards.includes(cardId)) {
+        // Si ya está en la lista, eliminarla
+        const updatedCards = prevSelectedCards.filter((id) => id !== cardId);
+
         return updatedCards;
+      } else {
+        // Si no está en la lista, agregarla
+        const newSelectedCards = [...prevSelectedCards, cardId];
+        return newSelectedCards;
       }
-  
-      // Agregar la nueva carta a la lista
-      const newAddedCards = [...prevAddedCards, cardId];
-      return newAddedCards;
     });
   };
-  
 
   const handleSendRequestClick = async () => {
     try {
@@ -51,7 +50,7 @@ const StartingTrade = ({ user }) => {
         return;
       }
 
-      if (addedCards.length === 0) {
+      if (selectedCards.length === 0) {
         toast.error(
           "Selecciona al menos una carta antes de enviar la petición."
         );
@@ -69,7 +68,7 @@ const StartingTrade = ({ user }) => {
           body: JSON.stringify({
             userId: user,
             email: email,
-            cardsOffered: addedCards,
+            cardsOffered: selectedCards,
           }),
         }
       );
