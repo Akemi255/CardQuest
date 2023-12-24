@@ -52,7 +52,7 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
         const responseData = await response.json();
         if (response.status === 202) {
           // La carta ya existe, muestra un toast.error específico
-          toast.success(`La carta ya la tienes, se ha guardado su valor en monedas en tu perfil:`);
+          toast.error(`La carta ya la tienes, se ha guardado su valor en monedas en tu perfil:`);
         } else {
           // La carta se guardó exitosamente
           toast.success('Carta guardada exitosamente');
