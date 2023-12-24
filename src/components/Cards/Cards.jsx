@@ -11,6 +11,7 @@ import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
 import { SetEmail } from "@/helpers/SetEmail";
+import { calculateNewFavoritesValue } from "@/helpers/Cards/calculateNewFavoritesValue";
 
 //declaración de estados
 const Cards = () => {
@@ -295,10 +296,12 @@ const checkTime = () => {
             const response = await fetch(
               `https://api.jikan.moe/v4/characters/${id}/full`
             );
+            
             if (response.ok) {
               const data = await response.json();
               if (data && data.data && data.data.images) {
                 const favorites = data.data.favorites || 0;
+                data.data.favorites = calculateNewFavoritesValue(favorites)
                 let borderColorClass = "";
                 let rareza = "";
 
@@ -321,10 +324,11 @@ const checkTime = () => {
                   borderColorClass = "border-mitico";
                   rareza = "Mitico";
                 }
-
+                
                 data.data = { ...data.data, borderColorClass, rareza };
 
                 setCharacterData((prevData) => [...prevData, data.data]);
+                console.log(characterData);
                 success = true;
               } else {
                 console.error(`No se encontraron imágenes para el ID ${id}`);

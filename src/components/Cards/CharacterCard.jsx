@@ -1,3 +1,4 @@
+
 import React from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
@@ -30,6 +31,7 @@ const CharacterCard = ({ character, index, getColorForRarity, saveCharacter }) =
               className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
             ></span>
           </p>
+          <p> Monedas: {character.favorites}</p>
           {character.saved ? (
             <button
               className="mt-2 bg-gray-500 text-white py-2 px-4 rounded cursor-not-allowed flex items-center justify-center"

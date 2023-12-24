@@ -35,27 +35,34 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
         };
         setCharacterData(updatedCharacterData);
      
-        // Enviar la carta al backend
-        try {
-          const response = await fetch('https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/saveCard', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json', // Cambiado a JSON
-          },
-          body: JSON.stringify({
-            email: userEmail, // Reemplaza con la lógica para obtener el email del usuario
-            content: character, // Utiliza el objeto character directamente
-          }),
-        });
+         // Enviar la carta al backend
+    try {
+      const response = await fetch('https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/saveCard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          content: character,
+        }),
+      });
 
-          if (response.ok) {
-            toast.success('Carta guardada exitosamente');
-          } else {
-            console.error('Error al guardar la carta en el backend.');
-          }
-        } catch (error) {
-          console.error('Error al enviar la carta al backend:', error);
+      if (response.ok) {
+        const responseData = await response.json();
+        if (response.status === 202) {
+          // La carta ya existe, muestra un toast.error específico
+          toast.success(`La carta ya la tienes, se ha guardado su valor en monedas en tu perfil:`);
+        } else {
+          // La carta se guardó exitosamente
+          toast.success('Carta guardada exitosamente');
         }
+      } else {
+        toast.error('Error al guardar la carta en el backend.');
+      }
+    } catch (error) {
+      toast.error('Error al enviar la carta al backend:', error);
+    }
       } else {
         toast.error("Este personaje ya ha sido guardado.");
       }
