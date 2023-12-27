@@ -36,7 +36,7 @@ const AwaitingTrade = (AwaitingRequest) => {
 
       // Realizar la solicitud POST
       const response = await fetch(
-        "http://localhost:3002/api/trade/acceptTradeRequest",
+        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/acceptTradeRequest",
         {
           method: "POST",
           headers: {
