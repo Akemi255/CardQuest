@@ -36,7 +36,7 @@ const AwaitingTrade = (AwaitingRequest) => {
 
       // Realizar la solicitud POST
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/acceptTradeRequest",
+        "http://localhost:3002/api/trade/acceptTradeRequest",
         {
           method: "POST",
           headers: {
@@ -59,10 +59,10 @@ const AwaitingTrade = (AwaitingRequest) => {
         window.location.href = "/mercado";
       }, 5000);
       } else {
-        console.error("Error en la solicitud:", response.status);
+        toast.error("Ha ocurrido un error en el envío de cartas")
       }
     } catch (error) {
-      console.error("Error al enviar la solicitud:", error);
+      toast.error("Ups... ha ocurrido un error");
     }
   };
 
@@ -76,7 +76,7 @@ const AwaitingTrade = (AwaitingRequest) => {
         );
         const data = await response.json();
         setTradeData(data);
-        console.log(data);
+        
       } catch (error) {
         console.error("Error fetching trade data:", error);
       } finally {
