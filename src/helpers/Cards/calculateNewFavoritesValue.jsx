@@ -13,16 +13,16 @@ export const calculateNewFavoritesValue = (currentFavorites) => {
             currentFavorites = Math.max(currentFavorites - 4500, 5000);
         }
         // Más de 1000 favoritos
-        newValue += getRandomInt(200, 400);
+        newValue += calculateIncrement(currentFavorites);
     } else if (currentFavorites >= 500) {
         // Entre 500 y 1000 favoritos
-        newValue += getRandomInt(100, 200);
+        newValue += calculateIncrement(currentFavorites);
     } else if (currentFavorites >= 100) {
         // Entre 100 y 500 favoritos
-        newValue += getRandomInt(50, 100);
+        newValue += calculateIncrement(currentFavorites);
     } else if (currentFavorites >= 0) {
         // Entre 0 y 100 favoritos
-        newValue += getRandomInt(0, 50);
+        newValue += calculateIncrement(currentFavorites);
     }
 
     // Asegurar que el nuevo valor no supere 8000 si es mayor a 5000
@@ -38,7 +38,8 @@ export const calculateNewFavoritesValue = (currentFavorites) => {
     return newValue;
 };
 
-// Función auxiliar para obtener un entero aleatorio en el rango [min, max)
-const getRandomInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+// Función auxiliar para calcular el incremento sin usar números aleatorios
+const calculateIncrement = (currentFavorites) => {
+   
+    return currentFavorites + 10; 
 };
