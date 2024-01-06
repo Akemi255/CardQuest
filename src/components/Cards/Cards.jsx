@@ -410,17 +410,6 @@ const Cards = () => {
   return (
     <>
     <div>
-      <div className="text-center mt-3 bg-slate-700 text-white font-bold py-2 px-4 rounded">{`Intentos restantes: ${remainingAttempts}`}</div>
-      <button
-        className="btn float"
-        onClick={() => {
-          CleanArray();
-          fetchCharacterData();
-        }}
-        disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
-      >
-        {"Cargar Cartas"}
-      </button>
 
       {showRetryMessage && (
         <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
@@ -442,14 +431,17 @@ const Cards = () => {
             ))}
         </div>
       )}
-       <button
-      className="btn lanzarCards"
-      onClick={fetchCharacterData}
-      disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
-    >
-      {"Lanzar Cartas"}
-    </button>
-    <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div>
+      <button
+        className="btn float lanzarCards"
+        onClick={() => {
+          CleanArray();
+          fetchCharacterData();
+        }}
+        disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
+      >
+        {"Lanzar Cartas"}
+      </button>
+        <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div>
     </div>
     <Footer></Footer>
     </>
