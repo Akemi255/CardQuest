@@ -31,15 +31,19 @@ const Cards = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [showRetryMessage, setShowRetryMessage] = useState(() => {
-  if (isClient) {
-    if (typeof window !== 'undefined') {
-      const storedShowRetryMessage = JSON.parse(localStorage.getItem("showRetryMessage"));
-      return storedShowRetryMessage !== null ? storedShowRetryMessage : getInitialShowRetryMessage();
-    } else {
-      return getInitialShowRetryMessage();
+    if (isClient) {
+      if (typeof window !== "undefined") {
+        const storedShowRetryMessage = JSON.parse(
+          localStorage.getItem("showRetryMessage")
+        );
+        return storedShowRetryMessage !== null
+          ? storedShowRetryMessage
+          : getInitialShowRetryMessage();
+      } else {
+        return getInitialShowRetryMessage();
+      }
     }
-  } 
-});
+  });
 
   const [retryCountdown, setRetryCountdown] = useState(
     isClient
@@ -60,9 +64,9 @@ const Cards = () => {
     const checkLocalStorage = () => {
       const localStorageCleared = localStorage.getItem("trappedState");
       if (buttonClickCount >= 0 && buttonClickCount <= 7) {
-        setButtonDisabled(false)
+        setButtonDisabled(false);
       }
-      
+
       if (buttonClickCount >= 1 && buttonClickCount <= 7) {
         const savedCount = parseInt(
           localStorage.getItem("buttonClickCount"),
@@ -91,12 +95,21 @@ const Cards = () => {
   const [liked, setLiked] = useState(false);
   const [likedCharacters, setLikedCharacters] = useState([]);
   const [remainingAttempts, setRemainingAttempts] = useState(0);
+  const [existingCards, setExistingCards] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedExistingCards = JSON.parse(
+        localStorage.getItem("existingCards")
+      );
+      return storedExistingCards || Array(5).fill(false);
+    } else {
+      return null;
+    } // Asegúrate de que siempre sea un array de 5 elementos
+  });
 
-useEffect(() => {
-  setIsClient(true);
-   
-  setRemainingAttempts(8 - buttonClickCount);
-}, [isClient, buttonClickCount]);
+  useEffect(() => {
+    setIsClient(true);
+    setRemainingAttempts(8 - buttonClickCount);
+  }, [isClient, buttonClickCount]);
 
   const { saveCharacter } = useCharacterSaver(
     characterData,
@@ -105,7 +118,7 @@ useEffect(() => {
     setLikedCharacters,
     setSavedCardsCount
   );
-  
+
   useEffect(() => {
     if (isClient) {
       localStorage.setItem(
@@ -156,33 +169,64 @@ useEffect(() => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
   }, [buttonClickCount]);
 
-  
+  // ...
 
-  
+  useEffect(() => {
+    if (isClient) {
+      const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
 
-// ...
+      if (buttonClickCount >= 8 && !storedFutureTime) {
+        const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
+        localStorage.setItem("futureTime", futureTime);
+      }
 
-useEffect(() => {
-  if (isClient) {
+      const interval = setInterval(() => {
+        // Lógica para comprobar el tiempo actual
+        checkTime();
+
+        const storedFutureTime = parseInt(
+          localStorage.getItem("futureTime"),
+          10
+        );
+
+        if (storedFutureTime > retryCountdown) {
+          setShowRetryMessage(true);
+        } else if (storedFutureTime < retryCountdown) {
+          setShowRetryMessage(false);
+          // Eliminar elementos uno por uno
+          localStorage.removeItem("futureTime");
+          localStorage.removeItem("showRetryMessage");
+
+          for (let i = 0; i < characterData.length; i++) {
+            localStorage.removeItem(`characterData_${i}`);
+          }
+
+          localStorage.removeItem("buttonClickCount");
+          localStorage.removeItem("savedCharacterData");
+          localStorage.removeItem("savedCardsCount");
+          localStorage.removeItem("liked");
+          localStorage.removeItem("likedCharacters");
+
+          localStorage.setItem("trappedState", true);
+          window.location.reload();
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isClient, buttonClickCount, retryCountdown, characterData]);
+
+  // ...
+
+  const checkTime = () => {
+    // Lógica para comprobar el tiempo en tiempo real
     const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
 
-    if (buttonClickCount >= 8 && !storedFutureTime) {
-      const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
-      localStorage.setItem("futureTime", futureTime);
-    }
+    if (storedFutureTime) {
+      const currentTime = parseInt(Date.now() / 1000, 10);
 
-    const interval = setInterval(() => {
-      // Lógica para comprobar el tiempo actual
-      checkTime();
-
-      const storedFutureTime = parseInt(
-        localStorage.getItem("futureTime"),
-        10
-      );
-
-      if (storedFutureTime > retryCountdown) {
-        setShowRetryMessage(true);
-      } else if (storedFutureTime < retryCountdown) {
+      if (currentTime > storedFutureTime) {
+        console.log("Tiempo actual es mayor que el tiempo futuro");
         setShowRetryMessage(false);
         // Eliminar elementos uno por uno
         localStorage.removeItem("futureTime");
@@ -201,50 +245,8 @@ useEffect(() => {
         localStorage.setItem("trappedState", true);
         window.location.reload();
       }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }
-}, [isClient, buttonClickCount, retryCountdown, characterData]);
-
-// ...
-
-const checkTime = () => {
-  // Lógica para comprobar el tiempo en tiempo real
-  const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
-
-  if (storedFutureTime) {
-    const currentTime = parseInt(Date.now() / 1000, 10);
-
-    if (currentTime > storedFutureTime) {
-      console.log("Tiempo actual es mayor que el tiempo futuro");
-      setShowRetryMessage(false);
-      // Eliminar elementos uno por uno
-      localStorage.removeItem("futureTime");
-      localStorage.removeItem("showRetryMessage");
-
-      for (let i = 0; i < characterData.length; i++) {
-        localStorage.removeItem(`characterData_${i}`);
-      }
-
-      localStorage.removeItem("buttonClickCount");
-      localStorage.removeItem("savedCharacterData");
-      localStorage.removeItem("savedCardsCount");
-      localStorage.removeItem("liked");
-      localStorage.removeItem("likedCharacters");
-
-      localStorage.setItem("trappedState", true);
-      window.location.reload();
     }
-  }
-};
-
-
-
-
-
-// ...
-
+  };
 
   function getColorForRarity(rareza) {
     switch (rareza.toLowerCase()) {
@@ -297,10 +299,12 @@ const checkTime = () => {
             const response = await fetch(
               `https://api.jikan.moe/v4/characters/${id}/full`
             );
+
             if (response.ok) {
               const data = await response.json();
               if (data && data.data && data.data.images) {
                 const favorites = data.data.favorites || 0;
+                data.data.favorites = calculateNewFavoritesValue(favorites);
                 let borderColorClass = "";
                 let rareza = "";
 
@@ -327,10 +331,44 @@ const checkTime = () => {
                 data.data = { ...data.data, borderColorClass, rareza };
 
                 setCharacterData((prevData) => [...prevData, data.data]);
+                console.log(characterData);
                 success = true;
+
+                const existCardResponse = await fetch(
+                  "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/existCard",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email: Email, content: data.data }),
+                  }
+                );
+
+                const existCardData = await existCardResponse.json();
+
+                if (existCardData.exists) {
+                  setExistingCards((prevExistingCards) => {
+                    // Asegúrate de que prevExistingCards sea un array
+                    const updatedExistingCards = Array.isArray(
+                      prevExistingCards
+                    )
+                      ? [...prevExistingCards]
+                      : Array(5).fill(false); // Cambia 5 al tamaño deseado del array
+
+                    updatedExistingCards[i] = true; // Marca la carta actual como existente
+                    localStorage.setItem(
+                      "existingCards",
+                      JSON.stringify(updatedExistingCards)
+                    );
+                    return updatedExistingCards;
+                  });
+                  console.log(`La carta con ID ${id} ya existe.`);
+                  continue;
+                }
               } else {
                 console.error(`No se encontraron imágenes para el ID ${id}`);
-                success = true; // Considerar como éxito para salir del bucle
+                success = true;
               }
             } else if (response.status === 404) {
               console.error(
@@ -361,10 +399,28 @@ const checkTime = () => {
       setIsLoading(false);
     }
   };
+  function CleanArray() {
+    setExistingCards(Array(5).fill(false));
+    localStorage.removeItem(`existingCards`);
+    for (let i = 0; i <= 5; i++) {
+      localStorage.removeItem(`existingCard-${i}`);
+    }
+  }
   
   return (
     <>
     <div>
+      <div className="text-center mt-3 bg-slate-700 text-white font-bold py-2 px-4 rounded">{`Intentos restantes: ${remainingAttempts}`}</div>
+      <button
+        className="btn float"
+        onClick={() => {
+          CleanArray();
+          fetchCharacterData();
+        }}
+        disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
+      >
+        {"Cargar Cartas"}
+      </button>
 
       {showRetryMessage && (
         <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
@@ -376,11 +432,12 @@ const checkTime = () => {
         <div className="flex car flex-wrap">
           {characterData.map((character, index) => (
             <CharacterCard
-            key={index}
-            character={character}
-            index={index}
-            getColorForRarity={getColorForRarity}
-            saveCharacter={saveCharacter}
+              key={index}
+              character={character}
+              index={index}
+              getColorForRarity={getColorForRarity}
+              saveCharacter={saveCharacter}
+              existingCards={existingCards}
             />
             ))}
         </div>

@@ -1,9 +1,16 @@
-import React from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import '/public/css/home.css';
 
-const CharacterCard = ({ character, index, getColorForRarity, saveCharacter }) => {
+const CharacterCard = ({
+  character,
+  index,
+  getColorForRarity,
+  saveCharacter,
+  existingCards,
+}) => {
+  
+  console.log(existingCards); 
   return (
 <div key={index} className="flex">
   <div className={`${character.borderColorClass} cartas  flex items-center`}>

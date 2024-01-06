@@ -44,7 +44,6 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
 
     if (user && user.user && user.user.primaryEmailAddress) {
       email = user.user.primaryEmailAddress.emailAddress;
-      console.log("Email de usuario:", email);
 
       const formData = new FormData();
       formData.append("name", formValues.name);
@@ -79,9 +78,10 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
         });
 
         if (response.ok) {
-          console.log("Usuario actualizado exitosamente");
           closeModal();
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
           // Puedes realizar alguna acción adicional después de la actualización exitosa
         } else {
           const data = await response.json();

@@ -1,6 +1,14 @@
 import { getEmail } from "@/helpers/getEmail";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const useCharacterSaver = (characterData, likedCharacters, setCharacterData, setLikedCharacters, setSavedCardsCount) => {
+const useCharacterSaver = (
+  characterData,
+  likedCharacters,
+  setCharacterData,
+  setLikedCharacters,
+  setSavedCardsCount
+) => {
   const saveCharacter = async (character, index) => {
     let cardsInCurrentSet = 0;
 
@@ -18,12 +26,12 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
 
     if (cardsSavedInCurrentSet < 1) {
       if (!likedCharacters.includes(character.name)) {
-
         const userEmail = getEmail();
-        console.log(userEmail);
-        console.log("hola"); 
-       
-        localStorage.setItem(`savedCard_${cardsInCurrentSet}`, JSON.stringify(character));
+
+        localStorage.setItem(
+          `savedCard_${cardsInCurrentSet}`,
+          JSON.stringify(character)
+        );
         setSavedCardsCount(cardsInCurrentSet + 1);
         setLikedCharacters([...likedCharacters, character.name]);
 
@@ -33,33 +41,43 @@ const useCharacterSaver = (characterData, likedCharacters, setCharacterData, set
           saved: true,
         };
         setCharacterData(updatedCharacterData);
-        console.log(character);
+
         // Enviar la carta al backend
         try {
-          const response = await fetch('https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/saveCard', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json', // Cambiado a JSON
-          },
-          body: JSON.stringify({
-            email: userEmail, // Reemplaza con la lógica para obtener el email del usuario
-            content: character, // Utiliza el objeto character directamente
-          }),
-        });
+          const response = await fetch(
+            "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/saveCard",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: userEmail,
+                content: character,
+              }),
+            }
+          );
 
           if (response.ok) {
-            console.log('Carta guardada exitosamente en el backend.');
+            const responseData = await response.json();
+            if (response.status === 202) {
+              // La carta ya existe, muestra un toast.error específico
+              toast.success(`Se ha guardado su valor en monedas en tu perfil:`);
+            } else {
+              // La carta se guardó exitosamente
+              toast.success("Carta guardada exitosamente");
+            }
           } else {
-            console.error('Error al guardar la carta en el backend.');
+            toast.error("Error al guardar la carta en el backend.");
           }
         } catch (error) {
-          console.error('Error al enviar la carta al backend:', error);
+          toast.error("Error al enviar la carta al backend:", error);
         }
       } else {
-        alert("Este personaje ya ha sido guardado.");
+        toast.error("Este personaje ya ha sido guardado.");
       }
     } else {
-      alert("Solo puedes guardar una carta por cada conjunto de cinco.");
+      toast.error("Solo puedes guardar una carta por cada conjunto de cinco.");
     }
   };
 

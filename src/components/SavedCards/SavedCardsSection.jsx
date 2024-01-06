@@ -39,18 +39,19 @@ const SavedCardsSection = () => {
     const handleScroll = () => {
       if (
         window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100
+          document.documentElement.offsetHeight - 100 &&
+        !loading
       ) {
-        setVisibleCards((prevVisibleCards) => prevVisibleCards + 12);
+        setVisibleCards((prevVisibleOfferedCards) => prevVisibleOfferedCards + 12);
       }
     };
-
+  
     window.addEventListener("scroll", handleScroll);
-
+  
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [loading]);
 
   const filteredCards = userCards.filter(
     (card) =>
