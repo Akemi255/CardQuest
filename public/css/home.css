@@ -1,0 +1,119 @@
+body{
+  background-image: url('/assets/background-cards.png');
+  background-color: #462241;
+  background-size: cover;
+  background-position:center;
+  background-repeat: no-repeat;
+}
+
+.cartas {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 450px; /* Ajusta según sea necesario */
+    min-width: 260px;
+  }
+.info-like{
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 78px;
+}
+  .name{
+    font-size: 11px;
+  }
+  .name-anime{
+    font-size: 9px;
+  }
+  .boton-guardar{
+    margin-top: 5px;
+    position: relative;
+    z-index: 2;
+    width: 80px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+  }
+  .boton-guardar img{
+    width: 17px;
+  }
+  .personaje-anime{
+    margin-top: 5px;
+    background-color: #ffffff;
+    width: 65%;
+    -webkit-box-shadow: 10px 10px 12px 2px rgba(0,0,0,0.23);
+    -moz-box-shadow: 10px 10px 12px 2px rgba(0,0,0,0.23);
+    box-shadow: 10px 10px 12px 2px rgba(0,0,0,0.23);
+  }
+  .border-comun{
+      height: 450px;
+      width: 260px;
+      background-image: url('/assets/FondoComun.png');
+      background-size:cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .border-plata{
+      height: 450px;
+      width: 260px;
+      background-image: url('/assets/plata.png');
+      background-size:cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .border-oro{
+      height: 450px;
+      width: 260px;
+      background-image: url('/assets/oro.png');
+      background-size:cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .border-raro{
+      height: 450px;
+      width: 260px;
+      background-image: url('/assets/raro.png');
+      background-size:cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .border-epico{
+      height: 450px;
+      width: 260px;
+      background-image: url('/assets/epico.png');
+      background-size:cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .border-mitico{
+        height: 450px;
+        width: 260px;
+        background-image: url('/assets/mitico.png');
+        background-size:cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .border-comun .imagenAnime, 
+    .border-plata .imagenAnime,
+    .border-oro .imagenAnime,
+    .border-raro .imagenAnime,
+    .border-epico .imagenAnime,
+    .border-mitico .imagenAnime{
+      margin-top: 20px;
+      width: 87%;
+      height: 316px;
+      object-fit: cover;
+    }
+    .cartas .borderComun{
+        position: absolute;
+        margin-top: 5px;
+        height: 440px;
+        z-index: 1;
+    }
+
+.gap{
+  gap: 20px;
+}

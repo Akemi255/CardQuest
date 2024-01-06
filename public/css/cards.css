@@ -1,0 +1,12 @@
+.car{
+    margin-top: 10%;
+    margin-bottom: 50px;
+    gap: 20px;
+    justify-content: center
+}
+.lanzarCards{
+    left: 0;
+}
+.intentos{
+    margin-bottom: 40px;
+}

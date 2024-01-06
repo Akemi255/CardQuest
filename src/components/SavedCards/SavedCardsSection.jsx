@@ -100,7 +100,7 @@ const SavedCardsSection = () => {
 
   return (
     <>
-      <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md">
+      <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md seccionGuardadas">
         <h1 className="flex justify-center items-center text-2xl font-bold text-white">
           Cartas guardadas
         </h1>
@@ -134,7 +134,7 @@ const SavedCardsSection = () => {
           </h2>
         </div>
         {!loading && userCards.length > 0 && (
-          <div className="flex flex-wrap mt-5">
+          <div className="flex flex-wrap mt-5 gap">
             {filteredCards.slice(0, visibleCards).map((card, index) => (
               <ProfileSavedCards
                 key={index}

@@ -11,6 +11,8 @@ import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
 import { SetEmail } from "@/helpers/SetEmail";
+import '/public/css/cards.css';
+import Footer from "../Layout/footer";
 
 //declaración de estados
 const Cards = () => {
@@ -361,15 +363,8 @@ const checkTime = () => {
   };
   
   return (
+    <>
     <div>
-      <div className="text-center mt-3 bg-slate-700 text-white font-bold py-2 px-4 rounded">{`Intentos restantes: ${remainingAttempts}`}</div>
-       <button
-      className="btn float"
-      onClick={fetchCharacterData}
-      disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
-    >
-      {"Cargar Cartas"}
-    </button>
 
       {showRetryMessage && (
         <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
@@ -378,19 +373,30 @@ const checkTime = () => {
       )}
 
       {characterData.length > 0 && (
-        <div className="flex flex-wrap">
+        <div className="flex car flex-wrap">
           {characterData.map((character, index) => (
             <CharacterCard
-              key={index}
-              character={character}
-              index={index}
-              getColorForRarity={getColorForRarity}
-              saveCharacter={saveCharacter}
+            key={index}
+            character={character}
+            index={index}
+            getColorForRarity={getColorForRarity}
+            saveCharacter={saveCharacter}
             />
-          ))}
+            ))}
         </div>
       )}
+       <button
+      className="btn lanzarCards"
+      onClick={fetchCharacterData}
+      disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
+    >
+      {"Lanzar Cartas"}
+    </button>
+    <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div>
     </div>
+    <Footer></Footer>
+    </>
+
   );
 };
 
