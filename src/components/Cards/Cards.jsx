@@ -280,8 +280,7 @@ const Cards = () => {
       while (randomNumbers.length < 5) {
         const randomNumber = getRandomNumberExcluding(
           1,
-          169000,
-          [8, 9, 10, 578, 576]
+          169979,
         );
         if (!randomNumbers.includes(randomNumber)) {
           randomNumbers.push(randomNumber);

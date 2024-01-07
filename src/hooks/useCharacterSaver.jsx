@@ -68,7 +68,6 @@ const useCharacterSaver = (
 
           // Verificar las respuestas de ambas solicitudes
           if (responseSaveCard.ok && responseBoostCard.ok) {
-            console.log(character);
             toast.success("Carta guardada exitosamente");
           } else {
             toast.error("Error en una o ambas solicitudes al backend.");
