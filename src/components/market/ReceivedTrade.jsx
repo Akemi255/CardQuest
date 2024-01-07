@@ -52,7 +52,7 @@ const ReceivedTrade = (ReceivedRequest) => {
           
       // Realizar la solicitud POST
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/editTradeRequest",
+        "https://api-rest-card-quest.vercel.app/api/trade/editTradeRequest",
         {
           method: "POST",
           headers: {
@@ -100,8 +100,8 @@ const ReceivedTrade = (ReceivedRequest) => {
   // Filtrar cartas de la derecha en tiempo real
    const filteredUserCards = userCards.filter(
     (card) =>
-      card.content.name.toLowerCase().includes(searchTermOffered.toLowerCase()) ||
-      card.content.anime.some((anime) =>
+      card?.content?.name?.toLowerCase().includes(searchTermOffered.toLowerCase()) ||
+      card?.content?.anime?.some((anime) =>
         anime.anime.title.toLowerCase().includes(searchTermOffered.toLowerCase())
       )
   );
@@ -110,7 +110,7 @@ const ReceivedTrade = (ReceivedRequest) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getTradeRequests/${id}`
+          `https://api-rest-card-quest.vercel.app/api/trade/getTradeRequests/${id}`
         );
         const data = await response.json();
         setTradeData(data);

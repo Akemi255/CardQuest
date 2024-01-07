@@ -1,7 +1,7 @@
 
 export const fetchUserCards = async (email, groupBy) => {
   try {
-    const response = await fetch("https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/findUserCards", {
+    const response = await fetch("https://api-rest-card-quest.vercel.app/api/cards/findUserCards", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

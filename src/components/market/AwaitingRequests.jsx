@@ -10,7 +10,7 @@ const AwaitingRequests = () => {
   const fetchTradeRequests = async () => {
     try {
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getAwaitingRequests",
+        "https://api-rest-card-quest.vercel.app/api/trade/getAwaitingRequests",
         {
           method: "POST",
           headers: {
@@ -50,7 +50,7 @@ const AwaitingRequests = () => {
   const handleDeleteRequest = async (requestId) => {
     try {
       const response = await fetch(
-        `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/deleteTrade/${requestId}`,
+        `https://api-rest-card-quest.vercel.app/api/trade/deleteTrade/${requestId}`,
         {
           method: "DELETE",
           headers: {

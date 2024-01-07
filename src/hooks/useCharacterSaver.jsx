@@ -1,4 +1,5 @@
 import { getEmail } from "@/helpers/getEmail";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -41,12 +42,10 @@ const useCharacterSaver = (
           saved: true,
         };
         setCharacterData(updatedCharacterData);
-
-        // Enviar la carta al backend
+       
         try {
-          const response = await fetch(
-            "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/saveCard",
-            {
+          const [responseSaveCard, responseBoostCard] = await Promise.all([
+            fetch("https://api-rest-card-quest.vercel.app/api/cards/saveCard", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -55,23 +54,27 @@ const useCharacterSaver = (
                 email: userEmail,
                 content: character,
               }),
-            }
-          );
+            }),
+            fetch("https://cards-api-beryl.vercel.app/api/cards/boostCard", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                content: character,
+              }),
+            }),
+          ]);
 
-          if (response.ok) {
-            const responseData = await response.json();
-            if (response.status === 202) {
-              // La carta ya existe, muestra un toast.error específico
-              toast.success(`Se ha guardado su valor en monedas en tu perfil:`);
-            } else {
-              // La carta se guardó exitosamente
-              toast.success("Carta guardada exitosamente");
-            }
+          // Verificar las respuestas de ambas solicitudes
+          if (responseSaveCard.ok && responseBoostCard.ok) {
+            console.log(character);
+            toast.success("Carta guardada exitosamente");
           } else {
-            toast.error("Error al guardar la carta en el backend.");
+            toast.error("Error en una o ambas solicitudes al backend.");
           }
         } catch (error) {
-          toast.error("Error al enviar la carta al backend:", error);
+          toast.error("Error al enviar las cartas al backend");
         }
       } else {
         toast.error("Este personaje ya ha sido guardado.");

@@ -8,8 +8,6 @@ const CharacterCard = ({
   saveCharacter,
   existingCards,
 }) => {
-  
-  console.log(existingCards); 
   return (
     <div
       key={index}
@@ -44,7 +42,7 @@ const CharacterCard = ({
               )}`}
             ></span>
           </p>
-          <p> Monedas: {character.favorites}</p>
+          <p> Monedas: {character.monedas}</p>
           {character.saved ? (
             <button
               className="mt-2 bg-gray-500 text-white py-2 px-4 rounded cursor-not-allowed flex items-center justify-center"
@@ -54,16 +52,18 @@ const CharacterCard = ({
             </button>
           ) : (
             <button
-          className={`mt-2 ${
-            existingCards[index] ? "bg-green-400 hover:bg-green-500" : "bg-blue-500 hover:bg-blue-700"
-          } text-white py-2 px-4 rounded flex items-center justify-center`}
-          onClick={() => saveCharacter(character, index)}
-        >
-          {existingCards[index]
-            ? `Guardar por ${character.favorites} monedas`
-            : "Guardar en el perfil"}{" "}
-          <AiOutlineLike className="ml-1" />
-        </button>
+              className={`mt-2 ${
+                existingCards[index]
+                  ? "bg-green-400 hover:bg-green-500"
+                  : "bg-blue-500 hover:bg-blue-700"
+              } text-white py-2 px-4 rounded flex items-center justify-center`}
+              onClick={() => saveCharacter(character, index)}
+            >
+              {existingCards[index]
+                ? `Guardar por ${character.monedas} monedas`
+                : "Guardar en el perfil"}{" "}
+              <AiOutlineLike className="ml-1" />
+            </button>
           )}
         </div>
       </div>

@@ -11,7 +11,6 @@ import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
 import { SetEmail } from "@/helpers/SetEmail";
-import { calculateNewFavoritesValue } from "@/helpers/Cards/calculateNewFavoritesValue";
 
 //declaración de estados
 const Cards = () => {
@@ -225,7 +224,7 @@ const Cards = () => {
       const currentTime = parseInt(Date.now() / 1000, 10);
 
       if (currentTime > storedFutureTime) {
-        console.log("Tiempo actual es mayor que el tiempo futuro");
+      
         setShowRetryMessage(false);
         // Eliminar elementos uno por uno
         localStorage.removeItem("futureTime");
@@ -296,14 +295,13 @@ const Cards = () => {
         while (!success) {
           try {
             const response = await fetch(
-              `https://api.jikan.moe/v4/characters/${id}/full`
+              `https://cards-api-beryl.vercel.app/api/cards/getCardById/${id}`
             );
 
             if (response.ok) {
               const data = await response.json();
               if (data && data.data && data.data.images) {
                 const favorites = data.data.favorites || 0;
-                data.data.favorites = calculateNewFavoritesValue(favorites);
                 let borderColorClass = "";
                 let rareza = "";
 
@@ -330,11 +328,11 @@ const Cards = () => {
                 data.data = { ...data.data, borderColorClass, rareza };
 
                 setCharacterData((prevData) => [...prevData, data.data]);
-                console.log(characterData);
+                
                 success = true;
 
                 const existCardResponse = await fetch(
-                  "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/existCard",
+                  "https://api-rest-card-quest.vercel.app/api/cards/existCard",
                   {
                     method: "POST",
                     headers: {
@@ -362,7 +360,7 @@ const Cards = () => {
                     );
                     return updatedExistingCards;
                   });
-                  console.log(`La carta con ID ${id} ya existe.`);
+                
                   continue;
                 }
               } else {
@@ -452,7 +450,7 @@ const sendReportOfficial = async (email) => {
     formData.append("reporterEmail", email);
 
     const response = await fetch(
-      "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/reportOfficial",
+      "https://api-rest-card-quest.vercel.app/api/users/reportOfficial",
       {
         method: "POST",
         headers: {

@@ -56,6 +56,7 @@ export const OfferedAwaitingCards = ({
               className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
             ></span>
           </p>
+          <p> Monedas: {character?.monedas}</p>
         </div>
       </div>
     </div>

@@ -22,7 +22,7 @@ const ViewProfile = ({ user }) => {
   const fetchFollowDataById = async () => {
     try {
       const response = await fetch(
-        `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/follows/getFollowDataById`,
+        `https://api-rest-card-quest.vercel.app/api/follows/getFollowDataById`,
         {
           method: "POST",
           headers: {
@@ -50,7 +50,7 @@ const ViewProfile = ({ user }) => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-          `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/getProfileById/${user}`
+          `https://api-rest-card-quest.vercel.app/api/users/getProfileById/${user}`
         );
         if (!response.ok) {
           throw new Error("Error al obtener el perfil del usuario");
@@ -69,7 +69,7 @@ const ViewProfile = ({ user }) => {
         const userEmail = loggedInUserEmail;
 
         const response = await fetch(
-          `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/follows/isFollowing`,
+          `https://api-rest-card-quest.vercel.app/api/follows/isFollowing`,
           {
             method: "POST",
             headers: {
@@ -94,7 +94,7 @@ const ViewProfile = ({ user }) => {
     const checkIfMe = async () => {
       try {
         const response = await fetch(
-          `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/follows/itsme`,
+          `https://api-rest-card-quest.vercel.app/api/follows/itsme`,
           {
             method: "POST",
             headers: {
@@ -133,8 +133,8 @@ const ViewProfile = ({ user }) => {
       }
       // Define el endpoint y el método según si ya estás siguiendo al usuario
       const endpoint = isFollowing
-        ? `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/follows/deleteFollow`
-        : `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/follows/saveFollow`;
+        ? `https://api-rest-card-quest.vercel.app/api/follows/deleteFollow`
+        : `https://api-rest-card-quest.vercel.app/api/follows/saveFollow`;
       const method = isFollowing ? "DELETE" : "POST";
 
       const response = await fetch(endpoint, {

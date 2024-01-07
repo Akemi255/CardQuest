@@ -71,6 +71,7 @@ export const ProfileMarketCards = ({
                 )}`}
               ></span>
             </p>
+            <p> Monedas: {character?.monedas}</p>
             <button
               onClick={handleToggleTradeStatus}
               className={`mt-2 ${

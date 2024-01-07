@@ -12,7 +12,7 @@ const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
         const storedEmail = getEmail();
 
         const response = await fetch(
-          "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/follows/getFollowData",
+          "https://api-rest-card-quest.vercel.app/api/follows/getFollowData",
           {
             method: "POST",
             headers: {

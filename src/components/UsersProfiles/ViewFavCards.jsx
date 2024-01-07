@@ -62,8 +62,8 @@ const ViewFavCards = ({ user }) => {
 
   const filteredCards = userCards.filter(
     (card) =>
-      card.content.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      card.content.anime.some((anime) =>
+      card?.content?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card?.content?.anime?.some((anime) =>
         anime.anime.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
   );
@@ -78,7 +78,7 @@ const ViewFavCards = ({ user }) => {
       formData.append("id", user);
 
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/reportUser",
+        "https://api-rest-card-quest.vercel.app/api/users/reportUser",
         {
           method: "POST",
           headers: {
