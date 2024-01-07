@@ -13,7 +13,10 @@ const Providers = ({ children }) => {
         options={{ showSpinner: false }}
         shallowRouting
       />
-      <ToastContainer />
+      <ToastContainer 
+       position="bottom-right"
+       autoClose={3000}
+      />
     </>
   );
 };
