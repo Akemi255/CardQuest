@@ -42,7 +42,7 @@ const useCharacterSaver = (
           saved: true,
         };
         setCharacterData(updatedCharacterData);
-       
+
         try {
           const [responseSaveCard, responseBoostCard] = await Promise.all([
             fetch("https://api-rest-card-quest.vercel.app/api/cards/saveCard", {
@@ -69,6 +69,19 @@ const useCharacterSaver = (
           // Verificar las respuestas de ambas solicitudes
           if (responseSaveCard.ok && responseBoostCard.ok) {
             toast.success("Carta guardada exitosamente");
+
+            // Obtener el nuevo valor en monedas de la carta desde la respuesta de boostCard
+            const boostCardResponseData = await responseBoostCard.json();
+            const newCoinsValue = boostCardResponseData.newCoinsValue;
+
+            // Actualizar localmente el valor en monedas de la carta
+            const updatedCharacterData = [...characterData];
+            updatedCharacterData[index] = {
+              ...updatedCharacterData[index],
+              monedas: newCoinsValue, // Ajustar a la propiedad correcta
+              saved: true,
+            };
+            setCharacterData(updatedCharacterData);
           } else {
             toast.error("Error en una o ambas solicitudes al backend.");
           }
