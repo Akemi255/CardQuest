@@ -68,10 +68,16 @@ const useCharacterSaver = (
 
           // Verificar las respuestas de ambas solicitudes
           if (responseSaveCard.ok && responseBoostCard.ok) {
-            toast.success("Carta guardada exitosamente");
+            const saveCardResponseData = await responseSaveCard.json();
+            const boostCardResponseData = await responseBoostCard.json();
+
+            if (saveCardResponseData.status === 202) {
+              toast.success(`Ya tienes esta carta recibirás su valor en monedas. Monedas ganadas: ${boostCardResponseData.newCoinsValue}`);
+            } else {
+              toast.success("Carta guardada exitosamente");
+            }
 
             // Obtener el nuevo valor en monedas de la carta desde la respuesta de boostCard
-            const boostCardResponseData = await responseBoostCard.json();
             const newCoinsValue = boostCardResponseData.newCoinsValue;
 
             // Actualizar localmente el valor en monedas de la carta
