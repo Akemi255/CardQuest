@@ -11,6 +11,8 @@ import { IoMdSettings } from "react-icons/io";
 import Logout from "./Logout";
 import { IoCloseCircle } from "react-icons/io5";
 import Link from "next/link";
+import UserIcon from "./user-icon";
+import Settings from "../UserProfile/Settings";
 
 const Menu = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -129,13 +131,12 @@ const Menu = () => {
                 className={`flex justify-center items-center text-white text-lg py-2 hover:opacity-75`}
                 onClick={closeMenu}
               >
-                <BiUser className="text-2xl sm:text-lg mr-2 sm:mr-2" /> Ver
-                Perfil
+               <UserIcon/>
               </Link>
             </li>
             <li>
               <Link
-                href="#"
+                href="/settings"
                 className={`flex justify-center items-center text-white text-lg py-2 hover:opacity-75`}
                 onClick={closeMenu}
               >
