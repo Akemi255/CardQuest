@@ -8,7 +8,8 @@ const useCharacterSaver = (
   likedCharacters,
   setCharacterData,
   setLikedCharacters,
-  setSavedCardsCount
+  setSavedCardsCount,
+  setLoading
 ) => {
   const saveCharacter = async (character, index) => {
     let cardsInCurrentSet = 0;
@@ -44,6 +45,7 @@ const useCharacterSaver = (
         setCharacterData(updatedCharacterData);
 
         try {
+          setLoading(true);
           const [responseSaveCard, responseBoostCard] = await Promise.all([
             fetch("https://api-rest-card-quest.vercel.app/api/cards/saveCard", {
               method: "POST",
@@ -91,7 +93,9 @@ const useCharacterSaver = (
           } else {
             toast.error("Error en una o ambas solicitudes al backend.");
           }
+          setLoading(false);
         } catch (error) {
+          setLoading(false);
           toast.error("Error al enviar las cartas al backend");
         }
       } else {
