@@ -15,7 +15,8 @@ import { SetEmail } from "@/helpers/SetEmail";
 //declaración de estados
 const Cards = () => {
   const [isClient, setIsClient] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   let Email = SetEmail();
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const Cards = () => {
   }, [buttonClickCount]);
   //fin de algoritmos de detección de trampas
 
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  
   const [savedCardsCount, setSavedCardsCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likedCharacters, setLikedCharacters] = useState([]);
@@ -167,14 +168,14 @@ const Cards = () => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
   }, [buttonClickCount]);
 
-  // ...
+  
 
   useEffect(() => {
     if (isClient) {
       const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
 
       if (buttonClickCount >= 8 && !storedFutureTime) {
-        const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
+        const futureTime = parseInt(Date.now() / 1000, 10) + 84; 
         localStorage.setItem("futureTime", futureTime);
       }
 
@@ -267,6 +268,7 @@ const Cards = () => {
 
   const fetchCharacterData = async () => {
     try {
+      setLoading(true)
       if (isLoading || buttonDisabled) return;
       setIsLoading(true);
       setCharacterData([]);
@@ -387,7 +389,7 @@ const Cards = () => {
           await new Promise((resolve) => setTimeout(resolve, 200));
         }
       }
-
+      setLoading(false)
       setIsLoading(false);
       setButtonClickCount((prevCount) => prevCount + 1);
     } catch (error) {
@@ -412,7 +414,7 @@ const Cards = () => {
           CleanArray();
           fetchCharacterData();
         }}
-        disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
+        disabled={loading ||buttonDisabled || (showRetryMessage && retryCountdown >= 0)}
       >
         {"Cargar Cartas"}
       </button>

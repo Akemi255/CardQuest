@@ -11,7 +11,7 @@ const Header = () => {
       <Menu />
       </div>
 
-      <div className="text-xl font-bold flex items-center justify-center relative left-4">
+      <div className="text-xl font-bold ">
         <Link href={"/"}>
           <img
             src="/assets/logo.png"
