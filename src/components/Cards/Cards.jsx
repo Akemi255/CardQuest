@@ -102,7 +102,7 @@ const Cards = () => {
       return storedExistingCards || Array(5).fill(false);
     } else {
       return null;
-    } // Asegúrate de que siempre sea un array de 5 elementos
+    } 
   });
 
   useEffect(() => {
@@ -331,7 +331,7 @@ const Cards = () => {
 
                 setCharacterData((prevData) => [...prevData, data.data]);
                 
-                
+                success = true;
 
                 const existCardResponse = await fetch(
                   "https://api-rest-card-quest.vercel.app/api/cards/existCard",
@@ -365,7 +365,7 @@ const Cards = () => {
                 
                   continue;
                 }
-                success = true;
+                
               } else {
                 console.error(`No se encontraron imágenes para el ID ${id}`);
                 success = true;
