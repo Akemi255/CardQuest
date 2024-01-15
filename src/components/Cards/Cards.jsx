@@ -226,9 +226,6 @@ const Cards = () => {
         // Eliminar elementos uno por uno
         localStorage.removeItem("futureTime");
         localStorage.removeItem("showRetryMessage");
-
-      
-
         localStorage.removeItem("buttonClickCount");
         localStorage.removeItem("savedCharacterData");
         localStorage.removeItem("savedCardsCount");
@@ -262,8 +259,9 @@ const Cards = () => {
 
   const fetchCharacterData = async () => {
     setCharacterData([]);
+    setLoading(true)
     try {
-      setLoading(true)
+      
       if (isLoading || buttonDisabled) {
         setCharacterData([]); return;
       }
@@ -400,7 +398,7 @@ const Cards = () => {
     }
   };
   function CleanArray() {
-    console.log("hola");
+    setCharacterData([])
     localStorage.removeItem("savedCharacterData");
     setExistingCards(Array(5).fill(false));
     localStorage.removeItem(`existingCards`);
