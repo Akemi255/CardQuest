@@ -158,12 +158,7 @@ const Cards = () => {
     }
   }, [buttonClickCount, characterData]);
 
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("savedCharacterData"));
-    if (savedData && savedData.length > 0) {
-      setCharacterData(savedData);
-    }
-  }, []);
+ 
 
   useEffect(() => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
@@ -232,9 +227,7 @@ const Cards = () => {
         localStorage.removeItem("futureTime");
         localStorage.removeItem("showRetryMessage");
 
-        for (let i = 0; i < characterData.length; i++) {
-          localStorage.removeItem(`characterData_${i}`);
-        }
+      
 
         localStorage.removeItem("buttonClickCount");
         localStorage.removeItem("savedCharacterData");
@@ -268,10 +261,15 @@ const Cards = () => {
   }
 
   const fetchCharacterData = async () => {
+    setCharacterData([]);
     try {
       setLoading(true)
-      if (isLoading || buttonDisabled) return;
+      if (isLoading || buttonDisabled) {
+        setCharacterData([]); return;
+      }
+      
       setIsLoading(true);
+      localStorage.removeItem("savedCharacterData");
       setCharacterData([]);
 
       if (buttonClickCount >= 8) {
@@ -402,6 +400,7 @@ const Cards = () => {
     }
   };
   function CleanArray() {
+    console.log("hola");
     localStorage.removeItem("savedCharacterData");
     setExistingCards(Array(5).fill(false));
     localStorage.removeItem(`existingCards`);
