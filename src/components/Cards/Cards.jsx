@@ -23,9 +23,7 @@ const Cards = () => {
     setIsClient(true);
   }, []);
 
-  const [characterData, setCharacterData] = useState(
-    isClient ? getInitialCharacterData() : []
-  );
+  const [characterData, setCharacterData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -298,7 +296,7 @@ const Cards = () => {
 
             if (response.ok) {
               const data = await response.json();
-              if (data && data.data && data.data.images) {
+              if (data) {
                 const favorites = data.data.favorites || 0;
                 let borderColorClass = "";
                 let rareza = "";
@@ -366,6 +364,7 @@ const Cards = () => {
                 
               } else {
                 console.error(`No se encontraron imágenes para el ID ${id}`);
+                console.error('Respuesta del servidor:', data);
                 success = true;
               }
             } else if (response.status === 404) {
@@ -386,7 +385,7 @@ const Cards = () => {
             );
             id = getRandomNumberExcluding(1, 2000, [8, 9, 10, 578, 576]);
           }
-          await new Promise((resolve) => setTimeout(resolve, 200));
+          await new Promise((resolve) => setTimeout(resolve, 100));
         }
       }
       setLoading(false)

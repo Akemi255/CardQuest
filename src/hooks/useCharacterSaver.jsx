@@ -12,6 +12,7 @@ const useCharacterSaver = (
   setLoading
 ) => {
   const saveCharacter = async (character, index) => {
+    setLoading(true);
     let cardsInCurrentSet = 0;
 
     for (const char of characterData) {
@@ -45,7 +46,7 @@ const useCharacterSaver = (
         setCharacterData(updatedCharacterData);
 
         try {
-          setLoading(true);
+         
           const [responseSaveCard, responseBoostCard] = await Promise.all([
             fetch("https://api-rest-card-quest.vercel.app/api/cards/saveCard", {
               method: "POST",
@@ -93,17 +94,20 @@ const useCharacterSaver = (
           } else {
             toast.error("Error en una o ambas solicitudes al backend.");
           }
-          setLoading(false);
+      
         } catch (error) {
-          setLoading(false);
+        
           toast.error("Error al enviar las cartas al backend");
         }
       } else {
         toast.error("Este personaje ya ha sido guardado.");
+        
       }
     } else {
       toast.error("Solo puedes guardar una carta por cada conjunto de cinco.");
+      
     }
+    setLoading(false);
   };
 
   return { saveCharacter };
