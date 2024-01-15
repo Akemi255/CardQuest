@@ -329,7 +329,9 @@ const Cards = () => {
 
                 data.data = { ...data.data, borderColorClass, rareza };
 
+                console.log("Before adding character:", characterData.length);
                 setCharacterData((prevData) => [...prevData, data.data]);
+                console.log("After adding character:", characterData.length);
                 
                 success = true;
 
@@ -400,6 +402,7 @@ const Cards = () => {
     }
   };
   function CleanArray() {
+    localStorage.removeItem("savedCharacterData");
     setExistingCards(Array(5).fill(false));
     localStorage.removeItem(`existingCards`);
     for (let i = 0; i <= 5; i++) {
