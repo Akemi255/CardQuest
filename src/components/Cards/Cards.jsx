@@ -291,7 +291,7 @@ const Cards = () => {
         while (!success) {
           try {
             const response = await fetch(
-              `https://cards-api-beryl.vercel.app/api/cards/getCardById/${id}`
+              `https://api-rest-card-quest.vercel.app/api/apiCards/getCardById/${id}`
             );
 
             if (response.ok) {

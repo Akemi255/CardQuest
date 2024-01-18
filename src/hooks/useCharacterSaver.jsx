@@ -58,7 +58,7 @@ const useCharacterSaver = (
                 content: character,
               }),
             }),
-            fetch("https://cards-api-beryl.vercel.app/api/cards/boostCard", {
+            fetch("https://api-rest-card-quest.vercel.app/api/apiCards/boostCard", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
