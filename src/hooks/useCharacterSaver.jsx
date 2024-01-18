@@ -9,9 +9,11 @@ const useCharacterSaver = (
   setCharacterData,
   setLikedCharacters,
   setSavedCardsCount,
-  setLoading
+  setLoading,
+  loading
 ) => {
   const saveCharacter = async (character, index) => {
+   
     setLoading(true);
     let cardsInCurrentSet = 0;
 

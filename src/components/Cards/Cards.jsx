@@ -108,14 +108,7 @@ const Cards = () => {
     setRemainingAttempts(8 - buttonClickCount);
   }, [isClient, buttonClickCount]);
 
-  const { saveCharacter } = useCharacterSaver(
-    characterData,
-    likedCharacters,
-    setCharacterData,
-    setLikedCharacters,
-    setSavedCardsCount,
-    setLoading
-  );
+  
 
   useEffect(() => {
     if (isClient) {
@@ -405,6 +398,15 @@ const Cards = () => {
       localStorage.removeItem(`existingCard-${i}`);
     }
   }
+  const { saveCharacter } = useCharacterSaver(
+    characterData,
+    likedCharacters,
+    setCharacterData,
+    setLikedCharacters,
+    setSavedCardsCount,
+    setLoading,
+    loading
+  );
   
   return (
     <div>
@@ -436,6 +438,7 @@ const Cards = () => {
               getColorForRarity={getColorForRarity}
               saveCharacter={saveCharacter}
               existingCards={existingCards}
+              loading={loading}
             />
           ))}
         </div>
