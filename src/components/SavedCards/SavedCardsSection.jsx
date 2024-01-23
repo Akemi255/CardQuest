@@ -55,8 +55,8 @@ const SavedCardsSection = () => {
 
   const filteredCards = userCards.filter(
     (card) =>
-      card.content.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      card.content.anime.some((anime) =>
+      card?.content?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card?.content?.anime?.some((anime) =>
         anime.anime.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
   );
@@ -67,10 +67,10 @@ const SavedCardsSection = () => {
 
   const confirmDelete = async () => {
     setIsModalOpen(false);
-
+    
     try {
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/deleteCards",
+        "https://api-rest-card-quest.vercel.app/api/cards/deleteCards",
         {
           method: "DELETE",
           headers: {

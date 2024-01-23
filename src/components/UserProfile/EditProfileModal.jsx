@@ -72,7 +72,7 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
       
 
       try {
-        const response = await fetch("https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/update", {
+        const response = await fetch("https://api-rest-card-quest.vercel.app/api/users/update", {
           method: "POST",
           body: formData,
         });

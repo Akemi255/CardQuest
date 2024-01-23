@@ -17,16 +17,15 @@ import Footer from "../Layout/footer";
 //declaración de estados
 const Cards = () => {
   const [isClient, setIsClient] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   let Email = SetEmail();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const [characterData, setCharacterData] = useState(
-    isClient ? getInitialCharacterData() : []
-  );
+  const [characterData, setCharacterData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -90,7 +89,7 @@ const Cards = () => {
   }, [buttonClickCount]);
   //fin de algoritmos de detección de trampas
 
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  
   const [savedCardsCount, setSavedCardsCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likedCharacters, setLikedCharacters] = useState([]);
@@ -103,7 +102,7 @@ const Cards = () => {
       return storedExistingCards || Array(5).fill(false);
     } else {
       return null;
-    } // Asegúrate de que siempre sea un array de 5 elementos
+    } 
   });
 
   useEffect(() => {
@@ -111,13 +110,7 @@ const Cards = () => {
     setRemainingAttempts(8 - buttonClickCount);
   }, [isClient, buttonClickCount]);
 
-  const { saveCharacter } = useCharacterSaver(
-    characterData,
-    likedCharacters,
-    setCharacterData,
-    setLikedCharacters,
-    setSavedCardsCount
-  );
+  
 
   useEffect(() => {
     if (isClient) {
@@ -158,25 +151,20 @@ const Cards = () => {
     }
   }, [buttonClickCount, characterData]);
 
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("savedCharacterData"));
-    if (savedData && savedData.length > 0) {
-      setCharacterData(savedData);
-    }
-  }, []);
+ 
 
   useEffect(() => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
   }, [buttonClickCount]);
 
-  // ...
+  
 
   useEffect(() => {
     if (isClient) {
       const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
 
       if (buttonClickCount >= 8 && !storedFutureTime) {
-        const futureTime = parseInt(Date.now() / 1000, 10) + 84; // 24 segundos en el futuro
+        const futureTime = parseInt(Date.now() / 1000, 10) + 84; 
         localStorage.setItem("futureTime", futureTime);
       }
 
@@ -226,16 +214,11 @@ const Cards = () => {
       const currentTime = parseInt(Date.now() / 1000, 10);
 
       if (currentTime > storedFutureTime) {
-        console.log("Tiempo actual es mayor que el tiempo futuro");
+      
         setShowRetryMessage(false);
         // Eliminar elementos uno por uno
         localStorage.removeItem("futureTime");
         localStorage.removeItem("showRetryMessage");
-
-        for (let i = 0; i < characterData.length; i++) {
-          localStorage.removeItem(`characterData_${i}`);
-        }
-
         localStorage.removeItem("buttonClickCount");
         localStorage.removeItem("savedCharacterData");
         localStorage.removeItem("savedCardsCount");
@@ -268,9 +251,16 @@ const Cards = () => {
   }
 
   const fetchCharacterData = async () => {
+    setCharacterData([]);
+    setLoading(true)
     try {
-      if (isLoading || buttonDisabled) return;
+      
+      if (isLoading || buttonDisabled) {
+        setCharacterData([]); return;
+      }
+      
       setIsLoading(true);
+      localStorage.removeItem("savedCharacterData");
       setCharacterData([]);
 
       if (buttonClickCount >= 8) {
@@ -282,8 +272,7 @@ const Cards = () => {
       while (randomNumbers.length < 5) {
         const randomNumber = getRandomNumberExcluding(
           1,
-          169000,
-          [8, 9, 10, 578, 576]
+          169979,
         );
         if (!randomNumbers.includes(randomNumber)) {
           randomNumbers.push(randomNumber);
@@ -297,14 +286,13 @@ const Cards = () => {
         while (!success) {
           try {
             const response = await fetch(
-              `https://api.jikan.moe/v4/characters/${id}/full`
+              `https://api-rest-card-quest.vercel.app/api/apiCards/getCardById/${id}`
             );
 
             if (response.ok) {
               const data = await response.json();
-              if (data && data.data && data.data.images) {
+              if (data) {
                 const favorites = data.data.favorites || 0;
-                data.data.favorites = calculateNewFavoritesValue(favorites);
                 let borderColorClass = "";
                 let rareza = "";
 
@@ -330,12 +318,14 @@ const Cards = () => {
 
                 data.data = { ...data.data, borderColorClass, rareza };
 
+                console.log("Before adding character:", characterData.length);
                 setCharacterData((prevData) => [...prevData, data.data]);
-                console.log(characterData);
+                console.log("After adding character:", characterData.length);
+                
                 success = true;
 
                 const existCardResponse = await fetch(
-                  "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/existCard",
+                  "https://api-rest-card-quest.vercel.app/api/cards/existCard",
                   {
                     method: "POST",
                     headers: {
@@ -363,11 +353,13 @@ const Cards = () => {
                     );
                     return updatedExistingCards;
                   });
-                  console.log(`La carta con ID ${id} ya existe.`);
+                
                   continue;
                 }
+                
               } else {
                 console.error(`No se encontraron imágenes para el ID ${id}`);
+                console.error('Respuesta del servidor:', data);
                 success = true;
               }
             } else if (response.status === 404) {
@@ -388,10 +380,10 @@ const Cards = () => {
             );
             id = getRandomNumberExcluding(1, 2000, [8, 9, 10, 578, 576]);
           }
-          await new Promise((resolve) => setTimeout(resolve, 200));
+          await new Promise((resolve) => setTimeout(resolve, 100));
         }
       }
-
+      setLoading(false)
       setIsLoading(false);
       setButtonClickCount((prevCount) => prevCount + 1);
     } catch (error) {
@@ -400,12 +392,23 @@ const Cards = () => {
     }
   };
   function CleanArray() {
+    setCharacterData([])
+    localStorage.removeItem("savedCharacterData");
     setExistingCards(Array(5).fill(false));
     localStorage.removeItem(`existingCards`);
     for (let i = 0; i <= 5; i++) {
       localStorage.removeItem(`existingCard-${i}`);
     }
   }
+  const { saveCharacter } = useCharacterSaver(
+    characterData,
+    likedCharacters,
+    setCharacterData,
+    setLikedCharacters,
+    setSavedCardsCount,
+    setLoading,
+    loading
+  );
   
   return (
     <>
@@ -427,6 +430,7 @@ const Cards = () => {
               getColorForRarity={getColorForRarity}
               saveCharacter={saveCharacter}
               existingCards={existingCards}
+              loading={loading}
             />
             ))}
         </div>
@@ -457,7 +461,7 @@ const sendReportOfficial = async (email) => {
     formData.append("reporterEmail", email);
 
     const response = await fetch(
-      "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/reportOfficial",
+      "https://api-rest-card-quest.vercel.app/api/users/reportOfficial",
       {
         method: "POST",
         headers: {

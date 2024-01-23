@@ -1,6 +1,6 @@
 export const FetchUsersCards = async (user, groupBy) => {
   try {
-    const response = await fetch(`https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/cards/ViewUserCards/${user}`);
+    const response = await fetch(`https://api-rest-card-quest.vercel.app/api/cards/ViewUserCards/${user}`);
 
     if (!response.ok) {
       throw new Error("Error al realizar la petición");

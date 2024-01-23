@@ -36,7 +36,7 @@ const AwaitingTrade = (AwaitingRequest) => {
 
       // Realizar la solicitud POST
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/acceptTradeRequest",
+        "https://api-rest-card-quest.vercel.app/api/trade/acceptTradeRequest",
         {
           method: "POST",
           headers: {
@@ -72,7 +72,7 @@ const AwaitingTrade = (AwaitingRequest) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getTradeRequests/${id}`
+          `https://api-rest-card-quest.vercel.app/api/trade/getTradeRequests/${id}`
         );
         const data = await response.json();
         setTradeData(data);

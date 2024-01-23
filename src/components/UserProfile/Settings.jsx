@@ -1,12 +1,12 @@
+"use client";
 import { useState } from "react";
+import { useEffect } from "react";
+import Modal from "react-modal";
 import { IoSettingsSharp } from "react-icons/io5";
-import Modal from "react-modal"; // Importa la librería de modales
 import { UserProfile } from "@clerk/nextjs";
 
-
-
-const Settings = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+const Settings = ({ defaultOpen = false }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(defaultOpen);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -22,9 +22,11 @@ const Settings = () => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      zIndex: 1000
     },
     content: {
       position: "relative",
+      
       borderRadius: "8px",
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
       overflow: "auto",
@@ -36,12 +38,17 @@ const Settings = () => {
       outline: "none",
     },
   };
+
+  // useEffect para abrir o cerrar el modal en función de la prop defaultOpen
+  useEffect(() => {
+    setModalIsOpen(defaultOpen);
+  }, [defaultOpen]);
+
   return (
     <>
-      <div className="flex justify-center items-center mt-5">
+      <div className="flex justify-center items-center">
         <button
-          className="bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded"
-          onClick={openModal}
+          onClick={modalIsOpen ? closeModal : openModal}
         >
           {modalIsOpen ? "Ocultar cuenta" : "Administrar cuenta"}
         </button>
@@ -53,7 +60,6 @@ const Settings = () => {
         style={customStyles}
         contentLabel="UserProfile Modal"
         ariaHideApp={false}
-    
       >
         <button onClick={closeModal} className="close-button">
           Cerrar
@@ -63,6 +69,5 @@ const Settings = () => {
     </>
   );
 };
-
 
 export default Settings;

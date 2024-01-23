@@ -14,7 +14,7 @@ const UsersMarket = () => {
        try {
          setLoading(true);
          const response = await fetch(
-           "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/getAllUsers"
+           "https://api-rest-card-quest.vercel.app/api/users/getAllUsers"
          );
          const data = await response.json();
          setUsers(data.users);

@@ -8,9 +8,8 @@ const CharacterCard = ({
   getColorForRarity,
   saveCharacter,
   existingCards,
+  loading
 }) => {
-  
-  console.log(existingCards); 
   return (
 <div key={index} className="flex">
   <div className={`${character.borderColorClass} cartas  flex items-center`}>
@@ -52,5 +51,6 @@ const CharacterCard = ({
 </div>
   );
 };
+
 
 export default CharacterCard;

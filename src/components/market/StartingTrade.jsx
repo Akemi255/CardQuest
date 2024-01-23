@@ -59,7 +59,7 @@ const StartingTrade = ({ user }) => {
 
       // Realizar la solicitud POST
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/sendTradeRequest",
+        "https://api-rest-card-quest.vercel.app/api/trade/sendTradeRequest",
         {
           method: "POST",
           headers: {
@@ -94,7 +94,7 @@ const StartingTrade = ({ user }) => {
       try {
         // Realizar la petición a la API
         const response = await fetch(
-          `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/users/getProfileById/${user}`
+          `https://api-rest-card-quest.vercel.app/api/users/getProfileById/${user}`
         );
 
         // Verificar si la petición fue exitosa (código de respuesta 200)
@@ -156,8 +156,8 @@ const StartingTrade = ({ user }) => {
 
   const filteredCards = userCards.filter(
     (card) =>
-      card.content.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      card.content.anime.some((anime) =>
+      card?.content?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card?.content?.anime?.some((anime) =>
         anime.anime.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
   );

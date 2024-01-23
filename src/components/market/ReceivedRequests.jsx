@@ -1,5 +1,6 @@
 "use client";
 import { getEmail } from "@/helpers/getEmail";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 
@@ -10,7 +11,7 @@ const ReceivedRequests = () => {
   const fetchTradeRequests = async () => {
     try {
       const response = await fetch(
-        "https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/getTradeRequests",
+        "https://api-rest-card-quest.vercel.app/api/trade/getTradeRequests",
         {
           method: "POST",
           headers: {
@@ -50,7 +51,7 @@ const ReceivedRequests = () => {
   const handleDeleteRequest = async (requestId) => {
     try {
       const response = await fetch(
-        `https://api-rest-card-quest-dev-dxjt.3.us-1.fl0.io/api/trade/deleteTrade/${requestId}`,
+        `https://api-rest-card-quest.vercel.app/api/trade/deleteTrade/${requestId}`,
         {
           method: "DELETE",
           headers: {
@@ -103,9 +104,10 @@ const ReceivedRequests = () => {
                   <p className="text-white font-bold">
                     {request.requester.userId.name}
                   </p>
+                  
                   <div className="flex">
                     <button className="bg-slate-700 text-white px-2 py-1 mr-2 rounded hover:bg-slate-800 text-xs md:text-sm">
-                      <a href={`/mercado/SolicitudesRecibidas/${request._id}`}>Ver Solicitud</a>
+                      <Link href={`/mercado/SolicitudesRecibidas/${request._id}`}>Ver Solicitud</Link>
                     </button>
                     <button 
                     onClick={() => handleDeleteRequest(request._id)}

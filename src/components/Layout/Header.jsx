@@ -3,6 +3,8 @@ import { BiUser } from "react-icons/bi";
 import Logout from "./Logout";
 import Menu from "./Menu";
 import '/public/css/header.css';
+import UserIcon from "./user-icon";
+
 const Header = () => {
   return (
     <div className="cont text-white flex justify-between items-center w-full">
