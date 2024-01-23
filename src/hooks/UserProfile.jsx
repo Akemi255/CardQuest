@@ -9,7 +9,7 @@ const UserProfile = () => {
     emailAddress: "",
     image: "https://via.placeholder.com/150",
     banner: "https://via.placeholder.com/1200x250",
-    bio: "undefined",
+    bio: "undefined aca hay que hacer los cambios",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
