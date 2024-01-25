@@ -378,7 +378,7 @@ const Cards = () => {
             );
             id = getRandomNumberExcluding(1, 2000, [8, 9, 10, 578, 576]);
           }
-          await new Promise((resolve) => setTimeout(resolve, 100));
+         
         }
       }
       setLoading(false)

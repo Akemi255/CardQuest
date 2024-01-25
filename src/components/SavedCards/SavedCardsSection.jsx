@@ -15,20 +15,20 @@ const SavedCardsSection = () => {
   const [groupBy, setGroupBy] = useState("recientes");
   const [showOrderOptions, setShowOrderOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState("recientes");
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const userEmail = getEmail();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true); 
+        setLoading(true);
         const data = await fetchUserCards(userEmail, groupBy);
         setUserCards(data);
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -42,12 +42,14 @@ const SavedCardsSection = () => {
           document.documentElement.offsetHeight - 100 &&
         !loading
       ) {
-        setVisibleCards((prevVisibleOfferedCards) => prevVisibleOfferedCards + 12);
+        setVisibleCards(
+          (prevVisibleOfferedCards) => prevVisibleOfferedCards + 12
+        );
       }
     };
-  
+
     window.addEventListener("scroll", handleScroll);
-  
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -67,7 +69,7 @@ const SavedCardsSection = () => {
 
   const confirmDelete = async () => {
     setIsModalOpen(false);
-    
+
     try {
       const response = await fetch(
         "https://api-rest-card-quest.vercel.app/api/cards/deleteCards",
@@ -88,7 +90,6 @@ const SavedCardsSection = () => {
         );
       }
 
-      
       setUserCards([]);
     } catch (error) {
       console.error("Error:", error);
