@@ -7,9 +7,9 @@ const UserProfile = () => {
     name: "User",
     nick: "undefined",
     emailAddress: "",
-    image: "https://via.placeholder.com/150",
-    banner: "https://via.placeholder.com/1200x250",
-    bio: "undefined aca hay que hacer los cambios",
+    image: "https://i.postimg.cc/ZRvmNYYp/foto-perfil150.png",
+    banner: "https://i.postimg.cc/YCBHWBTm/banner.png",
+    bio: "undefined",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
