@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/Layout/Header';
-import Footer from '@/components/Layout/Footer';
+import Footer from '@/components/Layout/footer';
 import { useParams } from 'next/navigation';
 
 const Page = () => {
