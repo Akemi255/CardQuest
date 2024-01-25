@@ -1,15 +1,16 @@
 import { SetEmail } from "@/helpers/SetEmail";
 import { getEmail } from "@/helpers/getEmail";
 import { useEffect, useState } from "react";
-
+import bannerImage from "@/assets/banner.png";
+import imageProfile from "@/assets/foto-perfil150.png";
 const ViewProfile = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState({
     name: "User",
     nick: "undefined",
     emailAddress: "",
-    image: "https://via.placeholder.com/150",
-    banner: "https://via.placeholder.com/1200x250",
+    image: 'https://i.postimg.cc/ZRvmNYYp/foto-perfil150.png',
+    banner: 'https://i.postimg.cc/YCBHWBTm/banner.png',
     bio: "undefined",
   });
   const [isFollowing, setIsFollowing] = useState(false);
@@ -168,7 +169,7 @@ const ViewProfile = ({ user }) => {
   return (
     <>
       {!loading && (
-        <div className="mx-auto w-5/5 mt-4 p-4 bg-gray-700 shadow-md rounded-md">
+        <div className="mx-auto w-5/5 mt-4 p-4 bg-gray-700 shadow-md rounded-md seccionGuardadas">
           {/* Profile Banner */}
           <div
             className="relative rounded-t-md"

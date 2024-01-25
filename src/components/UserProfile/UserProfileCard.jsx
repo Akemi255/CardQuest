@@ -44,7 +44,7 @@ const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
   }, []);
 
   return (
-    <div className="mx-auto w-5/5 mt-4 p-4 bg-gray-700 shadow-md rounded-md">
+    <div className="mx-auto w-5/5 mt-4 p-4 bg-gray-700 shadow-md rounded-md seccionGuardadas">
       {/* Profile Banner */}
       <div
         className="relative rounded-t-md"

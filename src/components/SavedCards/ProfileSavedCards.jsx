@@ -1,3 +1,5 @@
+import '/public/css/home.css';
+
 export const ProfileSavedCards = ({ character, index }) => {
   const getColorForRarity = (rareza) => {
     const lowerCasedRareza = (rareza || "").toLowerCase();
@@ -21,35 +23,43 @@ export const ProfileSavedCards = ({ character, index }) => {
   };
 
   return (
-    <div key={index} className="flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4">
-      <div
-        className={`${character.borderColorClass} border-animado bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 cursor-pointer h-full flex flex-col justify-center items-center`}
-      >
-        {character.images && character.images.jpg && (
-          <img
-            src={character.images.jpg.image_url}
-            alt={character.name}
-            className="w-full h-48 sm:h-64 object-cover hover:shadow-lg"
-          />
+    <div key={index} className="flex gap">
+  <div className={`${character.borderColorClass} cartas  flex items-center`}>
+    <img 
+    src={`/assets/${character.borderColorClass}.png`}
+    alt="" 
+    className="borderComun flex items-center"/>
+    {character.images && character.images.jpg && (
+      <img
+        src={character.images.jpg.image_url}
+        alt={character.name}
+        className="w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime"
+      />
+    )}
+    <div className="info-like">
+      <div className="text-center personaje-anime">
+        <p className="name font-bold">{character.name}</p>
+        {character.anime && character.anime[0] && (
+          <p className="name-anime">{character.anime[0].anime.title}</p>
         )}
-
-        <div className="p-4 text-center">
-          <h3 className="text-lg sm:text-xl font-bold">{character.name}</h3>
-          {character.anime && character.anime[0] && (
-            <p>Anime: {character.anime[0].anime.title}</p>
-          )}
-          <p className="flex items-center justify-center mt-2">
-            <span
-              className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
-            ></span>
-            <span className="mx-2">{character.rareza}</span>
-            <span
-              className={`w-1/4 border-b-2 ${getColorForRarity(character.rareza)}`}
-            ></span>
-          </p>
-          <p> Monedas: {character?.monedas}</p>
-        </div>
       </div>
+        {character.saved ? (
+          <button
+            className="boton-guardar text-white py-2 px-4 rounded cursor-not-allowed flex items-center justify-center"
+            disabled
+          >
+            <AiFillLike />
+          </button>
+        ) : (
+          <button
+            className="boton-guardar text-white py-2 px-4 rounded flex items-center justify-center"
+            onClick={() => saveCharacter(character, index)}
+          >
+            <img src="/assets/corazon.png" alt="corazon" />
+          </button>
+        )}
     </div>
+  </div>
+</div>
   );
 };
