@@ -1,8 +1,8 @@
 import { SetEmail } from "@/helpers/SetEmail";
 import { getEmail } from "@/helpers/getEmail";
 import { useEffect, useState } from "react";
-import bannerImage from "@/assets/banner.png";
-import imageProfile from "@/assets/foto-perfil150.png";
+
+
 const ViewProfile = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState({

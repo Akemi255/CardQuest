@@ -26,8 +26,7 @@ const Header = () => {
         {/* Ajuste de margen para el último elemento */}
         <button className="text-lg hover:text-gray-300 transition duration-300 ease-in-out flex items-center">
           <Link href="/dashboard" className="flex items-center">
-          <img src="/assets/foto-perfil.png" alt="" className="foto-perfil"/>
-          <span className="sm:inline-block">Mi perfil</span>
+          <UserIcon/>
           </Link>
         </button>
 
