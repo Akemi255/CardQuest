@@ -102,7 +102,7 @@ const CardItem = ({ card, getColorForRarity, index }) => {
     <div
       className={`relative ${getColorForRarity(
         card.rareza
-      )} border-mitico bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 w-82 h-full`}
+      )} bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 w-82 h-full`}
     >
       <FaMedal color={medalColor} size={40} className="absolute top-2 left-2 z-20" />
 
