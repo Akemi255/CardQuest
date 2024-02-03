@@ -11,7 +11,7 @@ const TopCards = () => {
     const fetchTopCards = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3003/api/apiCards/getTopCards"
+          "https://api-rest-card-quest.vercel.app/api/apiCards/getTopCards"
         );
 
         if (!response.ok) {
