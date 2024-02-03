@@ -19,7 +19,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3003/api/apiCards/sortedByCoins/${currentPageNumber}`
+          `https://api-rest-card-quest.vercel.app/api/apiCards/sortedByCoins/${currentPageNumber}`
         );
         if (response.ok) {
           const jsonData = await response.json();
