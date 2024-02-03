@@ -60,10 +60,10 @@ const TopCards = () => {
 
   return (
     <>
-      <h1 className="flex justify-center items-center text-2xl font-bold text-white relative top-5 bg-gray-700">
+      <h1 className="flex justify-center items-center text-2xl font-bold text-white relative top-5">
         <p>Cartas mejor valoradas</p>
       </h1>
-      <div className="flex flex-wrap justify-center w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md">
+      <div className="flex flex-wrap justify-center w-full mt-8 p-4 shadow-md rounded-md">
         
         {error && <p>{error}</p>}
         {topCards.map((card, index) => (
@@ -79,7 +79,7 @@ const TopCards = () => {
           </div>
         ))}
       </div>
-      <button className="mx-auto mt-3 flex justify-center items-center bg-slate-600 px-4 py-2 text-white rounded-md hover:bg-slate-800 text-2xl font-bold  cursor-pointer transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0">
+      <button className="mx-auto mt-3 flex justify-center items-center bg-gray-400 px-4 py-2 text-white rounded-md hover:bg-gray-500 text-2xl font-bold  cursor-pointer transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0">
       <Link href="/cards-ranking/1">Ver todo el ranking</Link> 
     </button>
       
