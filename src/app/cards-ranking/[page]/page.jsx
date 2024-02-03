@@ -5,6 +5,8 @@ import Footer from "@/components/Layout/footer";
 import { useParams } from "next/navigation";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdNavigateNext } from "react-icons/md";
+import { RenderCards } from "@/components/ranking/cards-ranking/render-all-cards";
+
 
 const Page = () => {
   const { page } = useParams();
@@ -178,11 +180,11 @@ const Page = () => {
       <Header />
 
       {/* Renderizar datos */}
-      {data.map((item) => (
-        <div key={item._id}>
-          <h3>{item.name}</h3>
-        </div>
-      ))}
+      <div className="flex flex-wrap mt-5">
+        {data.map((item, index) => (
+          <RenderCards key={item._id} data={item} index={index} />
+        ))}
+      </div>
 
       {/* Renderizar controles de paginación */}
       <div className="mt-4 flex justify-center items-center flex-wrap">
