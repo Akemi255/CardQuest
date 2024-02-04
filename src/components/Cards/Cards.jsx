@@ -441,7 +441,7 @@ const Cards = () => {
           CleanArray();
           fetchCharacterData();
         }}
-        disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0)}
+        disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0 || loading)}
       >
         {"Lanzar Cartas"}
       </button>
