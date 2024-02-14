@@ -6,7 +6,6 @@ import UserProfileCard from "@/components/UserProfile/UserProfileCard";
 import SavedCardsSection from "@/components/SavedCards/SavedCardsSection";
 import { SetEmail } from "@/helpers/SetEmail";
 import Footer from "@/components/Layout/footer";
-
 const DashboardPage = () => {
   let email = SetEmail();
   const { userProfile, loading } = UserProfile();
@@ -21,7 +20,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <>
+    <div className="back-profile">
       <Header />
       <UserProfileCard
         userProfile={userProfile}
@@ -32,7 +31,7 @@ const DashboardPage = () => {
       <SavedCardsSection />
       <br />
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -1,11 +1,16 @@
 body{
-  background-image: url('/assets/background-cards.png');
   background-color: #462241;
   background-size: cover;
   background-position:center;
   background-repeat: no-repeat;
 }
-
+.fondo{
+  background-image: url('/assets/background-cards.png') !important;
+  background-color: #462241;
+  background-size: cover;
+  background-position:center;
+  background-repeat: no-repeat;
+}
 .cartas {
     display: flex;
     flex-direction: column;

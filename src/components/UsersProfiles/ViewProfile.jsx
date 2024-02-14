@@ -1,7 +1,10 @@
 import { SetEmail } from "@/helpers/SetEmail";
 import { getEmail } from "@/helpers/getEmail";
 import { useEffect, useState } from "react";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
+import { FaExclamationTriangle } from 'react-icons/fa';
 
+import Modal from "react-modal";
 
 const ViewProfile = ({ user }) => {
   const [loading, setLoading] = useState(true);
@@ -18,6 +21,10 @@ const ViewProfile = ({ user }) => {
   const [followData, setFollowData] = useState(null);
 
   const loggedInUserEmail = SetEmail();
+
+  const handleDeleteCards = async () => {
+    setIsModalOpen(true);
+  };
 
 
   const fetchFollowDataById = async () => {
@@ -165,6 +172,55 @@ const ViewProfile = ({ user }) => {
       console.error(error);
     }
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reportMessage, setReportMessage] = useState("");
+  const [reportMessageColor, setReportMessageColor] = useState("");
+
+
+  const confirmReport = async () => {
+    try {
+      const cause = document.getElementById("causeInput").value;
+
+      const formData = new URLSearchParams();
+      formData.append("reporterEmail", userEmail);
+      formData.append("cause", cause);
+      formData.append("id", user);
+
+      const response = await fetch(
+        "https://api-rest-card-quest.vercel.app/api/users/reportUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        setReportMessage("Ha ocurrido un error");
+        setReportMessageColor("red");
+      }
+
+      console.log("Petición de reporte ejecutada correctamente");
+      // Si la petición fue exitosa, actualiza el mensaje del reporte y su color
+      setReportMessage("Reporte enviado correctamente");
+      setReportMessageColor("green");
+      setTimeout(() => {
+        setReportMessage("");
+        setReportMessageColor("");
+        setIsModalOpen(false);
+      }, 2500);
+    } catch (error) {
+      console.error("Error:", error);
+      setReportMessage("Ha ocurrido un error");
+      setReportMessageColor("red");
+    }
+  };
+
+  const cancelDelete = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -196,26 +252,87 @@ const ViewProfile = ({ user }) => {
           {/* User Info */}
           <div className="mt-10 p-4 flex flex-col items-center text-center">
             <h2 className="text-2xl text-white">{userProfile.name} </h2>
-            <p className="text-gray-500">@{userProfile.nick}</p>
+            <p className="text-white">@{userProfile.nick}</p>
             <p className="text-white">{userProfile.bio}</p>
           </div>
           {followData && (
-            <p className="text-gray-500 text-center">
-              Siguiendo: {followData.followingCount} | Seguidores: {followData.followersCount}
-            </p>
+          <div className="flex justify-center items-center">
+              <p className="text-white text-center w-32">
+                Siguiendo: {followData.followingCount} 
+              </p>
+              <img src="https://i.postimg.cc/XYy11bcj/gema-blanca.png" alt="gema-blanca" className="w-5"/>
+              <p className="text-white text-center w-32">
+                Seguidores:{" "}{followData.followersCount}
+              </p>
+          </div>
           )}
-          <div className="flex justify-center items-centers mt-2">
+          <div className="flex justify-between items-centers mt-2">
+            <h2
+              className="flex items-center md:mr-7 text-base text-white cursor-pointer hover:text-black relative transition duration-300 ease-in-out"
+              onClick={handleDeleteCards}
+            >
+              &nbsp;
+              <FaExclamationTriangle style={{ color: '#FFD43B' }} />
+              &nbsp;
+              Reportar
+            </h2>
             {!isItMe && (
                 <button
-                  className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full"
+                  className="bg-white hover:bg-gray-600 text-black px-4 rounded-full w-32 h-7"
                   onClick={handleFollow}
                 >
-                  {isFollowing ? "Dejar de Seguir" : "Seguir"}
+                  {isFollowing ? "Siguiendo" : "Seguir"}
                 </button>
-              )}
+            )}
+            <span className="w-32">&nbsp;</span>
             </div>
         </div>
       )}
+        <Modal
+        isOpen={isModalOpen}
+        onRequestClose={cancelDelete}
+        contentLabel="Confirmar eliminación"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 rounded-md p-4 text-white w-80"
+        overlayClassName="fixed inset-0 z-50"
+        ariaHideApp={false}
+      >
+        <h2 className="text-xl font-bold mb-4">
+          Escriba la razón por la que desea reportar a este usuario
+        </h2>
+        <input
+          type="text"
+          id="causeInput"
+          placeholder="Causa del reporte"
+          className="mb-4 w-full text-black"
+        />
+
+        <p
+          style={{ backgroundColor: reportMessageColor }}
+          className="flex justify-center items-center"
+        >
+          {reportMessage === "Reporte enviado correctamente" ? (
+            <>
+              <FaCheck />
+              &nbsp;
+              {reportMessage}
+            </>
+          ) : (
+            reportMessage
+          )}
+        </p>
+        <button
+          className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded mr-2"
+          onClick={confirmReport}
+        >
+          Enviar
+        </button>
+        <button
+          className="bg-slate-800 text-white px-4 py-2 rounded hover:bg-slate-700"
+          onClick={cancelDelete}
+        >
+          Cancelar
+        </button>
+      </Modal>
     </>
   );
 };

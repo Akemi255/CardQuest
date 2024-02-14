@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EditProfileModal from "@/components/UserProfile/EditProfileModal";
 import { BsPencilSquare } from "react-icons/bs";
 import { getEmail } from "@/helpers/getEmail";
+import '/public/css/profiles.css'
 
 const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
   const [followData, setFollowData] = useState(null);
@@ -79,14 +80,19 @@ const UserProfileCard = ({ userProfile, modalIsOpen, setModalIsOpen }) => {
             <BsPencilSquare size={20} color="white" />
           </button>
         </h2>
-        <p className="text-gray-500 ">@{userProfile.nick}</p>
+        <p className="text-white ">@{userProfile.nick}</p>
         <p className="text-white">{userProfile.bio}</p>
       </div>
       {followData && (
-        <p className="text-gray-500 text-center">
-          Siguiendo: {followData.followingCount} | Seguidores:{" "}
-          {followData.followersCount}
-        </p>
+        <div className="flex justify-center items-center ">
+          <p className="text-white text-center w-32">
+            Siguiendo: {followData.followingCount} 
+          </p>
+          <img src="https://i.postimg.cc/XYy11bcj/gema-blanca.png" alt="gema-blanca" className="w-5"/>
+          <p className="text-white text-center w-32">
+            Seguidores:{" "}{followData.followersCount}
+          </p>
+        </div>
       )}
 
       <EditProfileModal
