@@ -76,10 +76,7 @@ body{
     top: 175px;
     z-index: 3;
   }
-  
-  .cl-dividerRow{
-    visibility: hidden;
-  }
+
   .cl-formButtonPrimary{
     background-color: #4aa2d9;
     color: #ffffff;
@@ -98,4 +95,11 @@ body{
     text-decoration: none;
     font-weight: 500;
     color: #000000;
+  }
+  .cl-dividerText{
+    color: transparent;
+    background-image: url('/assets/forms-barra.png');
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
   }

@@ -13,7 +13,7 @@ const ViewProfile = ({ user }) => {
     nick: "undefined",
     emailAddress: "",
     image: 'https://i.postimg.cc/ZRvmNYYp/foto-perfil150.png',
-    banner: 'https://i.postimg.cc/YCBHWBTm/banner.png',
+    banner: 'https://i.postimg.cc/VNN272ND/paisaje.png',
     bio: "undefined",
   });
   const [isFollowing, setIsFollowing] = useState(false);

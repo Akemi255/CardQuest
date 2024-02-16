@@ -94,4 +94,10 @@ body{
     color: #000000;
   }
 
-  
+  .cl-dividerText{
+    color: transparent;
+    background-image: url('/assets/forms-barra.png');
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+  }
