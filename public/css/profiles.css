@@ -1,0 +1,14 @@
+body{
+    background-image: url('/assets/background-sections.png') !important;
+    background-color: #462241;
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+}
+.content-users{
+    background-color: rgba(80, 69, 104, 0.5);
+}
+.userName{
+    border-bottom: 10px solid #6B5F69;
+    width: 90%;
+}

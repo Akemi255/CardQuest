@@ -6,6 +6,7 @@ import { getEmail } from "@/helpers/getEmail";
 import Modal from "react-modal";
 import OrderOptions from "./OrderOptions";
 import { fetchUserCards } from "@/helpers/FavCards/fetchUserCards";
+import '/public/css/profile.css'
 
 const SavedCardsSection = () => {
   const [userCards, setUserCards] = useState([]);
@@ -103,11 +104,11 @@ const SavedCardsSection = () => {
   return (
     <>
       <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md seccionGuardadas">
-        <h1 className="flex justify-center items-center text-2xl font-bold text-white">
-          Cartas guardadas
+        <h1 className="flex justify-center items-center text-xl font-bold text-white">
+          TUS CARTAS
         </h1>
-        <div className="flex flex-col md:flex-row items-center justify-between mx-auto mt-7">
-          <div className="flex items-center text-2xl font-bold text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor-pointer mb-4 md:mb-0">
+        <div className="flex  items-center justify-center mt-3 gap-20 group-filter">
+          <div className="flex items-center text-base text-white hover:text-gray-300 transition duration-300 ease-in-out cursor-pointer mb-4 md:mb-0 text-base">
             <OrderOptions
               setGroupBy={setGroupBy}
               showOrderOptions={showOrderOptions}
@@ -116,24 +117,28 @@ const SavedCardsSection = () => {
               setSelectedOption={setSelectedOption}
             />
           </div>
-          <div className="flex items-center md:relative md:left-7 mb-4 md:mb-0">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
-              placeholder="Buscar cartas..."
-            />
-            <button className="px-2 py-2 rounded-r  ">
-              <FiSearch size={25} />
-            </button>
+          <div className="flex items-center md:left-7 mb-4 md:mb-0">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className=" px-10 py-2 border text-black w-96 barra"
+                placeholder="Buscar..."
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-2">
+                <FiSearch size={25} color="black"/>
+              </div>
+            </div>
           </div>
-          <h2
-            className="flex items-center md:mr-7 text-2xl font-bold text-white cursor-pointer hover:text-red-700 relative transition duration-300 ease-in-out"
-            onClick={handleDeleteCards}
-          >
-            Borrar cartas <BiSolidTrashAlt size={32} color="red" />
-          </h2>
+          <div>
+            <h2
+              className="flex items-center md:mr-7 text-base text-white cursor-pointer hover:text-black relative transition duration-300 ease-in-out"
+              onClick={handleDeleteCards}
+            >
+              <BiSolidTrashAlt size={25} color="white" /> Eliminar Cartas
+            </h2>
+          </div>
         </div>
         {!loading && userCards.length > 0 && (
           <div className="flex flex-wrap mt-5 gap">
@@ -151,9 +156,17 @@ const SavedCardsSection = () => {
         isOpen={isModalOpen}
         onRequestClose={cancelDelete}
         contentLabel="Confirmar eliminación"
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 rounded-md p-4 text-white w-80"
-        overlayClassName="fixed inset-0"
+        className="absolute modal top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 rounded-md p-4 text-white w-80 h-80"
+        overlayClassName="fixed inset-0 "
         ariaHideApp={false}
+        style={{
+          overlay: {
+            zIndex: 1000 // Z-index para el overlay del modal
+          },
+          content: {
+            zIndex: 1001 // Z-index para el contenido del modal
+          }
+        }}
       >
         <h2 className="text-xl font-bold mb-4">
           ¿Está seguro de que desea eliminar todas sus cartas?

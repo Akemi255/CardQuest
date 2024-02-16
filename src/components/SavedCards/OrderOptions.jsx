@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import OrderOptionButton from "./OrderOptionButton";
-import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { IoMdArrowDropdown } from 'react-icons/io';
 
 const OrderOptions = ({ setGroupBy, showOrderOptions, setShowOrderOptions, selectedOption, setSelectedOption }) => {
   const orderOptions = [
@@ -28,10 +28,10 @@ const OrderOptions = ({ setGroupBy, showOrderOptions, setShowOrderOptions, selec
   return (
     <div className="relative" ref={menuRef}>
       <button
-        className="ml-5 order-options-button text-2xl font-bold text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor flex justify-center items-center"
+        className="order-options-button text-base text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor flex justify-center items-center"
         onClick={() => setShowOrderOptions(!showOrderOptions)}
       >
-        Ordenar por &nbsp; <IoMdArrowDropdownCircle />
+        Ordenar por &nbsp; <IoMdArrowDropdown size={32}/>
       </button>
       <div className={`order-options ${showOrderOptions ? 'block' : 'hidden'} absolute left-5 bg-gray-700 rounded-md overflow-hidden shadow-md z-50 transition duration-300 ease-in-out`} >
         {orderOptions.map((option) => (

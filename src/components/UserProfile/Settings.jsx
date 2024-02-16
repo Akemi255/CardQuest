@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Modal from "react-modal";
 import { IoSettingsSharp } from "react-icons/io5";
 import { UserProfile } from "@clerk/nextjs";
+import '/public/css/profiles.css'
 
 const Settings = ({ defaultOpen = false }) => {
   const [modalIsOpen, setModalIsOpen] = useState(defaultOpen);

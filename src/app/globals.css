@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  @apply bg-gray-800;
-}
-
 /*estilos boton*/
+.back-profile{
+  background-image: url('/assets/background-sections.png') !important;
+  background-color: #462241;
+  background-size: cover;
+  background-position:center;
+  background-repeat: no-repeat;
+}
 .btn {
   position: relative;
   display: block;
@@ -163,7 +166,7 @@ body{
 
 /*Estilos css para el modal*/
 .modal{
-  height: 630px;
+  height: 200px;
   overflow-y: auto;
   
 }
@@ -178,10 +181,7 @@ body{
   border-radius: 5px; /* Bordes redondeados */
 }
 
-.banner{
-  width: 580px;
-  height: 150px;
-}
+
 .modal-overlay:focus {
   outline: none;
 }

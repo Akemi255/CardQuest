@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import { SetEmail } from "@/helpers/SetEmail";
+import '/public/css/profile.css'
 
 const ViewFavCards = ({ user }) => {
   const [userCards, setUserCards] = useState([]);
@@ -115,12 +116,12 @@ const ViewFavCards = ({ user }) => {
 
   return (
     <>
-      <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md">
-        <h1 className="flex justify-center items-center text-2xl font-bold text-white">
+      <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md seccionGuardadas">
+        <h1 className="flex justify-center items-center text-xl font-bold text-white">
           Cartas guardadas
         </h1>
-        <div className="flex flex-col md:flex-row items-center justify-between mx-auto mt-7">
-          <div className="flex items-center text-2xl font-bold text-white hover:text-gray-300 relative transition duration-300 ease-in-out cursor-pointer mb-4 md:mb-0">
+        <div className="flex  items-center justify-center mt-3 gap-20 ">
+          <div className="flex items-center text-base text-white hover:text-gray-300 transition duration-300 ease-in-out cursor-pointer mb-4 md:mb-0 text-base">
             <OrderOptions
               setGroupBy={setGroupBy}
               showOrderOptions={showOrderOptions}
@@ -129,29 +130,25 @@ const ViewFavCards = ({ user }) => {
               setSelectedOption={setSelectedOption}
             />
           </div>
-          <div className="flex items-center md:relative  mb-4 md:mb-0">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
-              placeholder="Buscar cartas..."
-            />
-            <button className="px-2 py-2 rounded-r  ">
-              <FiSearch size={25} />
-            </button>
+          <div className="flex items-center md:left-7 mb-4 md:mb-0">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className=" px-10 py-2 border text-black w-96 barra"
+                placeholder="Buscar..."
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-2">
+                <FiSearch size={25} color="black"/>
+              </div>
+            </div>
           </div>
-          <h2
-            className="flex items-center md:mr-7 text-2xl font-bold text-white cursor-pointer hover:text-red-700 relative transition duration-300 ease-in-out"
-            onClick={handleDeleteCards}
-          >
-            Reportar
-            <MdOutlineReportGmailerrorred size={32} color="red" />
-          </h2>
+            <span className="w-32">&nbsp;</span>
         </div>
 
         {!loading && userCards.length > 0 && (
-          <div className="flex flex-wrap mt-5">
+          <div className="flex flex-wrap mt-5 gap">
             {filteredCards.slice(0, visibleCards).map((card, index) => (
               <ProfileSavedCards
                 key={index}
@@ -162,52 +159,6 @@ const ViewFavCards = ({ user }) => {
           </div>
         )}
       </div>
-
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={cancelDelete}
-        contentLabel="Confirmar eliminación"
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 rounded-md p-4 text-white w-80"
-        overlayClassName="fixed inset-0"
-        ariaHideApp={false}
-      >
-        <h2 className="text-xl font-bold mb-4">
-          Escriba la razón por la que desea reportar a este usuario
-        </h2>
-        <input
-          type="text"
-          id="causeInput"
-          placeholder="Causa del reporte"
-          className="mb-4 w-full text-black"
-        />
-
-        <p
-          style={{ backgroundColor: reportMessageColor }}
-          className="flex justify-center items-center"
-        >
-          {reportMessage === "Reporte enviado correctamente" ? (
-            <>
-              <FaCheck />
-              &nbsp;
-              {reportMessage}
-            </>
-          ) : (
-            reportMessage
-          )}
-        </p>
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded mr-2"
-          onClick={confirmReport}
-        >
-          Enviar
-        </button>
-        <button
-          className="bg-slate-800 text-white px-4 py-2 rounded hover:bg-slate-700"
-          onClick={cancelDelete}
-        >
-          Cancelar
-        </button>
-      </Modal>
     </>
   );
 };

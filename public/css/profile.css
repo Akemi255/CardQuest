@@ -1,0 +1,58 @@
+body{
+    background-image: url('/assets/background-sections.png') ;
+}
+.inputCartas{
+    background-color: white;
+    width: 400px;
+}
+.modal-edit{
+    background-color: rgba(80, 69, 104, 0.5);
+    border-radius: 70px;
+    max-width: 1100px;
+}
+.banner-edit{
+    background-image: url('/assets/banner-edit.png');
+    background-size: cover;
+    height: 166px;
+    width: 835px;
+}
+.color-insert{
+    color:rgb(93, 83, 114);
+}
+.botones{
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+}
+.color-button{
+    background-color: #4592D1;
+}
+.color-letra{
+    color: #4592D1;
+}
+
+@media (max-width: 1100px) {
+    .banner-edit{
+        width: 500px;
+        
+    }
+    .group-filter{
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+@media (max-width: 750px) {
+    .order-barra{
+        flex-direction: column;
+        gap: 5px;
+    }
+    .barra{
+        width: 200px;
+    }
+}
+@media (max-width: 580px) {
+    .banner-edit{
+        width: 350px;
+        
+    }
+}

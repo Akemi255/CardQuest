@@ -16,7 +16,7 @@ body{
     align-items: center;
     padding: 0;
   }
-  .prueba{
+  .card-singUp{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,17 +42,20 @@ body{
   .cl-formFieldInput{
     background-color: #A9B0B8;
   }
-  
   .cl-headerTitle {
     visibility: hidden;
     font-size: 1px;
   }
-  .tituloInicia{
-    text-align: start;
+  .tituloSingUp{
     width: 100%;
     margin-left: 65px;
-    font-weight: 700;
-    font-size: 26px;
+    box-sizing: border-box;
+    color: black;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: auto !important;
   }
   .cl-headerSubtitle{
     font-size:20px;
@@ -68,12 +71,12 @@ body{
   .cl-main{
     gap: 10px;
   }
-  .gemaForm{
-    position: absolute;
+  .gema{
+    position:relative;
+    top: 175px;
     z-index: 3;
   }
-  
-  
+
   .cl-formButtonPrimary{
     background-color: #4aa2d9;
     color: #ffffff;
@@ -93,7 +96,6 @@ body{
     font-weight: 500;
     color: #000000;
   }
-
   .cl-dividerText{
     color: transparent;
     background-image: url('/assets/forms-barra.png');
