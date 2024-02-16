@@ -13,7 +13,6 @@ const useCharacterSaver = (
   loading
 ) => {
   const saveCharacter = async (character, index) => {
-   
     setLoading(true);
     let cardsInCurrentSet = 0;
 
@@ -48,7 +47,6 @@ const useCharacterSaver = (
         setCharacterData(updatedCharacterData);
 
         try {
-         
           const [responseSaveCard, responseBoostCard] = await Promise.all([
             fetch("https://api-rest-card-quest.vercel.app/api/cards/saveCard", {
               method: "POST",
@@ -60,15 +58,18 @@ const useCharacterSaver = (
                 content: character,
               }),
             }),
-            fetch("https://api-rest-card-quest.vercel.app/api/apiCards/boostCard", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                content: character,
-              }),
-            }),
+            fetch(
+              "https://api-rest-card-quest.vercel.app/api/apiCards/boostCard",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  content: character,
+                }),
+              }
+            ),
           ]);
 
           // Verificar las respuestas de ambas solicitudes
@@ -77,7 +78,9 @@ const useCharacterSaver = (
             const boostCardResponseData = await responseBoostCard.json();
 
             if (saveCardResponseData.status === 202) {
-              toast.success(`Ya tienes esta carta recibirás su valor en monedas. Monedas ganadas: ${boostCardResponseData.newCoinsValue}`);
+              toast.success(
+                `Ya tienes esta carta recibirás su valor en monedas. Monedas ganadas: ${boostCardResponseData.newCoinsValue}`
+              );
             } else {
               toast.success("Carta guardada exitosamente");
             }
@@ -96,18 +99,14 @@ const useCharacterSaver = (
           } else {
             toast.error("Error en una o ambas solicitudes al backend.");
           }
-      
         } catch (error) {
-        
           toast.error("Error al enviar las cartas al backend");
         }
       } else {
         toast.error("Este personaje ya ha sido guardado.");
-        
       }
     } else {
       toast.error("Solo puedes guardar una carta por cada conjunto de cinco.");
-      
     }
     setLoading(false);
   };
