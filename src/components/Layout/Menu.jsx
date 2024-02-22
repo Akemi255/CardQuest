@@ -95,7 +95,7 @@ const Menu = () => {
             </li>
             <li>
               <Link
-                href="#"
+                href="/users-ranking"
                 className={`flex justify-center items-center text-white text-lg py-2 hover:opacity-75`}
                 onClick={closeMenu}
               >

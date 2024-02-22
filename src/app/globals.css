@@ -32,7 +32,17 @@
 }
 
 
-
+.custom-table {
+  background-color: rgba(80, 69, 104, 0.5);
+}
+.custom-table-border {
+  border-color: rgba(80, 69, 104, 0.5);
+}
+@media screen and (max-width: 768px) {
+  .responsive-table {
+    width: 100%;
+  }
+}
 /* @keyframes animate {
   0% {
     background-position: 0%;
