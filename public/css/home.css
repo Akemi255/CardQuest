@@ -15,8 +15,8 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-height: 450px; /* Ajusta según sea necesario */
-    min-width: 260px;
+    /* min-height: 450px; 
+    min-width: 260px; */
   }
 .info-like{
   display: flex;
@@ -100,6 +100,12 @@ body{
         background-position: center;
         background-repeat: no-repeat;
     }
+    .cartas .borderGeneral{
+        position: absolute;
+        margin-top: 5px;
+        height: 440px;
+        z-index: 1;
+    }
 
     .border-comun .imagenAnime, 
     .border-plata .imagenAnime,
@@ -112,13 +118,41 @@ body{
       height: 316px;
       object-fit: cover;
     }
-    .cartas .borderComun{
-        position: absolute;
-        margin-top: 5px;
-        height: 440px;
-        z-index: 1;
-    }
 
 .gap{
   gap: 20px;
+}
+
+
+@media (max-width: 580px){
+  .border-comun .imagenAnime, 
+  .border-plata .imagenAnime,
+  .border-oro .imagenAnime,
+  .border-raro .imagenAnime,
+  .border-epico .imagenAnime,
+  .border-mitico .imagenAnime{
+    margin-top: 20px;
+    height: 160px;
+    object-fit: cover;
+  }
+  .border-comun, 
+  .border-plata,
+  .border-oro,
+  .border-raro,
+  .border-epico,
+  .border-mitico{
+    /* height: 346px;
+    width: 185px; */
+    height: 285px;
+    width: 161px;
+    border-radius: 10px;
+  }
+  .cartas .borderGeneral{
+    position: absolute;
+    margin-top: 5px;
+    height: 275px;
+    z-index: 1;
+    width: auto
+}
+  
 }

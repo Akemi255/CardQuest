@@ -16,7 +16,7 @@ const CharacterCard = ({
         <img 
           src={`/assets/${character.borderColorClass}.png`}
           alt="" 
-          className="borderComun flex items-center"
+          className="borderGeneral flex items-center"
         />
         {character.images && character.images.jpg && (
           <img
