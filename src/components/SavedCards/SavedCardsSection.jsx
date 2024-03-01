@@ -102,7 +102,7 @@ const SavedCardsSection = () => {
   };
 
   return (
-    <>
+    <div className="pepe">
       <div className="w-full mt-8 p-4 bg-gray-700 shadow-md rounded-md seccionGuardadas">
         <h1 className="flex justify-center items-center text-xl font-bold text-white">
           TUS CARTAS
@@ -133,10 +133,13 @@ const SavedCardsSection = () => {
           </div>
           <div>
             <h2
-              className="flex items-center md:mr-7 text-base text-white cursor-pointer hover:text-black relative transition duration-300 ease-in-out"
+              className="flex items-center md:mr-7 text-base text-white cursor-pointer relative transition duration-300 ease-in-out"
               onClick={handleDeleteCards}
             >
-              <BiSolidTrashAlt size={25} color="white" /> Eliminar Cartas
+            <div className="flex items-center hover:text-black">
+              <BiSolidTrashAlt size={25} />
+              <span className="ml-2">Eliminar Cartas</span>
+            </div>
             </h2>
           </div>
         </div>
@@ -185,7 +188,7 @@ const SavedCardsSection = () => {
           Cancelar
         </button>
       </Modal>
-    </>
+    </div>
   );
 };
 

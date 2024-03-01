@@ -5,12 +5,12 @@ import UsersProfiles from "@/components/UsersProfiles/UsersProfiles";
 
 const page = () => {
   return (
-    <>
+    <div className="back-profile">
       <Header />
       <UsersProfiles />
       <Footer/>
       
-    </>
+    </div>
   );
 };
 

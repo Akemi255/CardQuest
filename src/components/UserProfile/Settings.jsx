@@ -9,6 +9,7 @@ import '/public/css/profiles.css'
 const Settings = ({ defaultOpen = false }) => {
   const [modalIsOpen, setModalIsOpen] = useState(defaultOpen);
 
+
   const openModal = () => {
     setModalIsOpen(true);
   };

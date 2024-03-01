@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Header from "@/components/Layout/Header";
 import { useUser } from "@clerk/nextjs";
@@ -22,6 +22,18 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
   }else{
     document.body.style.overflow = 'auto';
   }
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto'; 
+    };
+  });
+
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -117,12 +129,9 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
         className="w-4/5 mx-auto my-12 p-8 rounded-3xl shadow-md modal-edit "
         style={{
           overlay: {
-            backgroundImage: 'url(/assets/background-sections.png)', // URL de tu imagen de fondo
-            backgroundColor: 'rgb(80, 69, 104)', // Color de fondo con opacidad
-            backgroundBlendMode: 'normal', // Mezcla la imagen de fondo con el color de fondo
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            overflow: 'hidden',
+            backgroundColor: 'rgba(80, 69, 104, 0.5)', 
+            backdropFilter: 'blur(8px)', // Aplica el desenfoque al fondo
+            overflowY: 'hidden',
             zIndex: 9999,
           }
         }}
