@@ -2,13 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body .modal-open {
+  overflow: hidden;
+}
+
+
 /*estilos boton*/
 .back-profile{
-  background-image: url('/assets/background-sections.png') !important;
+  background-image: url('/assets/background-sections.png');
   background-color: #462241;
   background-size: cover;
   background-position:center;
   background-repeat: no-repeat;
+}
+.fondoMontania{
+  background-color: #462241;
+  background-image: url('/assets/background-sections.png');
+  background-size: cover;
+  background-position:center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 .btn {
   position: relative;

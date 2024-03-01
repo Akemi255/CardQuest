@@ -10,7 +10,7 @@ import Footer from '@/components/Layout/footer';
 const User = () => {
   const { user } = useParams();
 
-  return <> 
+  return <div className="back-profile"> 
   
   <Header/>
   
@@ -18,7 +18,7 @@ const User = () => {
   <ViewFavCards user={user}/>
   <br />
   <Footer/>
-  </>;
+  </div>;
 };
 
 export default User;

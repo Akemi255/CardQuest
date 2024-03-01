@@ -58,10 +58,10 @@ const UsersProfiles = () => {
   return (
     <>
       <div className="flex items-center justify-center w-full">
-        <div className="relative">
+        <div className="relative w-2/5 mt-14 mb-7">
           <input
             type="text"
-            className="w-10/12 pl-10 pr-4 py-2 border rounded bg-white text-white"
+            className="w-full pl-10 pr-4 py-2 border rounded bg-white text-black"
             placeholder="Buscar usuarios"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -72,7 +72,7 @@ const UsersProfiles = () => {
         </div>
       </div>
     
-      <div className="content-users p-4 mt-4">
+      <div className="content-users p-4 mt-4 mb-14">
         <div className="container mx-auto">
 
           {!loading && (
@@ -94,12 +94,12 @@ const UsersProfiles = () => {
                         alt="Foto de Perfil"
                         className="w-28 h-28 object-cover rounded-full absolute -bottom-5 left-14 transform -translate-x-1/2"
                       />
-                      <div class="relative">
-                        <div class="flex flex-col w-[38%] text-lg text-white font-semibold mt-8 absolute left-[63%] -bottom-[0.3rem] text-center capitalize">
-                          <p class="userName">{user.name}</p>
+                      <div class="relative flex flex-col items-center">
+                        <div class="absolute flex flex-col w-[38%] text-lg text-white font-semibold  absolute left-[62%] bottom-[1.5rem] text-center capitalize ">
+                          <p class="userName ">{user.name}</p>
                         </div>
-                        <div class="absolute bottom-0 left-[14.7rem] top-[-1rem] w-full flex justify-center">
-                          <FaDiamond class="w-7 h-7 text-white" />
+                        <div class="relative bottom-0 max-[640px]:left-[46%] sm:left-[45%] md:left-[44%] lg:left-[45%] xl:left-[47%] top-[-1rem] flex justify-center">
+                          <FaDiamond class="w-7 h-7 text-white diamante"  />
                         </div>
                       </div>
                     </div>

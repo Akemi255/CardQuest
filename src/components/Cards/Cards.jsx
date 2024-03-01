@@ -269,7 +269,7 @@ const Cards = () => {
       }
 
       const randomNumbers = [];
-      while (randomNumbers.length < 5) {
+      while (randomNumbers.length < 6) {
         const randomNumber = getRandomNumberExcluding(
           1,
           169979,
