@@ -416,3 +416,17 @@
 .seccionGuardadas{
   background-color: rgba(80, 69, 104, 0.5);
 }
+
+
+/* Estilos buscador*/
+.bg-custom-bg-color {
+  background-color: rgba(80, 69, 104, 0.5); 
+}
+
+.border-custom-border-color {
+  border-color: rgba(80, 69, 104, 0.5); 
+}
+
+.bg-custom-button-color-hover:hover {
+  background-color: rgba(74, 64, 97, 0.5); 
+}

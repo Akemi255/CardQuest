@@ -6,8 +6,12 @@ import { useParams } from "next/navigation";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdNavigateNext } from "react-icons/md";
 import { RenderRankingCards } from "@/components/ranking/cards-ranking/render-ranking-cards";
+import { getEmail } from "@/helpers/getEmail";
+import { RenderExploreCards } from "@/components/explore-cards/render-explore-cards";
+import SearchInput from '@/components/explore-cards/buscador';
 
 const Page = () => {
+  const email = getEmail();
   const { page } = useParams();
   const [data, setData] = useState([]);
   const [currentPageNumber, setCurrentPageNumber] = useState(
@@ -20,7 +24,14 @@ const Page = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://api-rest-card-quest.vercel.app/api/apiCards/sortedByCoins/${currentPageNumber}`
+          `https://api-rest-card-quest.vercel.app/api/apiCards/exploredCards/${currentPageNumber}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+          }
         );
         if (response.ok) {
           const jsonData = await response.json();
@@ -39,7 +50,7 @@ const Page = () => {
     };
 
     fetchData();
-  }, [currentPageNumber]);
+  }, [currentPageNumber, email]);
 
   // Función para cambio de página
   const handlePageChange = (newPage) => {
@@ -168,14 +179,16 @@ const Page = () => {
     );
   };
 
+
   return (
     <>
       <Header />
-
+      <br />
+      <SearchInput/>
       {/* Renderizar datos */}
       <div className="flex flex-wrap mt-5">
         {data.map((item, index) => (
-          <RenderRankingCards key={item._id} data={item} index={index} />
+          <RenderExploreCards key={item._id} data={item} index={index} />
         ))}
       </div>
 
