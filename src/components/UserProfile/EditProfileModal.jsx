@@ -138,7 +138,7 @@ const EditProfileModal = ({ isOpen, closeModal }) => {
                 <img
                   src={bannerImage}
                   alt="Banner Preview"
-                  className=" h-full object-cover cursor-pointer "
+                  className="object-cover cursor-pointer "
                 />
               ) : (
                 <span
