@@ -1,58 +1,76 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Header from "@/components/Layout/Header";
-import Footer from "@/components/Layout/footer";
-import { useParams } from "next/navigation";
+"use client"
+import { getEmail } from '@/helpers/getEmail';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { MdNavigateBefore } from "react-icons/md";
 import { MdNavigateNext } from "react-icons/md";
-import { RenderRankingCards } from "@/components/ranking/cards-ranking/render-ranking-cards";
+import SearchInput from '@/components/explore-cards/buscador';
+import Header from '@/components/Layout/Header';
+import Footer from '@/components/Layout/footer';
+import { RenderExploreCards } from '@/components/explore-cards/render-explore-cards';
+
 
 const Page = () => {
-  const { page } = useParams();
-  const [data, setData] = useState([]);
-  const [currentPageNumber, setCurrentPageNumber] = useState(
-    parseInt(page, 10) || 1
-  );
-  const [totalPages, setTotalPages] = useState(4250);
+  const email = getEmail();
+  const router = useRouter();
+  const search = useSearchParams();
+  const searchQuery = search ? search.get("q") : null;
+  const encodedSearchQuery = encodeURI(searchQuery || "");
 
-  // Obtención de datos
+  const [currentPageNumber, setCurrentPageNumber] = useState(
+    parseInt(search ? search.get("page") || "1" : "1", 10)
+  );
+  const [totalPages, setTotalPages] = useState(0);
+  const [data, setData] = useState([]);
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://api-rest-card-quest.vercel.app/api/apiCards/sortedByCoins/${currentPageNumber}`
-        );
+        const response = await fetch(`https://api-rest-card-quest.vercel.app/api/apicards/searchCards/${currentPageNumber}/${encodedSearchQuery}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+
         if (response.ok) {
           const jsonData = await response.json();
           setTotalPages(jsonData.totalPages);
+          setData(jsonData.data); // Assuming your API response has a 'data' field containing the actual data
+          console.log('Petición POST exitosa');
           if (Array.isArray(jsonData.cards)) {
             setData(jsonData.cards);
           } else {
             console.error('Error fetching data: "cards" is not an array');
           }
         } else {
-          console.error("Error fetching data:", response.statusText);
+          console.error('Error en la petición POST:', response.statusText);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error en la petición POST:', error);
       }
     };
 
     fetchData();
-  }, [currentPageNumber]);
+  }, [email, encodedSearchQuery, currentPageNumber]);
 
-  // Función para cambio de página
   const handlePageChange = (newPage) => {
     setCurrentPageNumber(newPage);
     updateUrl(newPage);
   };
 
-  // Actualización de URL
   const updateUrl = (newPage) => {
-    window.history.pushState({}, "", `/cards-ranking/${newPage}`);
+    router.push(`/cards/1/search?q=${encodedSearchQuery}&page=${newPage}`);
   };
 
-  // Renderizar botones de paginación
+  const handleNewSearch = () => {
+    // Resetear currentPageNumber a 1 en cada nueva búsqueda
+    setCurrentPageNumber(1);
+  };
+
   const renderPagination = (totalPages) => {
     const pageButtons = [];
     const maxPagesToShow = 5;
@@ -168,14 +186,16 @@ const Page = () => {
     );
   };
 
+
   return (
     <>
       <Header />
-
+      <br />
+      <SearchInput onNewSearch={handleNewSearch}/>
       {/* Renderizar datos */}
       <div className="flex flex-wrap mt-5">
         {data.map((item, index) => (
-          <RenderRankingCards key={item._id} data={item} index={index} />
+          <RenderExploreCards key={item._id} data={item} index={index} />
         ))}
       </div>
 

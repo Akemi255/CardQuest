@@ -1,4 +1,4 @@
-export const RenderCards = ({ data, index }) => {
+export const RenderRankingCards = ({ data, index }) => {
   const getColorForRarity = (rareza) => {
     const lowerCasedRareza = (rareza || "").toLowerCase();
     switch (lowerCasedRareza) {
