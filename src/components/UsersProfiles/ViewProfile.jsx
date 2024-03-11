@@ -5,6 +5,7 @@ import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import { FaExclamationTriangle } from 'react-icons/fa';
 
 import Modal from "react-modal";
+import { FaCheck } from "react-icons/fa6";
 
 const ViewProfile = ({ user }) => {
   const [loading, setLoading] = useState(true);
@@ -182,7 +183,7 @@ const ViewProfile = ({ user }) => {
       const cause = document.getElementById("causeInput").value;
 
       const formData = new URLSearchParams();
-      formData.append("reporterEmail", userEmail);
+      formData.append("reporterEmail", loggedInUserEmail);
       formData.append("cause", cause);
       formData.append("id", user);
 
