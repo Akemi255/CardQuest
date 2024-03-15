@@ -45,15 +45,18 @@ export default function AuthenticationPage() {
         >
           Login
         </Link>
-        <div className="lg:p-8 bg-black bg-opacity-90 h-full flex">
+        <div className="lg:p-8 bg-black bg-opacity-90 h-full flex rounded-r-3xl">
           <div className="mx-auto  flex  w-full flex-col justify-center space-y-6 w-24 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">Welcome</h1>
-              <p className="text-sm text-muted-foreground">
-                Enter your email login
+              <h1 className="text-2xl font-semibold tracking-tight text-white">
+                Welcome
+              </h1>
+              <p className="text-sm text-muted-foreground text-white">
+                Enter your email to login
               </p>
             </div>
-            <UserAuthForm />
+            {/* <UserAuthForm /> */}
+            <SignIn />
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
