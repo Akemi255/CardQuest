@@ -11,7 +11,7 @@ import useCharacterSaver from "@/hooks/useCharacterSaver";
 import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
 import { SetEmail } from "@/helpers/SetEmail";
-import '/public/css/cards.css';
+import "/public/css/cards.css";
 import Footer from "../Layout/footer";
 
 //declaración de estados
@@ -89,7 +89,6 @@ const Cards = () => {
   }, [buttonClickCount]);
   //fin de algoritmos de detección de trampas
 
-  
   const [savedCardsCount, setSavedCardsCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [likedCharacters, setLikedCharacters] = useState([]);
@@ -102,15 +101,13 @@ const Cards = () => {
       return storedExistingCards || Array(5).fill(false);
     } else {
       return null;
-    } 
+    }
   });
 
   useEffect(() => {
     setIsClient(true);
     setRemainingAttempts(8 - buttonClickCount);
   }, [isClient, buttonClickCount]);
-
-  
 
   useEffect(() => {
     if (isClient) {
@@ -151,20 +148,16 @@ const Cards = () => {
     }
   }, [buttonClickCount, characterData]);
 
- 
-
   useEffect(() => {
     localStorage.setItem("buttonClickCount", buttonClickCount);
   }, [buttonClickCount]);
-
-  
 
   useEffect(() => {
     if (isClient) {
       const storedFutureTime = parseInt(localStorage.getItem("futureTime"), 10);
 
       if (buttonClickCount >= 8 && !storedFutureTime) {
-        const futureTime = parseInt(Date.now() / 1000, 10) + 84; 
+        const futureTime = parseInt(Date.now() / 1000, 10) + 84;
         localStorage.setItem("futureTime", futureTime);
       }
 
@@ -214,7 +207,6 @@ const Cards = () => {
       const currentTime = parseInt(Date.now() / 1000, 10);
 
       if (currentTime > storedFutureTime) {
-      
         setShowRetryMessage(false);
         // Eliminar elementos uno por uno
         localStorage.removeItem("futureTime");
@@ -252,13 +244,13 @@ const Cards = () => {
 
   const fetchCharacterData = async () => {
     setCharacterData([]);
-    setLoading(true)
+    setLoading(true);
     try {
-      
       if (isLoading || buttonDisabled) {
-        setCharacterData([]); return;
+        setCharacterData([]);
+        return;
       }
-      
+
       setIsLoading(true);
       localStorage.removeItem("savedCharacterData");
       setCharacterData([]);
@@ -270,10 +262,7 @@ const Cards = () => {
 
       const randomNumbers = [];
       while (randomNumbers.length < 6) {
-        const randomNumber = getRandomNumberExcluding(
-          1,
-          169979,
-        );
+        const randomNumber = getRandomNumberExcluding(1, 169979);
         if (!randomNumbers.includes(randomNumber)) {
           randomNumbers.push(randomNumber);
         }
@@ -321,7 +310,7 @@ const Cards = () => {
                 console.log("Before adding character:", characterData.length);
                 setCharacterData((prevData) => [...prevData, data.data]);
                 console.log("After adding character:", characterData.length);
-                
+
                 success = true;
 
                 const existCardResponse = await fetch(
@@ -353,13 +342,12 @@ const Cards = () => {
                     );
                     return updatedExistingCards;
                   });
-                
+
                   continue;
                 }
-                
               } else {
                 console.error(`No se encontraron imágenes para el ID ${id}`);
-                console.error('Respuesta del servidor:', data);
+                console.error("Respuesta del servidor:", data);
                 success = true;
               }
             } else if (response.status === 404) {
@@ -380,10 +368,9 @@ const Cards = () => {
             );
             id = getRandomNumberExcluding(1, 2000, [8, 9, 10, 578, 576]);
           }
-         
         }
       }
-      setLoading(false)
+      setLoading(false);
       setIsLoading(false);
       setButtonClickCount((prevCount) => prevCount + 1);
     } catch (error) {
@@ -392,7 +379,7 @@ const Cards = () => {
     }
   };
   function CleanArray() {
-    setCharacterData([])
+    setCharacterData([]);
     localStorage.removeItem("savedCharacterData");
     setExistingCards(Array(5).fill(false));
     localStorage.removeItem(`existingCards`);
@@ -409,47 +396,49 @@ const Cards = () => {
     setLoading,
     loading
   );
-  
+
   return (
     <>
-    <div>
+      <div>
+        {showRetryMessage && (
+          <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
+            <p>{`Límite de intentos superados, regrese en 24 horas.`}</p>
+          </div>
+        )}
 
-      {showRetryMessage && (
-        <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
-          <p>{`Límite de intentos superados, regrese en 24 horas.`}</p>
-        </div>
-      )}
-
-      {characterData.length > 0 && (
-        <div className="flex car flex-wrap">
-          {characterData.map((character, index) => (
-            <CharacterCard
-              key={index}
-              character={character}
-              index={index}
-              getColorForRarity={getColorForRarity}
-              saveCharacter={saveCharacter}
-              existingCards={existingCards}
-              loading={loading}
-            />
+        {characterData.length > 0 && (
+          <div className="flex car flex-wrap">
+            {characterData.map((character, index) => (
+              <CharacterCard
+                key={index}
+                character={character}
+                index={index}
+                getColorForRarity={getColorForRarity}
+                saveCharacter={saveCharacter}
+                existingCards={existingCards}
+                loading={loading}
+              />
             ))}
-        </div>
-      )}
-      <button
-        className="btn float lanzarCards"
-        onClick={() => {
-          CleanArray();
-          fetchCharacterData();
-        }}
-        disabled={buttonDisabled || (showRetryMessage && retryCountdown > 0 || loading)}
-      >
-        {"Lanzar Cartas"}
-      </button>
+          </div>
+        )}
+        <button
+          className="btn float lanzarCards"
+          onClick={() => {
+            CleanArray();
+            fetchCharacterData();
+          }}
+          disabled={
+            buttonDisabled ||
+            (showRetryMessage && retryCountdown > 0) ||
+            loading
+          }
+        >
+          {"Lanzar Cartas"}
+        </button>
         <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div>
-    </div>
-    <Footer></Footer>
+      </div>
+      <Footer></Footer>
     </>
-
   );
 };
 

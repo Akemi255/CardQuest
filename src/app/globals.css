@@ -1,456 +1,76 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-body .modal-open {
-  overflow: hidden;
-}
-
-
-/*estilos boton*/
-.back-profile{
-  background-image: url('/assets/background-sections.png');
-  background-color: #462241;
-  background-size: cover;
-  background-position:center;
-  background-repeat: no-repeat;
-}
-.fondoMontania{
-  background-color: #462241;
-  background-image: url('/assets/background-sections.png');
-  background-size: cover;
-  background-position:center;
-  background-repeat: no-repeat;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-}
-.btn {
-  position: relative;
-  display: block;
-  width: 100%; /* Ancho completo para que sea responsive */
-  max-width: 350px; /* Ancho máximo */
-  height: 80px;
-  margin: 15px auto; /* Margen arriba y abajo (50px) y centrado horizontalmente (auto) */
-  text-align: center;
-  line-height: 60px;
-  color: #fff;
-  font-size: 24px;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-family: sans-serif;
-  box-sizing: border-box;
-  background-image: url('/assets/boton-lanzar.png');
-  background-size: cover;
-  border-radius: 30px;
-  z-index: 1;
-}
-
-
-.custom-table {
-  background-color: rgba(80, 69, 104, 0.5);
-}
-.custom-table-border {
-  border-color: rgba(80, 69, 104, 0.5);
-}
-@media screen and (max-width: 768px) {
-  .responsive-table {
-    width: 100%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
-/* @keyframes animate {
-  0% {
-    background-position: 0%;
+ 
+@layer base {
+  * {
+    @apply border-border;
   }
-  100% {
-    background-position: 400%;
+  body {
+    @apply bg-background text-foreground;
   }
-} */
-
-/* .btn::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  bottom: -5px;
-  left: -5px;
-  z-index: -1;
-  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-  background-size: 400%;
-  border-radius: 40px;
-  opacity: 0;
-  transition: .5s;
-} */
-
-/* .btn:hover::before {
-  filter: blur(20px);
-  opacity: 1;
-  animation: none; 
-} */
-
-/* .header-button::before {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #fff;
-  transition: width 0.3s;
-} */
-/* .header-button:hover::before {
-  width: 100%;
-}
-
-.new-header-button::before {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #000000;
-  transition: width 0.3s;
-}
-.new-header-button:hover::before {
-  width: 100%;
-} */
-
-              
-
-     
-
-/* Estilos para los bordes de las cartas */
-/* .border-comun {
-  border: 6px solid rgb(82, 4, 4); 
-  position: relative;
-  overflow: hidden; 
-  width: 90%;
-  border-image: linear-gradient(to right, transparent, rgb(25, 25, 25), transparent) 1 1;
-  animation: desplazamiento-borde-comun 2.5s linear infinite; 
-} */
-/* 
-.border-plata {
-  border: 6px solid #C0C0C0; 
-  position: relative;
-  overflow: hidden; 
-  width: 90%;
-  border-image: linear-gradient(to right, transparent, #C0C0C0, transparent) 1 1;
-  animation: desplazamiento-borde-plata 2.5s linear infinite; 
-}
-
-.border-oro {
-  border: 6px solid #FFD700; 
-  position: relative;
-  overflow: hidden; 
-  width: 90%;
-  border-image: linear-gradient(to right, transparent, #FFD700, transparent) 1 1;
-  animation: desplazamiento-borde-oro 2.5s linear infinite; 
-}
-
-.border-raro {
-  border: 6px solid #1ecf4d; 
-  position: relative;
-  overflow: hidden; 
-  width: 90%;
-  border-image: linear-gradient(to right, transparent, #1ecf4d, transparent) 1 1;
-  animation: desplazamiento-borde-raro 2.5s linear infinite;
-}
-
-.border-epico {
-  border: 6px solid #271ecf; 
-  position: relative;
-  overflow: hidden; 
-  width: 90%;
-  border-image: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent) 1 1;
-  animation: desplazamiento-borde-epico 2.5s linear infinite; 
-} */
-
-/* .border-mitico {
-  border: 6px solid rgb(255, 0, 242);
-  position: relative;
-  overflow: hidden; 
-  width: 90%;
-  border-image: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent) 1 1;
-  animation: desplazamiento-borde-mitico 2.5s linear infinite; 
-} */
-/* Animación para el borde */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*Estilos css para el modal*/
-.modal{
-  height: 200px;
-  overflow-y: auto;
-  
-}
-.modal::-webkit-scrollbar {
-  width: 5px; /* Ancho de la barra de desplazamiento */
-  height: 5px; /* Grosor de la barra de desplazamiento */
-}
-
-/* Estilos adicionales de la barra de desplazamiento */
-.modal::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color del "pulgar" (la parte que se arrastra) */
-  border-radius: 5px; /* Bordes redondeados */
-}
-
-
-.modal-overlay:focus {
-  outline: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Animación para desplazar el borde */
-@keyframes desplazamiento-borde-comun {
-  0%, 100% {
-    border-image-source: linear-gradient(to right, transparent, rgb(82, 4, 4), transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  25% {
-    border-image-source: linear-gradient(to top, transparent, rgb(82, 4, 4), transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  50% {
-    border-image-source: linear-gradient(to right, transparent, rgb(82, 4, 4), transparent);
-    border-image-slice: 1;
-    border-image-offset: 100%;
-  }
-  75% {
-    border-image-source: linear-gradient(to bottom, transparent, rgb(82, 4, 4), transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-}
-
-
-@keyframes desplazamiento-borde-plata {
-  0%, 100% {
-    border-image-source: linear-gradient(to right, transparent, #7b7b7b, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  25% {
-    border-image-source: linear-gradient(to top, transparent, #7b7b7b, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  50% {
-    border-image-source: linear-gradient(to right, transparent, #7b7b7b, transparent);
-    border-image-slice: 1;
-    border-image-offset: 100%;
-  }
-  75% {
-    border-image-source: linear-gradient(to bottom, transparent, #7b7b7b, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-}
-
-
-
-@keyframes desplazamiento-borde-oro {
-  0%, 100% {
-    border-image-source: linear-gradient(to right, transparent, #FFD700, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  25% {
-    border-image-source: linear-gradient(to top, transparent, #FFD700, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  50% {
-    border-image-source: linear-gradient(to right, transparent, #FFD700, transparent);
-    border-image-slice: 1;
-    border-image-offset: 100%;
-  }
-  75% {
-    border-image-source: linear-gradient(to bottom, transparent, #FFD700, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-}
-
-
-@keyframes desplazamiento-borde-raro {
-  0%, 100% {
-    border-image-source: linear-gradient(to right, transparent, #1ecf4d, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  25% {
-    border-image-source: linear-gradient(to top, transparent, #1ecf4d, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  50% {
-    border-image-source: linear-gradient(to right, transparent, #1ecf4d, transparent);
-    border-image-slice: 1;
-    border-image-offset: 100%;
-  }
-  75% {
-    border-image-source: linear-gradient(to bottom, transparent, #1ecf4d, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-}
-
-
-@keyframes desplazamiento-borde-epico {
-  0%, 100% {
-    border-image-source: linear-gradient(to right, transparent, #271ecf, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  25% {
-    border-image-source: linear-gradient(to top, transparent, #271ecf, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  50% {
-    border-image-source: linear-gradient(to right, transparent, #271ecf, transparent);
-    border-image-slice: 1;
-    border-image-offset: 100%;
-  }
-  75% {
-    border-image-source: linear-gradient(to bottom, transparent, #271ecf, transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-}
-
-@keyframes desplazamiento-borde-mitico {
-  0%, 100% {
-    border-image-source: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  25% {
-    border-image-source: linear-gradient(to top, transparent, rgb(255, 0, 242), transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-  50% {
-    border-image-source: linear-gradient(to right, transparent, rgb(255, 0, 242), transparent);
-    border-image-slice: 1;
-    border-image-offset: 100%;
-  }
-  75% {
-    border-image-source: linear-gradient(to bottom, transparent, rgb(255, 0, 242), transparent);
-    border-image-slice: 1;
-    border-image-offset: 0;
-  }
-}
-
-
-.footer{
-  width: 100%;
-  position: absolute;
-  top: 910px;
-}
-
-.textArea{
-  height: 60px;
-}
-
-/*botón de las 3 opciones de filtrado de cartas*/
-.grouping-button {
-  cursor: pointer;
-  padding: 5px 10px;
-  margin-left: 10px;
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-weight: bold;
-  transition: color 0.3s;
-}
-
-.cl-formFieldInfoText__password {
-  display: none;
-}
-.cl-formFieldErrorText{
-  display: none;
-}
-
-/*boton del menu*/
-.close-button{
-  position: relative;
-  left: 210px;
-  top: -520px;
-}
-
-/* Agrega esta clase personalizada para estilizar el scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 12px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #a0aec0; /* Color del thumb */
-  border-radius: 6px;
-  border: 3px solid #2d3748; /* Color del borde del thumb */
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background-color: #2d3748; /* Color del track */
-  border-radius: 6px;
-}
-.gap{
-  gap: 20px;
-  justify-content: center;
-}
-.seccionGuardadas{
-  background-color: rgba(80, 69, 104, 0.5);
-}
-
-
-/* Estilos buscador*/
-.bg-custom-bg-color {
-  background-color: rgba(80, 69, 104, 0.5); 
-}
-
-.border-custom-border-color {
-  border-color: rgba(80, 69, 104, 0.5); 
-}
-
-.bg-custom-button-color-hover:hover {
-  background-color: rgba(74, 64, 97, 0.5); 
 }

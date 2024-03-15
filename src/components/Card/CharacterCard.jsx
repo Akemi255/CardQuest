@@ -1,26 +1,26 @@
-import { AiFillLike } from "react-icons/ai";
-import "/public/css/home.css";
+import React from "react";
+import Image from "next/image";
 
-const CharacterCard = ({
+export default function CharacterCard({
   character,
   index,
   getColorForRarity,
   saveCharacter,
   existingCards,
   loading,
-}) => {
+}) {
   return (
     <div key={index} className="flex">
       <div
         className={`${character.borderColorClass} cartas  flex items-center`}
       >
-        <img
+        <Image
           src={`/assets/${character.borderColorClass}.png`}
           alt=""
           className="borderGeneral flex items-center"
         />
         {character.images && character.images.jpg && (
-          <img
+          <Image
             src={character.images.jpg.image_url}
             alt={character.name}
             className="w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime"
@@ -70,6 +70,4 @@ const CharacterCard = ({
       </div>
     </div>
   );
-};
-
-export default CharacterCard;
+}
