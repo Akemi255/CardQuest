@@ -13,6 +13,7 @@ import { IoCloseCircle } from "react-icons/io5";
 import Link from "next/link";
 import UserIcon from "./user-icon";
 import Settings from "../UserProfile/Settings";
+import { FaHome } from "react-icons/fa";
 
 const Menu = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -57,7 +58,7 @@ const Menu = () => {
         ref={menuRef}
         className={`menu fixed top-0 left-0 ${
           menuActive ? "w-80 opacity-100" : "w-0 opacity-0"
-        } max-w-300 h-full bg-gray-800 text-white z-20 ${
+        } max-w-300 h-full bg-[#5d2d56] text-white z-20 ${
           menuClosing
             ? "transition-opacity duration-300"
             : "transition-width duration-300"
@@ -65,13 +66,23 @@ const Menu = () => {
       >
         <ul className="flex flex-col items-center h-full">
           <div className="top mb-20">
+            <br />
+            <br />
             <li>
-              <img
-                src="/assets/logo.png"
-                alt="logo"
-                style={{ width: "150px" }}
-                className="relative left-9"
-              />
+              <h1 className="relative text-2xl font-bold tracking-tighter text-center">
+                Harem Project Maid
+              </h1>
+            </li>
+            <br />
+            <li>
+              <Link
+                href="/"
+                className={`flex justify-center items-center text-white text-lg py-2 hover:opacity-75`}
+                onClick={closeMenu}
+              >
+                <FaHome className="text-2xl sm:text-lg sm:mr-2" />
+                Inicio
+              </Link>
             </li>
             <li>
               <Link
@@ -131,7 +142,7 @@ const Menu = () => {
                 className={`flex justify-center items-center text-white text-lg py-2 hover:opacity-75`}
                 onClick={closeMenu}
               >
-               <UserIcon/>
+                <UserIcon />
               </Link>
             </li>
             <li>
@@ -156,7 +167,7 @@ const Menu = () => {
             <li>
               <IoCloseCircle
                 size={30}
-                className="close-button cursor-pointer hover:text-red-500"
+                className="close-button cursor-pointer hover:text-red-500 mt-[-20px]"
                 onClick={closeMenu}
               />
             </li>
