@@ -8,6 +8,8 @@ import {
   FileBarChart,
   WalletCards,
   Settings,
+  ArrowLeftRight,
+  CircleDot,
 } from "lucide-react";
 
 import { usePathname } from "next/navigation";
@@ -31,7 +33,32 @@ const Links = [
     label: "128",
     icon: WalletCards,
     variant: "default",
-    subMenu: null,
+    subMenu: [
+      {
+        title: "Swap",
+        href: "/one",
+        label: "128",
+        icon: ArrowLeftRight,
+        variant: "default",
+        subMenu: null,
+      },
+      {
+        title: "Swap Card",
+        href: "/one",
+        label: "128",
+        icon: ArrowLeftRight,
+        variant: "default",
+        subMenu: null,
+      },
+      {
+        title: "The Choosen",
+        href: "/one",
+        label: "128",
+        icon: CircleDot,
+        variant: "default",
+        subMenu: null,
+      },
+    ],
   },
   {
     title: "Card Ranking",
@@ -39,7 +66,7 @@ const Links = [
     label: "128",
     icon: FileBarChart,
     variant: "default",
-    subMenu: [{}, {}, {}],
+    subMenu: null,
   },
   {
     title: "Explore",
@@ -75,64 +102,64 @@ export default function Nav() {
       <nav className="grid items-start gap-2 p-2">
         {Links.map((link, index) => {
           return (
-            <Link key={index} href={link.href}>
-              <span
-                className={cn(
-                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-                  path === link.href ? "bg-accent" : "transparent",
-                  false && "cursor-not-allowed opacity-80"
-                )}
-              >
-                <link.icon className="mr-2 h-6 w-6" />
-                <span className="text-base">{link.title}</span>
-              </span>
-            </Link>
+            <>
+              {link.subMenu ? (
+                <>
+                  <button
+                    onClick={() => setIsCollapsible((prev) => !prev)}
+                    className="mt-auto"
+                  >
+                    <span
+                      className={cn(
+                        "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                        path === "settings" ? "bg-accent" : "transparent",
+                        false && "cursor-not-allowed opacity-80"
+                      )}
+                    >
+                      <link.icon className="mr-2 h-6 w-6" />
+                      <span className="text-base">{link.title}</span>
+                    </span>
+                  </button>
+                  {isCollapsible && (
+                    <>
+                      {link.subMenu.map((sublink, index) => {
+                        return (
+                          <Link key={index} href={"/adasd"} className="mt-auto">
+                            <span
+                              className={cn(
+                                "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-8",
+                                path === "settings"
+                                  ? "bg-accent"
+                                  : "transparent",
+                                false && "cursor-not-allowed opacity-80"
+                              )}
+                            >
+                              <sublink.icon className="mr-2 h-4 w-4" />
+                              <span>{sublink.title}</span>
+                            </span>
+                          </Link>
+                        );
+                      })}
+                    </>
+                  )}
+                </>
+              ) : (
+                <Link key={index} href={link.href}>
+                  <span
+                    className={cn(
+                      "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                      path === link.href ? "bg-accent" : "transparent",
+                      false && "cursor-not-allowed opacity-80"
+                    )}
+                  >
+                    <link.icon className="mr-2 h-6 w-6" />
+                    <span className="text-base">{link.title}</span>
+                  </span>
+                </Link>
+              )}
+            </>
           );
         })}
-
-        <button
-          onClick={() => setIsCollapsible((prev) => !prev)}
-          className="mt-auto"
-        >
-          <span
-            className={cn(
-              "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-              path === "settings" ? "bg-accent" : "transparent",
-              false && "cursor-not-allowed opacity-80"
-            )}
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </span>
-        </button>
-        {isCollapsible && (
-          <>
-            <Link href={"/adasd"} className="mt-auto">
-              <span
-                className={cn(
-                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-8",
-                  path === "settings" ? "bg-accent" : "transparent",
-                  false && "cursor-not-allowed opacity-80"
-                )}
-              >
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </span>
-            </Link>
-            <Link href={"/adada"} className="mt-auto">
-              <span
-                className={cn(
-                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-8",
-                  path === "settings" ? "bg-accent" : "transparent",
-                  false && "cursor-not-allowed opacity-80"
-                )}
-              >
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </span>
-            </Link>
-          </>
-        )}
       </nav>
     </div>
   );
