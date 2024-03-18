@@ -19,9 +19,11 @@ export default function RootLayout({ children }) {
     <ClerkProvider localization={esES}>
       <html lang="es" translate="no">
         <body className={inter.className}>
-          {/* <Providers> */}
-          <Drawer>{children}</Drawer>
-          {/* </Providers> */}
+          <Providers>
+            <Drawer direction="left" shouldScaleBackground>
+              {children}
+            </Drawer>
+          </Providers>
         </body>
       </html>
     </ClerkProvider>

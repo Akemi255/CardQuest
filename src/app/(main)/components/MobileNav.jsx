@@ -94,7 +94,7 @@ export default function Nav() {
     <div className="flex flex-col gap-2 bg-[#252736]">
       <div className="flex flex-col gap-4 p-2 py-4  text-center">
         <Avatar className="h-20 w-20 mx-auto">
-          <AvatarImage src="https://github.com/shadcn.pngas" alt="@shadcn" />
+          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <span className="mt-[10.5px] text-white text-base">Card Quest</span>
