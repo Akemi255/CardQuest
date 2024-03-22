@@ -18,8 +18,8 @@ import ProfileButton from "./components/ProfileButton";
 export default function layout({ children }) {
   return (
     <div className="h-screen w-screen ">
-      <div className="bg-black">
-        <div className="w-screen py-4 container bg-black flex flex-col">
+      <div className="bg-[url('/assets/background-profile.png')] bg-no-repeat bg-center bg-cover">
+        <div className="w-screen py-4 container flex flex-col">
           <div className="flex flex-col grow justify-center pt-10">
             <div className="flex flex-row gap-4">
               <div className="flx flex-row">
