@@ -13,17 +13,19 @@ export default function ProfileButton(props) {
   const { icon, text, href, className, ...rest } = props;
 
   return (
-    <Button
-      className={cn(
-        "px-2 py-1 text-white h-auto",
-        className,
-        path !== "/" + text.toLowerCase() && "bg-transparent"
-        // path === "profile" && "bg-transparent"
-      )}
-      {...rest}
-    >
-      {icon}
-      {text}
-    </Button>
+    <Link href={href}>
+      <Button
+        className={cn(
+          "px-2 py-1 text-white h-auto",
+          className,
+          path !== "/" + text.toLowerCase() && "bg-transparent"
+          // path === "profile" && "bg-transparent"
+        )}
+        {...rest}
+      >
+        {icon}
+        {text}
+      </Button>
+    </Link>
   );
 }

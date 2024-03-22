@@ -71,17 +71,17 @@ export default function layout({ children }) {
             <div className="flex flex-row gap-4">
               <ProfileButton
                 icon={<Pencil className="h-4 w-4 mr-1" />}
-                href={"https://www.google.com"}
+                href={"/profile"}
                 text={"Profile"}
               />
               <ProfileButton
                 icon={<Settings className="h-4 w-4 mr-1" />}
-                href={"https://www.google.com"}
+                href={"/settings"}
                 text={"Settings"}
               />
               <ProfileButton
                 icon={<Star className="h-4 w-4 mr-1" />}
-                href={"https://www.google.com"}
+                href={"/favorite"}
                 text={"Favorite"}
               />
               <ProfileButton
@@ -91,11 +91,11 @@ export default function layout({ children }) {
               />
               <ProfileButton
                 icon={<AreaChart className="h-4 w-4 mr-1" />}
-                href={"https://www.google.com"}
+                href={"/ranking"}
                 text={"Ranking"}
               />
             </div>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-4 items-center">
               <div className=" flex flex-row gap-2 text-white">
                 <UserCheck className="h-4 w-4" />
                 <span className="text-sm">200</span>
