@@ -36,7 +36,7 @@ const Links = [
     subMenu: [
       {
         title: "Swap",
-        href: "/one",
+        href: "/swap",
         label: "128",
         icon: ArrowLeftRight,
         variant: "default",
@@ -44,7 +44,7 @@ const Links = [
       },
       {
         title: "Swap Card",
-        href: "/one",
+        href: "/swap-card",
         label: "128",
         icon: ArrowLeftRight,
         variant: "default",
@@ -52,7 +52,7 @@ const Links = [
       },
       {
         title: "The Choosen",
-        href: "/one",
+        href: "/choosen",
         label: "128",
         icon: CircleDot,
         variant: "default",
@@ -62,7 +62,7 @@ const Links = [
   },
   {
     title: "Card Ranking",
-    href: "/two",
+    href: "/ranking",
     label: "128",
     icon: FileBarChart,
     variant: "default",
@@ -70,7 +70,7 @@ const Links = [
   },
   {
     title: "Explore",
-    href: "/three",
+    href: "/explore",
     label: "128",
     icon: PackageSearch,
     variant: "default",
@@ -78,7 +78,7 @@ const Links = [
   },
   {
     title: "User Search",
-    href: "/usersearch",
+    href: "/searchuser",
     label: "128",
     icon: UserSearch,
     variant: "default",

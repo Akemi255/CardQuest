@@ -32,7 +32,9 @@ export default function SearchBar() {
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <span className="text-white w-28 text-lg">John Doe</span>
+        <span className="text-white w-28 text-lg hidden md:block">
+          John Doe
+        </span>
       </div>
     </div>
   );
