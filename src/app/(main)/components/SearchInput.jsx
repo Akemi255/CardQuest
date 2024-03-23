@@ -15,8 +15,9 @@ const Search = React.forwardRef(({ className, ...props }, ref) => {
       <input
         {...props}
         type="search"
+        placeholder="Search..."
         ref={ref}
-        className="w-full grow bg-[#171928] border-black placeholder:text-white  p-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full grow text-white bg-[#171928] border-black placeholder:text-white  p-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
       />
     </div>
   );
