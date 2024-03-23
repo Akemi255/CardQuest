@@ -4,6 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Eye, User } from "lucide-react";
+import { Button } from "../ui/button";
 
 const UsersMarket = () => {
   const [users, setUsers] = useState([]);
@@ -55,7 +56,7 @@ const UsersMarket = () => {
   return (
     <>
       <div className="bg-[#171928] p-4 rounded-lg shadow-md">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-0 md:px-8">
           {/* <h1 className="w-full text-center text-lg font-bold mb-2 text-white">
             Selecciona un usuario para iniciar el intercambio
           </h1>
@@ -74,7 +75,7 @@ const UsersMarket = () => {
           </div> */}
 
           {!loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 mt-5">
               {filteredUsers.slice(0, visibleUsers).map((user) => (
                 <Link key={user._id} href={`/mercado/${user._id}`}>
                   <div
@@ -98,14 +99,14 @@ const UsersMarket = () => {
                       /> */}
                     </div>
                     <div className="flex flex-col justify-between p-4">
-                      <p className="text-lg text-white font-semibold mt-8 text-center capitalize">
+                      <p className="text-lg text-white font-semibold mt-6 text-center capitalize">
                         {user.name}
                       </p>
                       {/* <p className="text-gray-500 text-center">
                         Follower: {user.following.length} | Viewer:{" "}
                         {user.followers.length}
                       </p> */}
-                      <div className="flex w-full items-center justify-between">
+                      <div className="flex w-full items-center justify-between mb-2">
                         <div className="flex flex-row gap-3 text-blue-400">
                           <User className="h-5 w-5" />
                           <span>1234</span>
@@ -118,6 +119,9 @@ const UsersMarket = () => {
                       </div>
 
                       {/* <p className="text-white text-center">{user.bio}</p> */}
+                      <Button className="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 text-white bg-[#43B581]">
+                        Browse Profile
+                      </Button>
                     </div>
                   </div>
                 </Link>

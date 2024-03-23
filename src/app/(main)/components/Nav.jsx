@@ -124,7 +124,11 @@ export default function Nav() {
                     <>
                       {link.subMenu.map((sublink, index) => {
                         return (
-                          <Link key={index} href={"/adasd"} className="mt-auto">
+                          <Link
+                            key={index}
+                            href={sublink.href}
+                            className="mt-auto"
+                          >
                             <span
                               className={cn(
                                 "group flex items-center rounded-md px-3 py-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-8 text-white",

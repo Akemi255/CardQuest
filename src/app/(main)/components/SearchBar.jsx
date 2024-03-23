@@ -6,6 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Gem, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DrawerTrigger } from "@/components/ui/drawer";
+import { Search } from "./SearchInput";
 
 export default function SearchBar() {
   return (
@@ -14,11 +15,15 @@ export default function SearchBar() {
         <AvatarImage src="https://github.com/shadcn.pngas" alt="@shadcn" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-      <Input
+
+      {/* <Input
         type="search"
         placeholder="Search"
         className="grow bg-black border-black placeholder:text-white"
-      />
+      /> */}
+
+      <Search />
+
       {/* <Button variant="outline" className="md:hidden">
         Open Drawer
       </Button> */}
@@ -27,14 +32,12 @@ export default function SearchBar() {
           <Menu />
         </Button>
       </DrawerTrigger>
-      <div className="flex flex-row items-center gap-4">
+      <div className="hidden md:flex flex-row items-center gap-4">
         <Avatar className="hidden md:flex  h-10 w-10 m-auto">
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <span className="text-white w-28 text-lg hidden md:block">
-          John Doe
-        </span>
+        <span className="text-white w-28 text-lg ">John Doe</span>
       </div>
     </div>
   );
