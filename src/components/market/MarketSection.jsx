@@ -12,11 +12,11 @@ const MarketSection = () => {
       </div>
 
       {/* Sección derecha */}
-      <div className="md:w-1/2 lg:w-1/5 p-2 md:mr-0 order-1 md:order-2">
-        <ReceivedRequests />
-        {/* Solicitudes pendientes */}
-        <AwaitingRequests />
-      </div>
+      {/* <div className="md:w-1/2 lg:w-1/5 p-2 md:mr-0 order-1 md:order-2"> */}
+      {/* <ReceivedRequests /> */}
+      {/* Solicitudes pendientes */}
+      {/* <AwaitingRequests /> */}
+      {/* </div> */}
     </div>
   );
 };

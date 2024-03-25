@@ -6,7 +6,7 @@ import { FaDiamond } from "react-icons/fa6";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { MdBlock } from "react-icons/md";
 import Link from "next/link";
-import '/public/css/profiles.css'
+import "/public/css/profiles.css";
 
 const UsersProfiles = () => {
   const [users, setUsers] = useState([]);
@@ -71,10 +71,9 @@ const UsersProfiles = () => {
           </button>
         </div>
       </div>
-    
+
       <div className="content-users p-4 mt-4 mb-14">
         <div className="container mx-auto">
-
           {!loading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-5">
               {filteredUsers.slice(0, visibleUsers).map((user) => (
@@ -95,21 +94,28 @@ const UsersProfiles = () => {
                         className="w-28 h-28 object-cover rounded-full absolute -bottom-5 left-14 transform -translate-x-1/2"
                       />
                       <div class="relative flex flex-col items-center">
-                        <div class="absolute flex flex-col w-[38%] text-lg text-white font-semibold  absolute left-[62%] bottom-[1.5rem] text-center capitalize ">
+                        <div class="absolute flex flex-col w-[38%] text-lg text-white font-semibold left-[62%] bottom-[1.5rem] text-center capitalize ">
                           <p class="userName ">{user.name}</p>
                         </div>
                         <div class="relative bottom-0 max-[640px]:left-[46%] sm:left-[45%] md:left-[44%] lg:left-[45%] xl:left-[47%] top-[-1rem] flex justify-center">
-                          <FaDiamond class="w-7 h-7 text-white diamante"  />
+                          <FaDiamond class="w-7 h-7 text-white diamante" />
                         </div>
                       </div>
                     </div>
                     <div className="py-1">
                       <p className="text-[#555555] text-center">{user.bio}</p>
                       <div className="flex gap-0.5 justify-center">
-                        <p className="text-[#555555] text-center "> Siguiendo: {user.following.length}</p>
-                          <img src="assets/gema-form.png" alt="" className="h-6 pl-2"/>
-                        <p className="">Seguidores:{" "}{user.followers.length}</p>
-                    </div>
+                        <p className="text-[#555555] text-center ">
+                          {" "}
+                          Siguiendo: {user.following.length}
+                        </p>
+                        <img
+                          src="assets/gema-form.png"
+                          alt=""
+                          className="h-6 pl-2"
+                        />
+                        <p className="">Seguidores: {user.followers.length}</p>
+                      </div>
                     </div>
                   </div>
                 </Link>
