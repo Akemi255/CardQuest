@@ -1,7 +1,8 @@
-'use client';
-import React from 'react';
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+"use client";
+import React from "react";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ToastContainer, toast } from "react-toastify";
+import Checkauth from "@/components/auth/checkauth";
 
 const Providers = ({ children }) => {
   return (
@@ -13,10 +14,8 @@ const Providers = ({ children }) => {
         options={{ showSpinner: false }}
         shallowRouting
       />
-      <ToastContainer 
-       position="bottom-right"
-       autoClose={3000}
-      />
+      <ToastContainer position="bottom-right" autoClose={3000} />
+      <Checkauth />
     </>
   );
 };
