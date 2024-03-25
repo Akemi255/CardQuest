@@ -374,13 +374,13 @@ const Cards = () => {
       }
       setLoading(false);
       setIsLoading(false);
-      setButtonClickCount((prevCount) => prevCount + 1);
     } catch (error) {
       console.error("Error al obtener datos:", error);
       setIsLoading(false);
     }
   };
   function CleanArray() {
+    setButtonClickCount((prevCount) => prevCount + 1);
     setCharacterData([]);
     localStorage.removeItem("savedCharacterData");
     setExistingCards(Array(5).fill(false));
