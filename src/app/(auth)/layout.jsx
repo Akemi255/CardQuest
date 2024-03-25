@@ -4,7 +4,7 @@ import { SignIn } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-import "public/css/login.css";
+import "../../../public/css/login.css";
 
 // import backgroundImage from "../../../../public/assets/login-background.jpg";
 import backgroundImage from "../../../public/assets/login-background.jpg";

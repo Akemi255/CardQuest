@@ -13,6 +13,8 @@ import CharacterCard from "./CharacterCard";
 import { SetEmail } from "@/helpers/SetEmail";
 import "/public/css/cards.css";
 import Footer from "../Layout/footer";
+import { Button } from "../ui/button";
+import { RotateCw } from "lucide-react";
 
 //declaración de estados
 const Cards = () => {
@@ -261,7 +263,7 @@ const Cards = () => {
       }
 
       const randomNumbers = [];
-      while (randomNumbers.length < 6) {
+      while (randomNumbers.length < 5) {
         const randomNumber = getRandomNumberExcluding(1, 169979);
         if (!randomNumbers.includes(randomNumber)) {
           randomNumbers.push(randomNumber);
@@ -421,7 +423,7 @@ const Cards = () => {
             ))}
           </div>
         )}
-        <button
+        {/* <button
           className="btn float lanzarCards"
           onClick={() => {
             CleanArray();
@@ -434,8 +436,21 @@ const Cards = () => {
           }
         >
           {"Lanzar Cartas"}
-        </button>
-        <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div>
+        </button> */}
+        <div className="flex justify-around container">
+          <Button className="bg-black">Inventory</Button>
+          <Button
+            className="bg-black"
+            onClick={() => {
+              CleanArray();
+              fetchCharacterData();
+            }}
+          >
+            <RotateCw />
+          </Button>
+          <Button className="bg-black">Auto-Spin</Button>
+        </div>
+        {/* <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div> */}
       </div>
       <Footer></Footer>
     </>

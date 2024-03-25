@@ -1,5 +1,8 @@
+import { Sparkle } from "lucide-react";
 import { AiFillLike } from "react-icons/ai";
 import "/public/css/home.css";
+
+import { IconButtons } from "./IconButton";
 
 const CharacterCard = ({
   character,
@@ -9,6 +12,12 @@ const CharacterCard = ({
   existingCards,
   loading,
 }) => {
+  // const findButtonIcon = () => {
+  //   return Object.keys(IconButtons).find(
+  //     (key) => IconButtons[key] === "sparkle"
+  //   );
+  // };
+
   return (
     <div key={index} className="flex">
       <div
@@ -26,23 +35,36 @@ const CharacterCard = ({
             className="w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime"
           />
         )}
-        <div className="info-like">
+        <div className="info-like relative">
           <div className="text-center personaje-anime">
             <p className="name font-bold">{character.name}</p>
             {character.anime && character.anime[0] && (
               <p className="name-anime">{character.anime[0].anime.title}</p>
             )}
           </div>
+          <div className="text-[12px] mt-2">
+            Likes: <span className="text-white">#3631</span>
+          </div>
+          <div className="flex flex-row text-[12px] gap-1">
+            <span className="font-medium">23</span>
+            {<IconButtons.sparkle />}
+          </div>
+
+          {/* 
+          {IconButtons.map((icon) => {
+            return <div>asdad</div>;
+          })} */}
+
           {character.saved ? (
             <button
-              className="boton-guardar text-white py-2 px-4 rounded cursor-not-allowed flex items-center justify-center"
+              className="absolute bottom-0 boton-guardar self-end rounded-full text-white cursor-not-allowed flex items-center justify-center"
               disabled={loading}
             >
               <AiFillLike />
             </button>
           ) : (
             <button
-              className="boton-guardar text-white py-2 px-4 rounded flex items-center justify-center"
+              className="absolute bottom-0 boton-guardar self-end text-white rounded-full flex items-center justify-center"
               onClick={() => saveCharacter(character, index)}
               disabled={loading}
             >
@@ -51,7 +73,7 @@ const CharacterCard = ({
           )}
           {existingCards[index] && (
             <button
-              className={`text-xs ${
+              className={`text-xs  ${
                 existingCards[index]
                   ? "bg-green-400 hover:bg-green-500"
                   : "bg-blue-500 hover:bg-blue-700"
@@ -63,7 +85,7 @@ const CharacterCard = ({
             >
               {existingCards[index]
                 ? `Esta carta ya la tienes`
-                : "Guardar en el perfil"}{" "}
+                : "Guardar en el perfil"}
             </button>
           )}
         </div>

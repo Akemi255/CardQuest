@@ -13,7 +13,7 @@ export default function layout({ children }) {
       <aside className="hidden md:flex w-[240px] flex-col bg-[#252736] ">
         <Nav />
       </aside>
-      <main className="flex w-full flex-1 flex-col overflow-hidden bg-[#171928]">
+      <main className="flex w-full flex-1 flex-col overflow-hidden bg-[#171928]  h-max md:h-auto">
         <SearchBar />
         {/* <TittleBar /> */}
         {children}
