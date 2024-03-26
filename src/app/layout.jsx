@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Providers from "@/providers/providers";
 import { Drawer } from "@/components/ui/drawer";
 
+import { dark } from "@clerk/themes";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,8 +18,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider localization={esES}>
-      <html lang="es" translate="no">
+    <ClerkProvider
+      // localization={esES}
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang="en" translate="no">
         <body className={inter.className}>
           <Providers>
             <Drawer direction="left" shouldScaleBackground>

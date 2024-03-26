@@ -1,4 +1,8 @@
- .prueba{
+.cl-card {
+  box-shadow: none;
+}
+
+/* .prueba{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,4 +86,4 @@
     background-size: cover;
     background-position:center;
     background-repeat: no-repeat;
-  }
+  } */
