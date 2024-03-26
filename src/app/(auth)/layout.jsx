@@ -17,11 +17,11 @@ export const metadata = {
 export default function AuthenticationPage({ children }) {
   return (
     <div className="relative h-screen">
-      <Image src={backgroundImage} layout="fill" objectFit="cover" />
+      {/* <Image src={backgroundImage} layout="fill" objectFit="cover" /> */}
 
-      <div className="container relative px-0 h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
-        <div className="lg:p-8 bg-[#19191A] h-full flex rounded-r-3xl">
-          <div className="mx-auto  flex  flex-col  space-y-6 w-24 sm:w-[400px] justify-between">
+      <div className="container relative px-0 h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-8 lg:px-0 ">
+        <div className="lg:p-10 col-span-3 bg-[#1C1C1C] h-full flex border-r border-[color:hsl(_0%,_0%,_18%)]">
+          <div className="mx-auto flex  flex-col  space-y-6 w-24 sm:w-[400px] justify-between">
             {/* <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight text-white">
                 Welcome
@@ -35,18 +35,18 @@ export default function AuthenticationPage({ children }) {
             {children}
             {/* <SignIn /> */}
 
-            <p className="px-8 text-center text-sm text-muted-foreground text-white mt-auto">
+            <p className="px-8 text-center text-sm text-muted-foreground text-gray-500 mt-auto">
               By clicking continue, you agree to our{" "}
               <Link
                 href="/terms"
-                className="underline underline-offset-4 hover:text-primary text-white"
+                className="underline underline-offset-4 hover:text-primary text-gray-500"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
                 href="/privacy"
-                className="underline underline-offset-4 hover:text-primary text-white"
+                className="underline underline-offset-4 hover:text-primary text-gray-500"
               >
                 Privacy Policy
               </Link>
@@ -54,9 +54,9 @@ export default function AuthenticationPage({ children }) {
             </p>
           </div>
         </div>
-        <div className="relative hidden h-full flex-col  p-10 text-white lg:flex dark:border-r">
+        <div className="relative hidden col-span-5 h-full flex-col p-10 text-white lg:flex dark:border-r bg-gray-500">
           {/* <div className="absolute inset-0 bg-zinc-900" /> */}
-          {/* <div className="relative z-20 flex items-center text-lg font-medium">
+          <div className="relative z-20 flex items-center text-lg font-medium">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ export default function AuthenticationPage({ children }) {
             >
               <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
             </svg>
-            Acme Inc
+            Card Quest Inc.
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
@@ -80,7 +80,7 @@ export default function AuthenticationPage({ children }) {
               </p>
               <footer className="text-sm">Sofia Davis</footer>
             </blockquote>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
