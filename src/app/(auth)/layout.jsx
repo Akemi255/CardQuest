@@ -20,8 +20,8 @@ export default function AuthenticationPage({ children }) {
       {/* <Image src={backgroundImage} layout="fill" objectFit="cover" /> */}
 
       <div className="container relative px-0 h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-8 lg:px-0 ">
-        <div className="lg:p-10 col-span-3 bg-[#1C1C1C] h-full flex border-r border-[color:hsl(_0%,_0%,_18%)]">
-          <div className="mx-auto flex  flex-col  space-y-6 w-24 sm:w-[400px] justify-between">
+        <div className="lg:p-10 col-span-8 bg-[#1C1C1C] h-full flex border-r border-[color:hsl(_0%,_0%,_18%)]">
+          <div className="lg:mx-auto mx-0 flex flex-col space-y-6 w-24 lg:w-full justify-between">
             {/* <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight text-white">
                 Welcome
@@ -35,7 +35,7 @@ export default function AuthenticationPage({ children }) {
             {children}
             {/* <SignIn /> */}
 
-            <p className="px-8 text-center text-sm text-muted-foreground text-gray-500 mt-auto">
+            <p className="px-8 text-center text-[13px] text-muted-foreground text-gray-500 mt-auto">
               By clicking continue, you agree to our{" "}
               <Link
                 href="/terms"
@@ -54,7 +54,7 @@ export default function AuthenticationPage({ children }) {
             </p>
           </div>
         </div>
-        <div className="relative hidden col-span-5 h-full flex-col p-10 text-white lg:flex dark:border-r bg-gray-500">
+        <div className="relative hidden col-span-0 h-full flex-col p-10 text-white lg:flex dark:border-r bg-gray-500">
           {/* <div className="absolute inset-0 bg-zinc-900" /> */}
           <div className="relative z-20 flex items-center text-lg font-medium">
             <svg

@@ -1,5 +1,20 @@
 .cl-card {
   box-shadow: none;
+  background-color: #1c1c1c;
+}
+
+.cl-internal {
+  background-color: #1c1c1c;
+}
+
+.cl-formButtonPrimary {
+  background-color: #37996b;
+  border: 1px solid #3ecf8e;
+  transition: all 100ms ease-out;
+}
+
+.cl-formButtonPrimary:hover {
+  background-color: #37996bcc;
 }
 
 /* .prueba{
