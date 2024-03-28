@@ -117,7 +117,7 @@ export default function Nav() {
                       )}
                     >
                       <link.icon className="mr-6 h-5 w-5" />
-                      <span className="text-base">{link.title}</span>
+                      <span className="text-sm">{link.title}</span>
                     </span>
                   </button>
                   {isCollapsible && (
@@ -131,7 +131,7 @@ export default function Nav() {
                           >
                             <span
                               className={cn(
-                                "group flex items-center rounded-md px-3 py-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-8 text-white",
+                                "group flex items-center rounded-md  text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-8 text-white",
                                 path === "settings"
                                   ? "bg-black"
                                   : "transparent",
@@ -151,13 +151,15 @@ export default function Nav() {
                 <Link key={index} href={link.href}>
                   <span
                     className={cn(
-                      "group flex items-center rounded-md px-3 py-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground text-white",
+                      "group flex items-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground text-white",
                       path === link.href ? "bg-black" : "transparent",
                       false && "cursor-not-allowed opacity-80"
                     )}
                   >
-                    <link.icon className="mr-6 h-5 w-5" />
-                    <span className="text-base">{link.title}</span>
+                    <span className="h-10 w-10 flex items-center justify-center rounded">
+                      <link.icon className="h-5 w-5" />
+                    </span>
+                    <span className="text-sm ">{link.title}</span>
                   </span>
                 </Link>
               )}
