@@ -401,7 +401,7 @@ const Cards = () => {
 
   return (
     <>
-      <div>
+      <div className="h-full  ">
         {showRetryMessage && (
           <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
             <p>{`Límite de intentos superados, regrese en 24 horas.`}</p>
@@ -438,17 +438,21 @@ const Cards = () => {
           {"Lanzar Cartas"}
         </button> */}
         <div className="flex justify-around container">
-          <Button className="bg-black">Inventory</Button>
+          <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
+            Inventory
+          </Button>
           <Button
-            className="bg-black"
+            className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover"
             onClick={() => {
               CleanArray();
               fetchCharacterData();
             }}
           >
-            <RotateCw />
+            <RotateCw className="h-5 w-5" />
           </Button>
-          <Button className="bg-black">Auto-Spin</Button>
+          <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
+            Auto-Spin
+          </Button>
         </div>
         {/* <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div> */}
       </div>

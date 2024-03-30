@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -18,18 +21,39 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
+        border: {
+          DEFAULT: "hsl(var(--border))",
+          grey: "hsl(var(--border-grey))",
+          button: {
+            DEFAULT: "hsl(var(--border-button))",
+            hover: "hsl(var(--border-button-hover))",
+          },
+        },
+
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
         background2: "hsl(var(--background2))",
+        background3: "hsl(var(--background3))",
+
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          surface: {
+            200: "hsl(var(--background-surface-200))",
+          },
+        },
 
         bgSelection: "hsl(var(--background-selection) / var(--tw-bg-opacity))",
 
         foreground: "hsl(var(--foreground))",
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          foreground: {
+            DEFAULT: "hsl(var(--primary-foreground))",
+            light: "hsl(var(--primary-foreground-light))",
+            lighter: "hsl(var(--primary-foreground-lighter))",
+            morelighter: "hsl(var(--primary-foreground-morelighter))",
+          },
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",

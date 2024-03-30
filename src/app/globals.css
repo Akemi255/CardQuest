@@ -6,6 +6,9 @@
   :root {
     --background: 0 0% 100%;
     --background2: 0, 0%, 14%;
+    --background3: 0, 0%, 18%;
+
+    --background-surface-200: 0 0% 20.4%;
 
     --foreground: 222.2 84% 4.9%;
 
@@ -16,7 +19,10 @@
     --popover-foreground: 222.2 84% 4.9%;
 
     --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary-foreground: 0 0% 92.9%;
+    --primary-foreground-light: 0 0% 62.7%;
+    --primary-foreground-lighter: 0 0% 49.4%;
+    --primary-foreground-morelighter: 0 0% 92.9%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -31,6 +37,9 @@
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
+    --border-button: 0 0% 24.3%;
+    --border-button-hover: 0 0% 31.4%;
+
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
@@ -63,6 +72,8 @@
     --destructive-foreground: 210 40% 98%;
 
     --border: 217.2 32.6% 17.5%;
+    --border-grey: 0 0% 18%;
+
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }

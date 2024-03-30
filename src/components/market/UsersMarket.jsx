@@ -55,8 +55,8 @@ const UsersMarket = () => {
 
   return (
     <>
-      <div className="bg-[#171928] p-4 rounded-lg shadow-md">
-        <div className="container mx-auto px-0 md:px-8">
+      <div className="bg-background2 p-4 rounded-lg shadow-md">
+        <div className="container mx-auto px-0 ">
           {/* <h1 className="w-full text-center text-lg font-bold mb-2 text-white">
             Selecciona un usuario para iniciar el intercambio
           </h1>
@@ -75,7 +75,7 @@ const UsersMarket = () => {
           </div> */}
 
           {!loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 mt-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 ">
               {filteredUsers.slice(0, visibleUsers).map((user) => (
                 <Link key={user._id} href={`/mercado/${user._id}`}>
                   <div
