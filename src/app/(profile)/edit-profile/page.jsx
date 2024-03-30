@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { Form } from "@/components/ui/form";
 
 import { getProfileData } from "./helpers/getProfileData";
-import { dataURItoBlob } from "./helpers/dataUriToBlob";
+import { dataURItoBlob } from "./helpers/data-to-blob";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
