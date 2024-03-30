@@ -11,6 +11,7 @@ import {
   Eye,
   Github,
   Facebook,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProfileButton from "./components/ProfileButton";
@@ -70,9 +71,14 @@ export default function layout({ children }) {
           <div className="flex flex-row justify-between pb-2">
             <div className="flex flex-row gap-4">
               <ProfileButton
-                icon={<Pencil className="h-4 w-4 mr-1" />}
+                icon={<User className="h-4 w-4 mr-1" />}
                 href={"/profile"}
                 text={"Profile"}
+              />
+              <ProfileButton
+                icon={<Pencil className="h-4 w-4 mr-1" />}
+                href={"/edit-profile"}
+                text={"Edit Profile"}
               />
               <ProfileButton
                 icon={<Settings className="h-4 w-4 mr-1" />}
@@ -83,11 +89,6 @@ export default function layout({ children }) {
                 icon={<Star className="h-4 w-4 mr-1" />}
                 href={"/favorite"}
                 text={"Favorite"}
-              />
-              <ProfileButton
-                icon={<Share2 className="h-4 w-4 mr-1" />}
-                href={"https://www.google.com"}
-                text={"Share"}
               />
               <ProfileButton
                 icon={<AreaChart className="h-4 w-4 mr-1" />}
