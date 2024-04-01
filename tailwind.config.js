@@ -3,7 +3,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  darkMode: ["class"],
+  darkMode: ["selector"],
   content: [
     "./pages/**/*.{js,jsx}",
     "./components/**/*.{js,jsx}",
@@ -28,6 +28,7 @@ module.exports = {
             DEFAULT: "hsl(var(--border-button))",
             hover: "hsl(var(--border-button-hover))",
           },
+          overlay: "hsl(var(--border-overlay))",
         },
 
         input: "hsl(var(--input))",

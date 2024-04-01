@@ -46,8 +46,8 @@ export default async function page() {
   }, []);
 
   return (
-    <div className="bg-[#171928] h-screen overflow-scroll">
-      <div className="container">
+    <div className="bg-[#171928] h-auto w-full overflow-scroll">
+      <div className="max-w-7xl mx-auto">
         <Table className="text-white [&_.text-muted-foreground]:text-white">
           <TableCaption>User Ranking</TableCaption>
           <TableHeader>

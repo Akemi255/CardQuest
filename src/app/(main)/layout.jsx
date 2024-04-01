@@ -16,7 +16,8 @@ export default function layout({ children }) {
       <main className="flex w-full flex-1 flex-col overflow-hidden bg-background2  h-max md:h-auto">
         <SearchBar />
         {/* <TittleBar /> */}
-        <div className="max-w-7xl mx-auto mt-20">{children}</div>
+        {/* <div className="max-w-7xl mx-auto mt-20 overflow-y-scroll"> */}
+        <div className="overflow-y-scroll">{children}</div>
       </main>
       <MyDrawer />
     </div>

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const MarketSection = () => {
   return (
-    <div className="flex flex-col md:flex-col">
+    <div className="flex flex-col md:flex-col max-w-7xl mx-auto mt-20 mb-24 ">
       <h1 className="text-[28px] font-semibold text-[#EDEDED]">users</h1>
       <div className="my-6"></div>
       <div className="w-full md:ml-auto order-2 md:order-1 relative bottom-1">

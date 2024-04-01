@@ -55,7 +55,7 @@ const UsersMarket = () => {
 
   return (
     <>
-      <div className="bg-background2 p-4 rounded-lg shadow-md">
+      <div className="bg-background2 py-4 rounded-lg shadow-md">
         <div className="container mx-auto px-0 ">
           {/* <h1 className="w-full text-center text-lg font-bold mb-2 text-white">
             Selecciona un usuario para iniciar el intercambio
