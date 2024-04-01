@@ -43,6 +43,14 @@ module.exports = {
           },
         },
 
+        surface: {
+          100: "hsl(var(--background-surface-100))",
+          200: "hsl(var(--background-surface-200))",
+          300: "hsl(var(--background-surface-300))",
+          400: "hsl(var(--background-surface-400))",
+          500: "hsl(var(--background-surface-500))",
+        },
+
         bgSelection: "hsl(var(--background-selection) / var(--tw-bg-opacity))",
 
         foreground: "hsl(var(--foreground))",
