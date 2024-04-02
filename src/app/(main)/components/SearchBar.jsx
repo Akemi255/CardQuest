@@ -3,7 +3,15 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Gem, Menu, Settings, EllipsisVertical } from "lucide-react";
+import {
+  Gem,
+  Menu,
+  Settings,
+  EllipsisVertical,
+  User,
+  LogOut,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { DrawerTrigger } from "@/components/ui/drawer";
 import { Search } from "./SearchInput";
@@ -79,31 +87,56 @@ export default function SearchBar() {
             sideOffset={8}
             align="end"
           >
+            <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start  text-primary-foreground-light">
+              <User className="w-[14px] h-[14px] mr-2" />
+              Profile
+            </Button>
+            <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start text-primary-foreground-light">
+              <Settings className="w-[14px] h-[14px] mr-2" />
+              Prefference
+            </Button>
+            <Separator className="bg-[#2E2E2E]" />
+            <Label className="flex flex-col bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start items-start text-primary-foreground-light">
+              Theme
+            </Label>
             <RadioGroup
               defaultValue="comfortable"
-              className="text-primary-foreground-light p-1"
+              className="text-primary-foreground-light"
             >
-              <div className="flex items-center space-x-2  ">
-                <RadioGroupItem value="default" id="r1" />
-                <Label htmlFor="r1" className="text-xs">
+              <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm pl-2">
+                <RadioGroupItem
+                  value="default"
+                  id="r1"
+                  className="border-none text-primary-foreground-lighter "
+                />
+                <Label htmlFor="r1" className="text-xs w-full p-1 ml-2">
                   System
                 </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="comfortable" id="r2" />
-                <Label htmlFor="r2" className="text-xs">
+              <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm">
+                <RadioGroupItem
+                  value="comfortable"
+                  id="r2"
+                  className="border-none text-primary-foreground-lighter "
+                />
+                <Label htmlFor="r2" className="text-xs w-full p-1 pl-2 ">
                   Light
                 </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="compact" id="r3" />
-                <Label htmlFor="r3" className="text-xs">
+              <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm">
+                <RadioGroupItem
+                  value="compact"
+                  id="r3"
+                  className="border-none text-primary-foreground-lighter p-1 "
+                />
+                <Label htmlFor="r3" className="text-xs w-full p-1 pl-0">
                   Dark
                 </Label>
               </div>
             </RadioGroup>
             <Separator className="bg-[#2E2E2E]" />
-            <Button className="flex flex-col bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start items-start text-primary-foreground-light">
+            <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start text-primary-foreground-light">
+              <LogOut className="w-[14px] h-[14px] mr-2" />
               Log out
             </Button>
           </PopoverContent>
