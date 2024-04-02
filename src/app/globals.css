@@ -140,26 +140,19 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --background2: 0, 0%, 14%;
+    --background2: 0, 0%, 11%;
     --background3: 0, 0%, 18%;
 
-    --background-surface-200: 0 0% 20.4%;
-
-    --surface-75: --colors-slate-light-alpha-1200;
-    --surface-100: 0 0% 13.7%;
-    --surface-200: 0 0% 15.7%;
-    --surface-300: 0 0% 18%;
-    --surface-400: 0 0% 24.3%;
-    --surface-500: 0 0% 20.4%;
+    --background-surface-75: 0 0% 11%;
+    --background-surface-100: 0 0% 13.7%;
+    --background-surface-200: 0 0% 15.7%;
+    --background-surface-300: 0 0% 18%;
+    --background-surface-400: 0 0% 24.3%;
+    --background-surface-500: 0 0% 20.4%;
 
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
+    /* primary text color */
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 0 0% 92.9%;
     --primary-foreground-light: 0 0% 62.7%;
@@ -187,6 +180,12 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
   }
 
   .dark {
