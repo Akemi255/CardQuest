@@ -37,7 +37,6 @@ export default function SearchBar() {
         <AvatarImage src="https://github.com/shadcn.pngas" alt="@shadcn" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-
       {/* <Input
         type="search"
         placeholder="Search"
@@ -45,7 +44,6 @@ export default function SearchBar() {
       /> */}
 
       <Search />
-
       {/* <Button variant="outline" className="md:hidden">
         Open Drawer
       </Button> */}
@@ -55,6 +53,14 @@ export default function SearchBar() {
           <Menu />
         </Button>
       </DrawerTrigger>
+
+      <div
+        variant="outline"
+        className="bg-none text-[13px]  border-border-button w-auto h-auto flex flex-row justify-start items-center gap-2 py-1 px-2 rounded-full text-primary-foreground-morelighter hover:text-primary-foreground-morelighter border"
+      >
+        <Gem className="h-4 w-4 text-white" />
+        <span className="-mb-[1px]">123</span>
+      </div>
       <div className="hidden md:flex flex-row items-center gap-4">
         <Popover>
           <PopoverTrigger asChild>
@@ -95,7 +101,7 @@ export default function SearchBar() {
               <Settings className="w-[14px] h-[14px] mr-2" />
               Prefference
             </Button>
-            <Separator className="bg-[#2E2E2E]" />
+            <Separator className="bg-[#2E2E2E] my-1" />
             <Label className="flex flex-col bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start items-start text-primary-foreground-light">
               Theme
             </Label>
@@ -109,32 +115,32 @@ export default function SearchBar() {
                   id="r1"
                   className="border-none text-primary-foreground-lighter "
                 />
-                <Label htmlFor="r1" className="text-xs w-full p-1 ml-2">
+                <Label htmlFor="r1" className="text-xs w-full p-1 !ml-[2px]">
                   System
                 </Label>
               </div>
-              <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm">
+              <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm pl-2">
                 <RadioGroupItem
                   value="comfortable"
                   id="r2"
                   className="border-none text-primary-foreground-lighter "
                 />
-                <Label htmlFor="r2" className="text-xs w-full p-1 pl-2 ">
+                <Label htmlFor="r2" className="text-xs w-full p-1 !ml-[2px]">
                   Light
                 </Label>
               </div>
-              <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm">
+              <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm pl-2">
                 <RadioGroupItem
                   value="compact"
                   id="r3"
-                  className="border-none text-primary-foreground-lighter p-1 "
+                  className="border-none text-primary-foreground-lighter "
                 />
-                <Label htmlFor="r3" className="text-xs w-full p-1 pl-0">
+                <Label htmlFor="r3" className="text-xs w-full p-1 !ml-[2px]">
                   Dark
                 </Label>
               </div>
             </RadioGroup>
-            <Separator className="bg-[#2E2E2E]" />
+            <Separator className="bg-[#2E2E2E] my-1" />
             <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start text-primary-foreground-light">
               <LogOut className="w-[14px] h-[14px] mr-2" />
               Log out
