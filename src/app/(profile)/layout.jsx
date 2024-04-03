@@ -11,6 +11,7 @@ import {
   Eye,
   Github,
   Facebook,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProfileButton from "./components/ProfileButton";

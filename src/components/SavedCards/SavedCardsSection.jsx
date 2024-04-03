@@ -6,7 +6,7 @@ import { getEmail } from "@/helpers/getEmail";
 import Modal from "react-modal";
 import OrderOptions from "./OrderOptions";
 import { fetchUserCards } from "@/helpers/FavCards/fetchUserCards";
-import '/public/css/profile.css'
+import "/public/css/profile.css";
 
 const SavedCardsSection = () => {
   const [userCards, setUserCards] = useState([]);
@@ -108,7 +108,7 @@ const SavedCardsSection = () => {
           TUS CARTAS
         </h1>
         <div className="flex  items-center justify-center mt-3 gap-20 group-filter">
-          <div className="flex items-center text-base text-white hover:text-gray-300 transition duration-300 ease-in-out cursor-pointer mb-4 md:mb-0 text-base">
+          <div className="flex items-center text-white hover:text-gray-300 transition duration-300 ease-in-out cursor-pointer mb-4 md:mb-0 text-base">
             <OrderOptions
               setGroupBy={setGroupBy}
               showOrderOptions={showOrderOptions}
@@ -127,7 +127,7 @@ const SavedCardsSection = () => {
                 placeholder="Buscar..."
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-2">
-                <FiSearch size={25} color="black"/>
+                <FiSearch size={25} color="black" />
               </div>
             </div>
           </div>
@@ -136,10 +136,10 @@ const SavedCardsSection = () => {
               className="flex items-center md:mr-7 text-base text-white cursor-pointer relative transition duration-300 ease-in-out"
               onClick={handleDeleteCards}
             >
-            <div className="flex items-center hover:text-black">
-              <BiSolidTrashAlt size={25} />
-              <span className="ml-2">Eliminar Cartas</span>
-            </div>
+              <div className="flex items-center hover:text-black">
+                <BiSolidTrashAlt size={25} />
+                <span className="ml-2">Eliminar Cartas</span>
+              </div>
             </h2>
           </div>
         </div>
@@ -164,11 +164,11 @@ const SavedCardsSection = () => {
         ariaHideApp={false}
         style={{
           overlay: {
-            zIndex: 1000 // Z-index para el overlay del modal
+            zIndex: 1000, // Z-index para el overlay del modal
           },
           content: {
-            zIndex: 1001 // Z-index para el contenido del modal
-          }
+            zIndex: 1001, // Z-index para el contenido del modal
+          },
         }}
       >
         <h2 className="text-xl font-bold mb-4">
