@@ -20,7 +20,6 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 
 import {
@@ -56,7 +55,7 @@ export default function SearchBar() {
 
       <div
         variant="outline"
-        className="bg-none text-[13px]  border-border-button w-auto h-auto flex flex-row justify-start items-center gap-2 py-1 px-2 rounded-full text-primary-foreground-morelighter hover:text-primary-foreground-morelighter border"
+        className="bg-none text-[13px]  border-border-button w-auto h-auto hidden md:flex flex-row justify-start items-center gap-2 py-1 px-2 rounded-full text-primary-foreground-morelighter hover:text-primary-foreground-morelighter border "
       >
         <Gem className="h-4 w-4 text-white" />
         <span className="-mb-[1px]">123</span>
