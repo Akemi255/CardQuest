@@ -40,7 +40,7 @@ export default function SearchBar() {
   const handleSignOut = async () => {
     try {
       await signOut();
-      router.push("/");
+      router.push("/sign-in");
       router.refresh();
     } catch (error) {
       console.error("Logout error", error);
