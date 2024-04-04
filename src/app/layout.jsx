@@ -19,8 +19,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider
-      // localization={esES}
       appearance={{
+        variables: {
+          colorPrimary: "white",
+        },
+        layout: {
+          socialButtonsPlacement: "bottom",
+          socialButtonsVariant: "iconButton",
+        },
         baseTheme: dark,
       }}
     >

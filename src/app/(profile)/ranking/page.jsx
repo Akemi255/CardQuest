@@ -46,10 +46,9 @@ export default async function page() {
   }, []);
 
   return (
-    <div className="bg-[#171928] h-auto w-full overflow-scroll">
+    <div className="bg-[#171928] h-auto w-full overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <Table className="text-white [&_.text-muted-foreground]:text-white">
-          <TableCaption>User Ranking</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Ranking</TableHead>
@@ -79,7 +78,7 @@ export default async function page() {
                 );
               })
             ) : (
-              <div>ad</div>
+              <div></div>
             )}
           </TableBody>
         </Table>

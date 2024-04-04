@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { useClerk } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -33,6 +34,18 @@ import { Separator } from "@/components/ui/separator";
 
 export default function SearchBar() {
   const [mounted, setIsMounted] = useState(false);
+  const { signOut } = useClerk();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout error", error);
+    }
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -102,10 +115,13 @@ export default function SearchBar() {
                 sideOffset={8}
                 align="end"
               >
-                <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start  text-primary-foreground-light">
+                <Link
+                  href={"/profile"}
+                  className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start  text-primary-foreground-light"
+                >
                   <User className="w-[14px] h-[14px] mr-2" />
                   Profile
-                </Button>
+                </Link>
                 <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start text-primary-foreground-light">
                   <Settings className="w-[14px] h-[14px] mr-2" />
                   Prefference
@@ -159,7 +175,10 @@ export default function SearchBar() {
                   </div>
                 </RadioGroup>
                 <Separator className="bg-[#2E2E2E] my-1" />
-                <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start text-primary-foreground-light">
+                <Button
+                  onClick={handleSignOut}
+                  className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start text-primary-foreground-light"
+                >
                   <LogOut className="w-[14px] h-[14px] mr-2" />
                   Log out
                 </Button>

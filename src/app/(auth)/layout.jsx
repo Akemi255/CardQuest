@@ -1,13 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-import { SignIn } from "@clerk/nextjs";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-
-import "../../../public/css/login.css";
-
-// import backgroundImage from "../../../../public/assets/login-background.jpg";
-import backgroundImage from "../../../public/assets/login-background.jpg";
 
 export const metadata = {
   title: "Authentication",
@@ -16,11 +7,12 @@ export const metadata = {
 
 export default function AuthenticationPage({ children }) {
   return (
-    <div className="relative h-screen">
-      {/* <Image src={backgroundImage} layout="fill" objectFit="cover" /> */}
-
-      <div className="container relative px-0 h-screen  flex flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-8 lg:px-0 ">
-        <div className="lg:p-10 col-span-3 bg-[#1C1C1C] h-full w-full flex border-r border-[color:hsl(_0%,_0%,_18%)]">
+    <div className="relative h-screen overflow-hidden">
+      <div className="bg-[url('https://i.postimg.cc/mrxypwDt/login-background.jpg')] bg-center bg-cover container relative px-0 h-screen  flex flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-8 lg:px-0 ">
+        <div
+          style={{ backgroundColor: "rgba(25, 30, 43, 0.97)" }}
+          className="lg:p-10 col-span-3 h-full w-full flex border-r border-[color:hsl(_0%,_0%,_18%)]"
+        >
           <div className="lg:mx-auto mx-0 flex justify-between py-10 items-center flex-col space-y-6  w-full md:w-24 lg:w-full md:justify-between md:py-0">
             <div className="relative z-20 flex md:hidden items-center justify-start w-full text-lg font-medium text-white  px-10 ">
               <svg
@@ -37,7 +29,11 @@ export default function AuthenticationPage({ children }) {
               </svg>
               Card Quest
             </div>
-            <div></div>
+
+            <h1 className="text-white text-2xl font-bold tracking-tight">
+              HAREM: PROJECT MAID
+            </h1>
+
             {children}
             <p className="px-8 text-center text-[13px] text-muted-foreground text-gray-500 mt-auto max-w-[400px]">
               By clicking continue, you agree to our{" "}
@@ -58,23 +54,7 @@ export default function AuthenticationPage({ children }) {
             </p>
           </div>
         </div>
-        <div className="relative hidden col-span-5 h-full flex-col p-10 text-white lg:flex dark:border-r bg-gray-500">
-          {/* <div className="absolute inset-0 bg-zinc-900" /> */}
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-6 w-6"
-            >
-              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-            </svg>
-            Card Quest
-          </div>
+        <div className="relative hidden col-span-5 h-full flex-col p-10 text-white lg:flex dark:border-r ">
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
@@ -83,7 +63,6 @@ export default function AuthenticationPage({ children }) {
                 card holds the power to unlock thrilling adventures and
                 unforgettable moments!.&rdquo;
               </p>
-              <footer className="text-sm">Sofia Davis</footer>
             </blockquote>
           </div>
         </div>

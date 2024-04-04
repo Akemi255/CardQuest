@@ -29,7 +29,7 @@ export default function layout({ children }) {
       </aside>
       <main className="flex w-full flex-1 flex-col overflow-hidden bg-background2  h-max md:h-auto">
         <SearchBar />
-        <div className="h-auto w-full">
+        <div className="h-auto w-full overflow-y-auto overflow-x-hidden ">
           <div className="bg-[url('/assets/background-profile.png')] bg-no-repeat bg-center bg-cover">
             <div className="w-screen py-4 container flex flex-col">
               <div className="flex flex-col grow justify-center pt-10">

@@ -1,5 +1,5 @@
 import { SignUp } from "@clerk/nextjs";
-import React from "react";
+import "./sign-up.css";
 
 export default function page() {
   return <SignUp />;
