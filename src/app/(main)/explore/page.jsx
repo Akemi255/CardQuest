@@ -12,7 +12,9 @@ export default async function page({ searchParams }) {
   return (
     <div>
       <Search />
-      <Suspense key={query + currentPage} fallback={<p>loading</p>}></Suspense>
+      <Suspense key={query + currentPage} fallback={<p>loading</p>}>
+        <List query={query} currentPage={currentPage} />
+      </Suspense>
     </div>
   );
 }
