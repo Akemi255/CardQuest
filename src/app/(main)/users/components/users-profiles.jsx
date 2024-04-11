@@ -166,10 +166,10 @@ const UsersProfiles = () => {
                         {user.name}
                       </p>
                       <div className="flex justify-between mt-6">
-                        <p className="lg:ml-3 md:ml-0 text-[#316686] font-bold flex items-center lg:text-sm  md:text-xs">
+                        <p className="lg:ml-3 md:ml-0 text-[#316686] font-bold flex items-center lg:text-lg md:text-xs">
                           <UserRound
                             size={15}
-                            className="relative bottom-[0.2px] "
+                            className="relative bottom-[0.2px]"
                           />
                           {user.following.length} Following
                         </p>
