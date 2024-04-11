@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, notFound } from "next/navigation";
 
 import { Eye } from "lucide-react";
 import { UserRound } from "lucide-react";
@@ -22,11 +22,10 @@ const UsersProfiles = () => {
 
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(parseInt(page) || 1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState();
   const [loading, setLoading] = useState(true);
   const maxPagesToShow = 5;
 
-  // Obtención de datos
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,13 +50,11 @@ const UsersProfiles = () => {
     fetchData();
   }, [currentPage]);
 
-  // Función para cambio de página
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     router.push(`/users/${newPage}`);
   };
 
-  // Renderizar botones de paginación
   const renderPagination = (totalPages) => {
     const pageButtons = [];
 
@@ -90,7 +87,6 @@ const UsersProfiles = () => {
       );
     }
 
-    // Renderizar botones de página en el medio
     for (let i = startPage; i <= endPage; i++) {
       pageButtons.push(
         <PaginationItem key={i}>
@@ -129,6 +125,11 @@ const UsersProfiles = () => {
 
     return pageButtons;
   };
+
+  // Redireccionamiento a notFound solo si la página no está dentro del rango válido
+  if (parseInt(page) < 1 || page > parseInt(totalPages)) {
+    return notFound();
+  }
 
   return (
     <>
@@ -187,23 +188,26 @@ const UsersProfiles = () => {
         </div>
       </div>
 
-      {/* Renderizar controles de paginación */}
       {!loading && totalPages > 1 && (
         <div className=" flex justify-center items-center flex-wrap">
           <Pagination className="relative bottom-7">
             <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                />
-              </PaginationItem>
+              {currentPage > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious
+                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                  />
+                </PaginationItem>
+              )}
               {renderPagination(totalPages)}
               <PaginationItem>
-                <PaginationNext
-                  className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                />
+                {currentPage < totalPages && (
+                  <PaginationNext
+                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                  />
+                )}
               </PaginationItem>
             </PaginationContent>
           </Pagination>
