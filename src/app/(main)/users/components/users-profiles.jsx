@@ -14,6 +14,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationEllipsis,
 } from "@/components/ui/pagination";
 
 const UsersProfiles = () => {
@@ -82,7 +83,7 @@ const UsersProfiles = () => {
     if (startPage > 2) {
       pageButtons.push(
         <PaginationItem key="ellipsis_start">
-          <PaginationLink>...</PaginationLink>
+          <PaginationEllipsis className="text-white" />
         </PaginationItem>
       );
     }
@@ -106,7 +107,7 @@ const UsersProfiles = () => {
       if (totalPages - endPage > 1) {
         pageButtons.push(
           <PaginationItem key="ellipsis_end">
-            <PaginationLink>...</PaginationLink>
+            <PaginationEllipsis className="text-white" />
           </PaginationItem>
         );
       }
