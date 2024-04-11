@@ -8,8 +8,7 @@ const page = () => {
     <div className="back-profile">
       <Header />
       <UsersProfiles />
-      <Footer/>
-      
+      <Footer />
     </div>
   );
 };
