@@ -1,7 +1,12 @@
 "use client";
-
-import React from "react";
+import { ClipLoader } from "react-spinners";
 
 export default function loading() {
-  return <div>loading</div>;
+  return (
+    <>
+      <div className="flex justify-center items-center mt-[200px]">
+        <ClipLoader color={"#ffffff"} size={150} />
+      </div>
+    </>
+  );
 }

@@ -1,11 +1,10 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-
+import ClipLoader from "react-spinners/ClipLoader";
 import { Gem, Menu, User, LogOut, Home } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,7 @@ import { SetEmail } from "@/helpers/SetEmail";
 export default function SearchBar() {
   const [mounted, setIsMounted] = useState(false);
   const [profileData, setProfileData] = useState("");
-  const [avatarImage, setAvatarImage] = useState("");
+  const [loadingImage, setLoadingImage] = useState(true);
   const email = SetEmail();
   const { signOut } = useClerk();
   const router = useRouter();
@@ -45,7 +44,7 @@ export default function SearchBar() {
       const fetchProfile = async () => {
         try {
           const response = await fetch(
-            "http://localhost:3003/api/users/profile",
+            "https://api-rest-card-quest.vercel.app/api/users/profile",
             {
               method: "POST",
               headers: {
@@ -61,7 +60,7 @@ export default function SearchBar() {
 
           const data = await response.json();
           setProfileData(data.user);
-          setAvatarImage(data.user.image);
+          setLoadingImage(false);
         } catch (error) {
           console.error("Error fetching profile:", error);
         }
@@ -76,7 +75,8 @@ export default function SearchBar() {
       {mounted && (
         <div className="flex w-full items-center  p-4 gap-4 bg-background2 border-b border-border-grey">
           <Avatar className="flex md:hidden h-8 w-8 m-auto">
-            <AvatarImage src="https://github.com/shadcn.pngas" alt="@shadcn" />
+            <AvatarImage src={profileData.image} alt="@shadcn" />
+
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
@@ -102,17 +102,27 @@ export default function SearchBar() {
                   variant="outline"
                   className="hover:bg-background-surface-200 bg-background2 border-border-button flex flex-row justify-start h-auto p-0 text-primary-foreground-light hover:text-primary-foreground-morelighter "
                 >
-                  <div className="flex h-10 w-10  justify-center items-center">
-                    <Avatar className="h-9 w-9 relative right-1 ">
-                      <Image src={profileData.image} fill alt="Avatar" />
-                    </Avatar>
-                  </div>
-                  <div className="flex-col flex w-auto text-start">
-                    <p className="text-[13px] ">{profileData.name}</p>
-                    <p className="text-xs text-clip overflow-hidden">
-                      {profileData.email}
-                    </p>
-                  </div>
+                  {loadingImage ? (
+                    <ClipLoader
+                      color={"#ffffff"}
+                      loading={loadingImage}
+                      size={20}
+                    />
+                  ) : (
+                    <>
+                      <div className="flex h-10 w-10 justify-center items-center">
+                        <Avatar className="h-9 w-9 relative right-1 ">
+                          <Image src={profileData.image} fill alt="Avatar" />
+                        </Avatar>
+                      </div>
+                      <div className="flex-col flex w-auto text-start">
+                        <p className="text-[13px] ">{profileData.name}</p>
+                        <p className="text-xs text-clip overflow-hidden">
+                          {profileData.email}
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent

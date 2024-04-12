@@ -92,13 +92,10 @@ const ProfileForm = () => {
       }
 
       try {
-        const response = await fetch(
-          "https://api-rest-card-quest.vercel.app/api/users/update",
-          {
-            method: "POST",
-            body: formDataToSend,
-          }
-        );
+        const response = await fetch("http://localhost:3003/api/users/update", {
+          method: "POST",
+          body: formDataToSend,
+        });
 
         if (response.ok) {
           toast.success("User updated");
