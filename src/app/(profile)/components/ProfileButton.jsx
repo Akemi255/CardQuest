@@ -14,7 +14,7 @@ export default function ProfileButton(props) {
     <Link href={href}>
       <Button
         className={cn(
-          "px-2 py-1 text-white h-auto",
+          "px-2 py-1 text-white h-auto lg:text-[12px] md:text-[12px] sm:text-[12px] text-[0px]",
           className,
           path === href ? null : "bg-transparent"
         )}
