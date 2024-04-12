@@ -226,7 +226,7 @@ export default function Nav() {
         })}
       </nav>
 
-      <Link href={"/Settings"} className="m-3">
+      <Link href={"/settings"} className="m-3">
         <span
           className={cn(
             "group flex items-center rounded-sm text-sm font-medium hover:bg-background-surface-200 hover:text-primary-foreground-morelighter  text-primary-foreground-light transition-all",

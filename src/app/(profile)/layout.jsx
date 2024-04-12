@@ -92,11 +92,6 @@ export default function layout({ children }) {
                     text={"Edit Profile"}
                   />
                   <ProfileButton
-                    icon={<Settings className="h-4 w-4 mr-1" />}
-                    href={"/settings"}
-                    text={"Settings"}
-                  />
-                  <ProfileButton
                     icon={<Star className="h-4 w-4 mr-1" />}
                     href={"/favorite"}
                     text={"Favorite"}

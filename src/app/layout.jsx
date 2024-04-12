@@ -1,13 +1,12 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
-import "./settings.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { esES } from "@clerk/localizations";
+import { dark } from "@clerk/themes";
+
 import "react-toastify/dist/ReactToastify.css";
+import { Inter } from "next/font/google";
+
 import Providers from "@/providers/providers";
 import { Drawer } from "@/components/ui/drawer";
-
-import { dark } from "@clerk/themes";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
