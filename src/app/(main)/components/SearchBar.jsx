@@ -54,7 +54,7 @@ export default function SearchBar() {
   return (
     <>
       {mounted && (
-        <div className="flex w-full items-center  p-4 gap-4 bg-background2 border-b border-border-grey">
+        <div className="flex w-full items-center  p-4 gap-4 bg-blackBackground border-b border-border-grey">
           <Avatar className="flex md:hidden h-8 w-8 m-auto">
             <AvatarImage src="https://github.com/shadcn.pngas" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
@@ -78,7 +78,7 @@ export default function SearchBar() {
 
           <div
             variant="outline"
-            className="bg-none text-[13px]  border-border-button w-auto h-auto flex flex-row justify-start items-center gap-2 py-1 px-2 rounded-full text-primary-foreground-morelighter hover:text-primary-foreground-morelighter border"
+            className="bg-background-surface-200 text-[13px]  border-border-button w-auto h-auto hidden md:flex flex-row justify-start items-center gap-2 py-1 px-2 rounded-full text-primary-foreground-morelighter hover:text-primary-foreground-morelighter border"
           >
             <Gem className="h-4 w-4 text-white" />
             <span className="-mb-[1px]">123</span>
@@ -88,7 +88,7 @@ export default function SearchBar() {
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className="hover:bg-background-surface-200 bg-background2 border-border-button w-[240px] flex flex-row justify-start h-auto p-0 text-primary-foreground-light hover:text-primary-foreground-morelighter border "
+                  className="hover:bg-background-surface-200 bg-background-surface-200 border-border-button w-[240px] flex flex-row justify-start h-auto p-0 text-primary-foreground-light hover:text-primary-foreground-morelighter border "
                 >
                   <div className="flex h-10 w-10  justify-center items-center">
                     <Avatar className="h-7 w-7 ">
@@ -111,7 +111,7 @@ export default function SearchBar() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent
-                className="w-[240px] bg-background-surface-100 text-white bottom-7 p-1 data-[state=open]:data-[side=bottom]:!left-5 border border-border-overlay shadow-lg border-spacing-3 "
+                className="w-[240px] bg-background-surface-200 text-white bottom-7 p-1 data-[state=open]:data-[side=bottom]:!left-5 border border-border-overlay shadow-lg border-spacing-3 "
                 sideOffset={8}
                 align="end"
               >
@@ -126,8 +126,8 @@ export default function SearchBar() {
                   <Settings className="w-[14px] h-[14px] mr-2" />
                   Prefference
                 </Button>
-                <Separator className="bg-[#2E2E2E] my-1" />
-                <Label className="flex flex-col bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start items-start text-primary-foreground-light">
+                {/* <Separator className="bg-[#2E2E2E] my-1" /> */}
+                {/* <Label className="flex flex-col bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start items-start text-primary-foreground-light">
                   Theme
                 </Label>
                 <RadioGroup
@@ -173,7 +173,7 @@ export default function SearchBar() {
                       Dark
                     </Label>
                   </div>
-                </RadioGroup>
+                </RadioGroup> */}
                 <Separator className="bg-[#2E2E2E] my-1" />
                 <Button
                   onClick={handleSignOut}

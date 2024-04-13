@@ -437,7 +437,7 @@ const Cards = () => {
         >
           {"Lanzar Cartas"}
         </button> */}
-        <div className="flex justify-around container">
+        <div className="flex justify-around container mb-10 md:mb-0">
           <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
             Inventory
           </Button>

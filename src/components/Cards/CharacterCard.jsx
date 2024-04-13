@@ -19,14 +19,17 @@ const CharacterCard = ({
   // };
 
   return (
-    <div key={index} className="flex">
+    <div key={index} className="flex relative">
       <div
         className={`${character.borderColorClass} cartas  flex items-center`}
       >
         <img
           src={`/assets/${character.borderColorClass}.png`}
           alt=""
-          className="borderGeneral flex items-center"
+          className="borderGeneral flex items-center "
+          style={{
+            transform: "scale(1.13, 1)",
+          }}
         />
         {character.images && character.images.jpg && (
           <img

@@ -140,12 +140,14 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --background2: 0, 0%, 11%;
+    --background2: 233, 27%, 12%;
     --background3: 0, 0%, 18%;
+
+    --black-background: 0, 0%, 0%;
 
     --background-surface-75: 0 0% 11%;
     --background-surface-100: 0 0% 13.7%;
-    --background-surface-200: 0 0% 15.7%;
+    --background-surface-200: 233, 25%, 6%;
     --background-surface-300: 0 0% 18%;
     --background-surface-400: 0 0% 24.3%;
     --background-surface-500: 0 0% 20.4%;

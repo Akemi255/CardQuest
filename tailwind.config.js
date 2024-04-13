@@ -36,6 +36,8 @@ module.exports = {
         background2: "hsl(var(--background2))",
         background3: "hsl(var(--background3))",
 
+        blackBackground: "hsl(var(--black-background))",
+
         background: {
           DEFAULT: "hsl(var(--background))",
           surface: {

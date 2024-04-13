@@ -110,15 +110,7 @@ const Links = [
       },
     ],
   },
-  {
-    title: "Store",
-    href: "/store",
-    label: "128",
-    icon: Store,
-    variant: "default",
-    separator: false,
-    subMenu: null,
-  },
+
   // {
   //   title: "Profile",
   //   href: "/store",
@@ -135,30 +127,15 @@ export default function Nav() {
   const [isCollapsible, setIsCollapsible] = useState(false);
 
   return (
-    <div className="flex flex-col gap-2 bg-background2 justify-between h-full">
-      <div className="flex flex-col gap-4 p-2 py-4 text-center">
-        <Button
-          variant="outline"
-          className="hover:bg-background-surface-200 bg-background2 border-none flex flex-row justify-start h-auto p-0 text-primary-foreground-light hover:text-primary-foreground-morelighter"
-        >
-          {/* <span className="h-10 w-10 flex items-center justify-center rounded "> */}
-          {/* <CircleUserRound className="w-5 h-5 bg-white rounded" /> */}
-          <div className="flex h-10 w-10 justify-center items-center mx-2">
-            <Avatar className="h-10 w-10 ">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
-
-          {/* </span> */}
-
-          {/* <span className="h-100">a</span> */}
-
-          <div className="flex-col flex w-auto text-start">
-            <h1 className="text-[16px]">CARD QUEST</h1>
-          </div>
-        </Button>
-        {/* <span className="mt-[10.5px] text-white text-base">Card Quest</span> */}
+    <div className="flex flex-col gap-2 bg-background2 h-full !bg-[#252736]">
+      <div className="flex flex-col gap-4 p-2 py-4 text-center justify-center align-middle items-center">
+        <Avatar className="h-20 w-20 ">
+          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <span className="mt-[10.5px] text-white text-base">
+          Harem: Project Maid
+        </span>
       </div>
       <nav className="grid items-start gap-y-2 p-3">
         {Links.map((link, index) => {
@@ -240,7 +217,7 @@ export default function Nav() {
         })}
         {/* <Separator className="bg-[#2E2E2E]" /> */}
       </nav>
-
+      {/* 
       <Link href={"/Settings"} className="m-3">
         <span
           className={cn(
@@ -256,7 +233,7 @@ export default function Nav() {
           </span>
           <span className="text-[13px]">Settings</span>
         </span>
-      </Link>
+      </Link> */}
 
       {/* <Popover>
         <PopoverTrigger asChild>
