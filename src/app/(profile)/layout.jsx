@@ -114,18 +114,46 @@ export default function Layout({ children }) {
 
               <div className="flex flex-row sm:justify-end justify-center">
                 <div className="flex flex-row flex-wrap gap-4 text-white mr-2">
-                  <div className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent">
-                    <FaSpotify className="h-7 w-7  text-green-500" />
-                  </div>
-                  <div className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent">
-                    <Facebook className="h-7 w-7 text-blue-500" />
-                  </div>
-                  <div className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent">
-                    <Instagram className="h-7 w-7 text-red-400" />
-                  </div>
-                  <div className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent">
-                    <Twitter className="h-7 w-7 text-blue-500" />
-                  </div>
+                  {profileData.spotify && (
+                    <a
+                      href={profileData.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent"
+                    >
+                      <FaSpotify className="h-7 w-7  text-green-500" />
+                    </a>
+                  )}
+                  {profileData.facebook && (
+                    <a
+                      href={profileData.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent"
+                    >
+                      <Facebook className="h-7 w-7 text-blue-500" />
+                    </a>
+                  )}
+                  {profileData.instagram && (
+                    <a
+                      href={profileData.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent"
+                    >
+                      <Instagram className="h-7 w-7 text-red-400" />
+                    </a>
+                  )}
+                  {profileData.twitter && (
+                    <a
+                      href={profileData.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center lg:bg-black hover:bg-gray-900 cursor-pointer  rounded-lg w-10 h-10 sm:bg-transparent"
+                    >
+                      <Twitter className="h-7 w-7 text-blue-500" />
+                    </a>
+                  )}
                 </div>
               </div>
 

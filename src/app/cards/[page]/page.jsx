@@ -5,10 +5,9 @@ import Footer from "@/components/Layout/footer";
 import { useParams } from "next/navigation";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdNavigateNext } from "react-icons/md";
-import { RenderRankingCards } from "@/components/ranking/cards-ranking/render-ranking-cards";
 import { getEmail } from "@/helpers/getEmail";
 import { RenderExploreCards } from "@/components/explore-cards/render-explore-cards";
-import SearchInput from '@/components/explore-cards/buscador';
+import SearchInput from "@/components/explore-cards/buscador";
 
 const Page = () => {
   const email = getEmail();
@@ -179,12 +178,11 @@ const Page = () => {
     );
   };
 
-
   return (
     <>
       <Header />
       <br />
-      <SearchInput/>
+      <SearchInput />
       {/* Renderizar datos */}
       <div className="flex flex-wrap mt-5">
         {data.map((item, index) => (
