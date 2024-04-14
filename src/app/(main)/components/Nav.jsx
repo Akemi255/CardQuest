@@ -11,7 +11,7 @@ import {
   ArrowLeftRight,
   CircleDot,
   Store,
-  CircleUserRound,
+  User,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -22,13 +22,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
 const Links = [
   {
@@ -40,14 +33,14 @@ const Links = [
     separator: false,
     subMenu: null,
   },
-  // {
-  //   title: "Trade",
-  //   href: "/one",
-  //   label: "128",
-  //   icon: WalletCards,
-  //   variant: "default",
-  //   subMenu: null,
-  // },
+  {
+    title: "Trade",
+    href: "/one",
+    label: "128",
+    icon: WalletCards,
+    variant: "default",
+    subMenu: null,
+  },
 
   {
     title: "Card Ranking",
@@ -68,8 +61,8 @@ const Links = [
     subMenu: null,
   },
   {
-    title: "User Search",
-    href: "/searchuser",
+    title: "Users",
+    href: "/users/1",
     label: "128",
     icon: UserSearch,
     variant: "default",
@@ -215,7 +208,6 @@ export default function Nav() {
             </>
           );
         })}
-        {/* <Separator className="bg-[#2E2E2E]" /> */}
       </nav>
       {/* 
       <Link href={"/Settings"} className="m-3">

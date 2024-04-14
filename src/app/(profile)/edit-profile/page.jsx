@@ -15,12 +15,38 @@ import { Form } from "@/components/ui/form";
 import { getProfileData } from "./helpers/getProfileData";
 import { dataURItoBlob } from "./helpers/data-to-blob";
 
+const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
+
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   nick: z
     .string()
     .min(2, { message: "Nickname must be at least 2 characters." }),
   bio: z.string().min(10, { message: "Bio must be at least 10 characters." }),
+  twitter: z
+    .string()
+    .optional()
+    .refine((value) => !value || urlRegex.test(value), {
+      message: "Invalid Twitter URL.",
+    }),
+  instagram: z
+    .string()
+    .optional()
+    .refine((value) => !value || urlRegex.test(value), {
+      message: "Invalid Instagram URL.",
+    }),
+  facebook: z
+    .string()
+    .optional()
+    .refine((value) => !value || urlRegex.test(value), {
+      message: "Invalid Facebook URL.",
+    }),
+  spotify: z
+    .string()
+    .optional()
+    .refine((value) => !value || urlRegex.test(value), {
+      message: "Invalid Spotify URL.",
+    }),
 });
 
 const ProfileForm = () => {
@@ -78,6 +104,10 @@ const ProfileForm = () => {
       formDataToSend.append("nick", formData.nick);
       formDataToSend.append("bio", formData.bio);
       formDataToSend.append("email", email);
+      formDataToSend.append("twitter", formData.twitter || "");
+      formDataToSend.append("instagram", formData.instagram || "");
+      formDataToSend.append("facebook", formData.facebook || "");
+      formDataToSend.append("spotify", formData.spotify || "");
 
       function isURL(str) {
         return /^(http|https):\/\/[^ "]+$/.test(str);
@@ -206,6 +236,50 @@ const ProfileForm = () => {
               />
               {errors.bio && (
                 <span className="text-red-500">{errors.bio.message}</span>
+              )}
+
+              <Input
+                type="text"
+                name="twitter"
+                placeholder="Twitter"
+                className="p-2 border rounded-md mt-2 w-1/2"
+                {...register("twitter")}
+              />
+              {errors.twitter && (
+                <span className="text-red-500">{errors.twitter.message}</span>
+              )}
+
+              <Input
+                type="text"
+                name="instagram"
+                placeholder="Instagram"
+                className="p-2 border rounded-md mt-2 w-1/2"
+                {...register("instagram")}
+              />
+              {errors.instagram && (
+                <span className="text-red-500">{errors.instagram.message}</span>
+              )}
+
+              <Input
+                type="text"
+                name="facebook"
+                placeholder="Facebook"
+                className="p-2 border rounded-md mt-2 w-1/2"
+                {...register("facebook")}
+              />
+              {errors.facebook && (
+                <span className="text-red-500">{errors.facebook.message}</span>
+              )}
+
+              <Input
+                type="text"
+                name="spotify"
+                placeholder="Spotify"
+                className="p-2 border rounded-md mt-2 w-1/2"
+                {...register("spotify")}
+              />
+              {errors.spotify && (
+                <span className="text-red-500">{errors.spotify.message}</span>
               )}
 
               <div className="flex justify-center w-full mt-6 gap-4">

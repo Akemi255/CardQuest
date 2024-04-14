@@ -1,6 +1,5 @@
 import React from "react";
 import { Search as SearchIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const Search = React.forwardRef(({ className, ...props }, ref) => {
