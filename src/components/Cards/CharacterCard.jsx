@@ -12,12 +12,6 @@ const CharacterCard = ({
   existingCards,
   loading,
 }) => {
-  // const findButtonIcon = () => {
-  //   return Object.keys(IconButtons).find(
-  //     (key) => IconButtons[key] === "sparkle"
-  //   );
-  // };
-
   return (
     <div key={index} className="flex relative">
       <div
@@ -27,9 +21,6 @@ const CharacterCard = ({
           src={`/assets/${character.borderColorClass}.png`}
           alt=""
           className="borderGeneral flex items-center "
-          style={{
-            transform: "scale(1.13, 1)",
-          }}
         />
         {character.images && character.images.jpg && (
           <img
