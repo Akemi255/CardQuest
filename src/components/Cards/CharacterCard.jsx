@@ -61,8 +61,8 @@ const CharacterCard = ({
 
           <div className="flex flex-row gap-1 items-center">
             <span className="font-medium">{character.monedas}</span>
-            {/* {<IconButtons.sparkle />} */}
-            <Image src={imgCoins.key("comun")} />
+            {<IconButtons.sparkle />}
+            {/* <Image src={imgCoins.key("comun")} /> */}
           </div>
 
           {character.saved ? (
