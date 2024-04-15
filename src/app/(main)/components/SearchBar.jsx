@@ -83,12 +83,10 @@ export default function SearchBar() {
         <div className="flex w-full items-center  p-4 gap-4 bg-blackBackground border-b border-border-grey">
           <Avatar className="flex md:hidden h-8 w-8 m-auto">
             <AvatarImage src={profileData.image} alt="@shadcn" />
-
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
           <Search onChange={handleChange} />
-          <div>adad</div>
           <DrawerTrigger>
             <Button variant="outline" className="md:hidden p-2">
               <Menu />
@@ -151,58 +149,6 @@ export default function SearchBar() {
                   <User className="w-[14px] h-[14px] mr-2" />
                   Profile
                 </Link>
-                {/* <Button className="flex flex-row justify-start items-center bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start text-primary-foreground-light">
-                  <Settings className="w-[14px] h-[14px] mr-2" />
-                  Prefference
-                </Button> */}
-                {/* <Separator className="bg-[#2E2E2E] my-1" /> */}
-                {/* <Label className="flex flex-col bg-transparent hover:bg-background-surface-300 w-full text-xs px-2 py-[6px] h-auto text-start items-start text-primary-foreground-light">
-                  Theme
-                </Label>
-                <RadioGroup
-                  defaultValue="comfortable"
-                  className="text-primary-foreground-light"
-                >
-                  <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm pl-2">
-                    <RadioGroupItem
-                      value="default"
-                      id="r1"
-                      className="border-none text-primary-foreground-lighter "
-                    />
-                    <Label
-                      htmlFor="r1"
-                      className="text-xs w-full p-1 !ml-[2px]"
-                    >
-                      System
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm pl-2">
-                    <RadioGroupItem
-                      value="comfortable"
-                      id="r2"
-                      className="border-none text-primary-foreground-lighter "
-                    />
-                    <Label
-                      htmlFor="r2"
-                      className="text-xs w-full p-1 !ml-[2px]"
-                    >
-                      Light
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2 hover:bg-background-surface-300 border-sm pl-2">
-                    <RadioGroupItem
-                      value="compact"
-                      id="r3"
-                      className="border-none text-primary-foreground-lighter "
-                    />
-                    <Label
-                      htmlFor="r3"
-                      className="text-xs w-full p-1 !ml-[2px]"
-                    >
-                      Dark
-                    </Label>
-                  </div>
-                </RadioGroup> */}
                 <Separator className="bg-[#2E2E2E] my-1" />
 
                 <Button
