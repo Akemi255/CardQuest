@@ -1,20 +1,7 @@
-body {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.fondo {
-  background-image: url("/assets/background-cards.png") !important;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 .cartas {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* min-height: 450px; 
-    min-width: 260px; */
 }
 .info-like {
   display: flex;
@@ -27,9 +14,7 @@ body {
 .name {
   font-size: 11px;
 }
-.name-anime {
-  font-size: 9px;
-}
+
 .boton-guardar {
   margin-top: 5px;
   position: absolute;
@@ -43,7 +28,6 @@ body {
   width: 17px;
 }
 .personaje-anime {
-  margin-top: 5px;
   background-color: #ffffff;
   width: 65%;
   -webkit-box-shadow: 10px 10px 12px 2px rgba(0, 0, 0, 0.23);

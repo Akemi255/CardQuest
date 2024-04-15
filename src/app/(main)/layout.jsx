@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
 import MyDrawer from "./components/MyDrawer";
 import Nav from "./components/Nav";
-
 import SearchBar from "./components/SearchBar";
-import TittleBar from "./components/TittleBar";
 
 export default function layout({ children }) {
   const [mounted, setIsMounted] = useState(false);
@@ -23,8 +22,6 @@ export default function layout({ children }) {
           </aside>
           <main className="flex w-full flex-1 flex-col overflow-hidden bg-background2  h-max md:h-auto">
             <SearchBar />
-            {/* <TittleBar /> */}
-            {/* <div className="max-w-7xl mx-auto mt-20 overflow-y-scroll"> */}
             <div className="overflow-y-scroll h-full">{children}</div>
           </main>
           <MyDrawer />

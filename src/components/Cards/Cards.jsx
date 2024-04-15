@@ -1,22 +1,17 @@
 "use client";
-
-import { decrementRetryCountdown } from "@/helpers/Cards/decrementRetryCountdown";
-import { getColorForRarity } from "@/helpers/Cards/getColorForRarity";
 import { getInitialButtonClickCount } from "@/helpers/Cards/getInitialButtonClickCount";
-import { getInitialCharacterData } from "@/helpers/Cards/getInitialCharacterData";
 import { getInitialRetryCountdown } from "@/helpers/Cards/getInitialRetryCountdown";
 import { getInitialShowRetryMessage } from "@/helpers/Cards/getInitialShowRetryMessage";
 import { getRandomNumberExcluding } from "@/helpers/Cards/getRandomNumberExcluding";
 import useCharacterSaver from "@/hooks/useCharacterSaver";
-import React, { useState, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
 import { SetEmail } from "@/helpers/SetEmail";
-import "/public/css/cards.css";
-import Footer from "../Layout/footer";
-import { Button } from "../ui/button";
-import { RotateCw } from "lucide-react";
+import { sendReportOfficial } from "./sendReportOfficial";
 
-//declaración de estados
+import { useState, useEffect } from "react";
+import { RotateCw } from "lucide-react";
+import { Button } from "../ui/button";
+
 const Cards = () => {
   const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,7 +23,6 @@ const Cards = () => {
   }, []);
 
   const [characterData, setCharacterData] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [showRetryMessage, setShowRetryMessage] = useState(() => {
@@ -263,7 +257,7 @@ const Cards = () => {
       }
 
       const randomNumbers = [];
-      while (randomNumbers.length < 5) {
+      while (randomNumbers.length < 4) {
         const randomNumber = getRandomNumberExcluding(1, 169979);
         if (!randomNumbers.includes(randomNumber)) {
           randomNumbers.push(randomNumber);
@@ -311,6 +305,7 @@ const Cards = () => {
 
                 console.log("Before adding character:", characterData.length);
                 setCharacterData((prevData) => [...prevData, data.data]);
+
                 console.log("After adding character:", characterData.length);
 
                 success = true;
@@ -409,7 +404,7 @@ const Cards = () => {
         )}
 
         {characterData.length > 0 && (
-          <div className="flex car flex-wrap">
+          <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
             {characterData.map((character, index) => (
               <CharacterCard
                 key={index}
@@ -423,21 +418,7 @@ const Cards = () => {
             ))}
           </div>
         )}
-        {/* <button
-          className="btn float lanzarCards"
-          onClick={() => {
-            CleanArray();
-            fetchCharacterData();
-          }}
-          disabled={
-            buttonDisabled ||
-            (showRetryMessage && retryCountdown > 0) ||
-            loading
-          }
-        >
-          {"Lanzar Cartas"}
-        </button> */}
-        <div className="flex justify-around container mb-10 md:mb-0">
+        <div className="flex justify-around container mb-10 md:mb-0 mt-4">
           <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
             Inventory
           </Button>
@@ -454,31 +435,12 @@ const Cards = () => {
             Auto-Spin
           </Button>
         </div>
+        <br />
+
         {/* <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div> */}
       </div>
-      <Footer></Footer>
     </>
   );
 };
 
 export default Cards;
-
-const sendReportOfficial = async (email) => {
-  try {
-    const formData = new URLSearchParams();
-    formData.append("reporterEmail", email);
-
-    const response = await fetch(
-      "https://api-rest-card-quest.vercel.app/api/users/reportOfficial",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData,
-      }
-    );
-  } catch (error) {
-    console.error("Error al realizar la petición POST:", error.message);
-  }
-};
