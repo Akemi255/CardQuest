@@ -4,6 +4,13 @@ import "/public/css/home.css";
 import { IconButtons } from "./IconButton";
 import Image from "next/image";
 
+import comunCoin from "../../../public/assets/coins/comun-coin.png";
+import raroCoin from "../../../public/assets/coins/raro-coin.png";
+import oroCoin from "../../../public/assets/coins/oro-coin.png";
+import plataCoin from "../../../public/assets/coins/plata-coin.png";
+import epicoCoin from "../../../public/assets/coins/epico-coin.png";
+import miticoCoin from "../../../public/assets/coins/mitico-coin.png";
+
 const CharacterCard = ({
   character,
   index,
@@ -12,6 +19,15 @@ const CharacterCard = ({
   existingCards,
   loading,
 }) => {
+  const imgCoins = {
+    comun: comunCoin,
+    raro: raroCoin,
+    oro: oroCoin,
+    plata: plataCoin,
+    epic: epicoCoin,
+    mitic: miticoCoin,
+  };
+
   return (
     <div key={index} className="flex relative">
       <div
@@ -43,7 +59,8 @@ const CharacterCard = ({
 
           <div className="flex flex-row gap-1 items-center">
             <span className="font-medium">{character.monedas}</span>
-            {<IconButtons.sparkle />}
+            {/* {<IconButtons.sparkle />} */}
+            <Image src={imgCoins.key("comun")} />
           </div>
 
           {character.saved ? (
