@@ -31,7 +31,7 @@ const CharacterCard = ({
   return (
     <div key={index} className="flex relative">
       <div
-        className={`${character.borderColorClass} flex flex-col justify-start cartas items-center`}
+        className={`${character.borderColorClass} flex flex-col justify-start cartas items-center `}
       >
         <Image
           src={`/assets/${character.borderColorClass}.png`}
@@ -42,16 +42,18 @@ const CharacterCard = ({
         />
 
         {character.images && character.images.jpg && (
-          <img
+          <Image
             src={character.images.jpg.image_url}
             alt={character.name}
+            width={500}
+            height={500}
             className="w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime"
           />
         )}
 
         <div className="info-like relative">
           <div className="text-center mt-[5px] personaje-anime">
-            <p className="name font-bold">{character.name}</p>
+            <p className="text-[11px] font-bold">{character.name}</p>
             {character.anime && character.anime[0] && (
               <p className="text-[9px]">{character.anime[0].anime.title}</p>
             )}
