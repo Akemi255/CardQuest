@@ -1,7 +1,6 @@
 import { AiFillLike } from "react-icons/ai";
 import "/public/css/home.css";
 
-import { IconButtons } from "./IconButton";
 import Image from "next/image";
 
 import comunCoin from "../../../public/assets/coins/comun-coin.png";
@@ -45,7 +44,7 @@ const CharacterCard = ({
       >
         <Image
           src={`/assets/${character.borderColorClass}.png`}
-          alt=""
+          alt="border"
           className="borderGeneral flex items-center"
           width={500}
           height={500}
@@ -71,11 +70,12 @@ const CharacterCard = ({
 
           <div className="flex flex-row gap-1 items-center">
             <span className="font-medium">{character.monedas}</span>
-            {/* {<IconButtons.sparkle />} */}
+
             <Image
               src={imgCoins(character.borderColorClass)}
               width={24}
               height={24}
+              alt="coin"
             />
           </div>
 
@@ -97,21 +97,16 @@ const CharacterCard = ({
           )}
 
           {existingCards[index] && (
-            <button
-              className={`text-xs ${
-                existingCards[index]
-                  ? "bg-green-400 hover:bg-green-500"
-                  : "bg-blue-500 hover:bg-blue-700"
-              } text-white py-1 px-2 rounded flex items-center justify-center ${
-                loading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-              }`}
-              onClick={() => saveCharacter(character, index)}
+            <div
+              className={`text-xs relative top-5 ${
+                existingCards[index] ? "bg-green-400 " : "bg-blue-500"
+              } text-white py-1 px-2 rounded flex items-center justify-center`}
               disabled={loading}
             >
               {existingCards[index]
                 ? `Esta carta ya la tienes`
                 : "Guardar en el perfil"}
-            </button>
+            </div>
           )}
         </div>
       </div>
