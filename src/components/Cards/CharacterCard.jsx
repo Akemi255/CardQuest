@@ -21,17 +21,17 @@ const CharacterCard = ({
 }) => {
   const imgCoins = (params) => {
     switch (params) {
-      case "comun":
+      case "border-comun":
         return comunCoin;
-      case "raro":
+      case "border-raro":
         return raroCoin;
-      case "oro":
+      case "border-oro":
         return oroCoin;
-      case "plata":
+      case "border-plata":
         return plataCoin;
-      case "epic":
+      case "border-epic":
         return epicoCoin;
-      case "mitic":
+      case "border-mitic":
         return miticoCoin;
       default:
         return miticoCoin;
@@ -72,7 +72,11 @@ const CharacterCard = ({
           <div className="flex flex-row gap-1 items-center">
             <span className="font-medium">{character.monedas}</span>
             {/* {<IconButtons.sparkle />} */}
-            <Image src={imgCoins("raro")} width={24} height={24} layout="" />
+            <Image
+              src={imgCoins(character.borderColorClass)}
+              width={24}
+              height={24}
+            />
           </div>
 
           {character.saved ? (
