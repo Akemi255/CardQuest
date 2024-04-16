@@ -19,13 +19,23 @@ const CharacterCard = ({
   existingCards,
   loading,
 }) => {
-  const imgCoins = {
-    comun: comunCoin,
-    raro: raroCoin,
-    oro: oroCoin,
-    plata: plataCoin,
-    epic: epicoCoin,
-    mitic: miticoCoin,
+  const imgCoins = (params) => {
+    switch (params) {
+      case "comun":
+        return comunCoin;
+      case "raro":
+        return raroCoin;
+      case "oro":
+        return oroCoin;
+      case "plata":
+        return plataCoin;
+      case "epic":
+        return epicoCoin;
+      case "mitic":
+        return miticoCoin;
+      default:
+        return miticoCoin;
+    }
   };
 
   return (
@@ -61,8 +71,8 @@ const CharacterCard = ({
 
           <div className="flex flex-row gap-1 items-center">
             <span className="font-medium">{character.monedas}</span>
-            {<IconButtons.sparkle />}
-            {/* <Image src={imgCoins.key("comun")} /> */}
+            {/* {<IconButtons.sparkle />} */}
+            <Image src={imgCoins("raro")} width={24} height={24} layout="" />
           </div>
 
           {character.saved ? (
