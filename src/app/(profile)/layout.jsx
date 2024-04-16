@@ -105,7 +105,7 @@ export default function Layout({ children }) {
                     <span className="text-lg">{profileData.name}</span>
                   </div>
                   <div>
-                    <span className="text-lg text-gray-400">
+                    <span className="text-lg text-gray-400 sm:flex hidden">
                       {profileData.email}
                     </span>
                   </div>
