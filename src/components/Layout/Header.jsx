@@ -1,8 +1,5 @@
 import Link from "next/link";
-import { BiUser } from "react-icons/bi";
-import Logout from "./Logout";
 import Menu from "./Menu";
-import "/public/css/header.css";
 import UserIcon from "./user-icon";
 
 const Header = () => {

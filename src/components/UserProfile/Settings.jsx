@@ -4,11 +4,9 @@ import { useEffect } from "react";
 import Modal from "react-modal";
 import { IoSettingsSharp } from "react-icons/io5";
 import { UserProfile } from "@clerk/nextjs";
-import '/public/css/profiles.css'
 
 const Settings = ({ defaultOpen = false }) => {
   const [modalIsOpen, setModalIsOpen] = useState(defaultOpen);
-
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -24,11 +22,11 @@ const Settings = ({ defaultOpen = false }) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      zIndex: 1000
+      zIndex: 1000,
     },
     content: {
       position: "relative",
-      
+
       borderRadius: "8px",
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
       overflow: "auto",
@@ -49,9 +47,7 @@ const Settings = ({ defaultOpen = false }) => {
   return (
     <>
       <div className="flex justify-center items-center">
-        <button
-          onClick={modalIsOpen ? closeModal : openModal}
-        >
+        <button onClick={modalIsOpen ? closeModal : openModal}>
           {modalIsOpen ? "Ocultar cuenta" : "Administrar cuenta"}
         </button>
       </div>

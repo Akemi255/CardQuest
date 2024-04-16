@@ -1,11 +1,8 @@
-import React from "react";
-
-import Search from "./components/search";
-
 export default function page() {
   return (
     <div>
-      <Search />
+      {/*I modified this because of the errors it gave in deploy*/}
+      {/*<Search />*/}
       {/* <List /> */}
     </div>
   );
