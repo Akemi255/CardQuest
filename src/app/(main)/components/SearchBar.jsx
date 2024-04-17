@@ -19,7 +19,6 @@ import { Separator } from "@/components/ui/separator";
 
 import { Search } from "./SearchInput";
 import { SetEmail } from "@/helpers/SetEmail";
-import { useDebouncedCallback } from "use-debounce";
 
 export default function SearchBar() {
   const [mounted, setIsMounted] = useState(false);
@@ -38,12 +37,6 @@ export default function SearchBar() {
       console.error("Logout error", error);
     }
   };
-
-  const [query, setQuery] = useState("");
-  const handleChange = useDebouncedCallback((event) => {
-    console.log(event.target.value);
-    setQuery(event.target.cvalue);
-  }, 800);
 
   useEffect(() => {
     setIsMounted(true);
@@ -86,7 +79,7 @@ export default function SearchBar() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
-          <Search onChange={handleChange} />
+          <Search />
           <DrawerTrigger>
             <Button variant="outline" className="md:hidden p-2">
               <Menu />
