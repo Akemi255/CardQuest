@@ -1,5 +1,5 @@
 "use client";
-import { useParams, useRouter } from "next/navigation";
+import { notFound as NotFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -19,7 +19,6 @@ import { handleFollow } from "../helpers/handleFollow";
 
 const ExploreProfile = () => {
   const { user } = useParams();
-  const router = useRouter();
   const email = SetEmail();
   const [profileData, setProfileData] = useState("");
   const [loadingImage, setLoadingImage] = useState(true);
@@ -27,17 +26,22 @@ const ExploreProfile = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isItMe, setIsItMe] = useState(false);
   const [followData, setFollowData] = useState(null);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     if (typeof email === "string") {
       if (email) {
-        fetchProfile(user, setProfileData);
+        fetchProfile(user, setProfileData, setNotFound);
         fetchFollowDataById(user, setFollowData);
         checkIfFollowing(email, user, setIsFollowing);
         checkIfMe(user, email, setIsItMe);
       }
     }
   }, [user, email]);
+
+  if (notFound) {
+    NotFound();
+  }
 
   return (
     <div className="overflow-y-auto overflow-x-hidden relative">

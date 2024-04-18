@@ -1,4 +1,4 @@
-export const fetchProfile = async (user, setProfileData) => {
+export const fetchProfile = async (user, setProfileData, setNotFound) => {
   try {
     const response = await fetch(
       `https://api-rest-card-quest.vercel.app/api/users/getProfileById/${user}`
@@ -11,6 +11,7 @@ export const fetchProfile = async (user, setProfileData) => {
     const data = await response.json();
     setProfileData(data.user);
   } catch (error) {
+    setNotFound(true);
     console.error("Error fetching profile:", error);
   }
 };
