@@ -29,7 +29,7 @@ export default function page() {
             key={index}
             index={index}
             character={card.content}
-            getColorForRarity={"border-red-800"}
+            // getColorForRarity={"border-red-800"}
             // saveCharacter={saveCharacter}
             // existingCards={existingCards}
             // loading={loading}
