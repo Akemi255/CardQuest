@@ -9,6 +9,7 @@ export default function CharacterCard({
   existingCards,
   loading,
 }) {
+  console.log(character.borderColorClass);
   return (
     <div key={index} className="flex">
       <div
@@ -49,7 +50,7 @@ export default function CharacterCard({
               <img src="/assets/corazon.png" alt="corazon" />
             </button>
           )}
-          {existingCards[index] && (
+          {/* {existingCards[index] && (
             <button
               className={`text-xs ${
                 existingCards[index]
@@ -65,7 +66,7 @@ export default function CharacterCard({
                 ? `Esta carta ya la tienes`
                 : "Guardar en el perfil"}{" "}
             </button>
-          )}
+          )} */}
         </div>
       </div>
     </div>

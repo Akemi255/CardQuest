@@ -96,7 +96,7 @@ const CharacterCard = ({
             </button>
           )}
 
-          {existingCards[index] && (
+          {/* {existingCards[index] && (
             <div
               className={`text-xs relative top-5 ${
                 existingCards[index] ? "bg-green-400 " : "bg-blue-500"
@@ -107,7 +107,16 @@ const CharacterCard = ({
                 ? `Esta carta ya la tienes`
                 : "Guardar en el perfil"}
             </div>
-          )}
+          )} */}
+          {/* {true && (
+            <div
+              className={`text-xs relative top-5 ${
+                true ? "bg-green-400 " : "bg-blue-500"
+              } text-white py-1 px-2 rounded flex items-center justify-center`}
+            >
+              {true ? `Esta carta ya la tienes` : "Guardar en el perfil"}
+            </div>
+          )} */}
         </div>
       </div>
     </div>
