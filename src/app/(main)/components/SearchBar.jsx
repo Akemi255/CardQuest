@@ -73,7 +73,7 @@ export default function SearchBar() {
   return (
     <>
       {mounted && (
-        <div className="flex w-full items-center  p-4 gap-4 bg-blackBackground border-b border-border-grey">
+        <div className="flex w-full items-center p-4 gap-4 bg-blackBackground border-border-grey">
           <Avatar className="flex md:hidden h-8 w-8 m-auto">
             <AvatarImage src={profileData.image} alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>

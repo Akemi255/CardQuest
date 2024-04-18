@@ -16,6 +16,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { toast } from "react-toastify";
 
 const page = () => {
   const router = useRouter();
@@ -27,13 +28,14 @@ const page = () => {
     parseInt(search ? search.get("page") || "1" : "1", 10)
   );
 
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const maxPagesToShow = 5;
 
   const reset = usePage((state) => state.reset);
   const setResetFalse = usePage((state) => state.setResetFalse);
+  const [messageNotFound, setMessageNotFound] = useState(false);
 
   useEffect(() => {
     if (reset) {
@@ -51,14 +53,16 @@ const page = () => {
           `https://api-rest-card-quest.vercel.app/api/users/searchUsers/${currentPageNumber}/${encodedSearchQuery}`
         );
         if (response.ok) {
+          setMessageNotFound(false);
           const data = await response.json();
           setData(data.users);
           setTotalPages(data.totalPages);
-        } else {
-          console.error("Error fetching data:", response.statusText);
+        } else if (response.status === 404) {
+          setMessageNotFound(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        toast.error("Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -154,88 +158,104 @@ const page = () => {
     return pageButtons;
   };
 
+  //en caso de error en paginas en url volver al inicio
+  if (
+    parseInt(currentPageNumber) <= 0 ||
+    parseInt(currentPageNumber) > parseInt(totalPages)
+  ) {
+    setCurrentPageNumber(1);
+    router.push(`/users/search?q=${encodedSearchQuery}&page=1`);
+  }
+
   return (
     <>
-      <div className="content-users p-4 mb-14">
-        <div className="container mx-auto">
-          {!loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-              {data.map((user) => (
-                <Link key={user._id} href={`/user/${user._id}`}>
-                  <div
-                    key={user._id}
-                    className="bg-black h-60 cursor-pointer border border-slate-900 rounded-3xl shadow-md transition duration-300 transform hover:scale-105 relative flex flex-col justify-center"
-                  >
-                    <div className="relative mb-4">
-                      <Image
-                        src={user.banner}
-                        alt="Banner"
-                        className="w-full h-32 object-cover rounded-t-3xl"
-                        width={500}
-                        height={500}
-                      />
-                      <div className=" absolute top-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      {messageNotFound && (
+        <h1 className="flex justify-center items-center mt-6 text-2xl md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-300">
+          Not Results for {searchQuery}
+        </h1>
+      )}
+      <div>
+        <div className="content-users p-4 mb-14">
+          <div className="mx-auto">
+            {!loading && !messageNotFound && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                {data.map((user) => (
+                  <Link key={user._id} href={`/user/${user._id}`}>
+                    <div
+                      key={user._id}
+                      className="bg-black h-60 cursor-pointer border border-slate-900 rounded-3xl shadow-md transition duration-300 transform hover:scale-105 relative flex flex-col justify-center"
+                    >
+                      <div className="relative mb-4">
                         <Image
-                          src={user.image}
-                          alt="Foto de Perfil"
+                          src={user.banner}
+                          alt="Banner"
+                          className="w-full h-32 object-cover rounded-t-3xl"
                           width={500}
                           height={500}
-                          className="w-28 h-28 object-cover rounded-full"
                         />
-                      </div>
-                    </div>
-
-                    <div className="py-1 mt-2 ">
-                      <p className="text-white text-center relative top-[25px]">
-                        {user.name}
-                      </p>
-                      <div className="flex justify-between mt-6">
-                        <p className="lg:ml-3 md:ml-0 text-[#316686] font-bold flex items-center lg:text-lg md:text-xs">
-                          <UserRound
-                            size={15}
-                            className="relative bottom-[0.2px]"
+                        <div className=" absolute top-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                          <Image
+                            src={user.image}
+                            alt="Foto de Perfil"
+                            width={500}
+                            height={500}
+                            className="w-28 h-28 object-cover rounded-full"
                           />
-                          {user.following.length} Following
-                        </p>
+                        </div>
+                      </div>
 
-                        <p className="lg:mr-3 md:mr-0 text-[#d973cc] font-bold flex items-center gap-2">
-                          <Eye /> {user.followers.length}
+                      <div className="py-1 mt-2 ">
+                        <p className="text-white text-center relative top-[25px]">
+                          {user.name}
                         </p>
+                        <div className="flex justify-between mt-6">
+                          <p className="lg:ml-3 md:ml-0 text-[#316686] font-bold flex items-center lg:text-lg md:text-xs">
+                            <UserRound
+                              size={15}
+                              className="relative bottom-[0.2px]"
+                            />
+                            {user.following.length} Following
+                          </p>
+
+                          <p className="lg:mr-3 md:mr-0 text-[#d973cc] font-bold flex items-center gap-2">
+                            <Eye /> {user.followers.length}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      {!loading && totalPages > 1 && (
-        <div className="flex justify-center items-center flex-wrap">
-          <Pagination className="relative bottom-7">
-            <PaginationContent>
-              {currentPageNumber > 1 && (
-                <PaginationItem>
-                  <PaginationPrevious
-                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
-                    onClick={() => handlePageChange(currentPageNumber - 1)}
-                  />
-                </PaginationItem>
-              )}
-              {renderPagination()}
-              <PaginationItem>
-                {currentPageNumber < totalPages && (
-                  <PaginationNext
-                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
-                    onClick={() => handlePageChange(currentPageNumber + 1)}
-                  />
+        {!loading && totalPages > 1 && !messageNotFound && (
+          <div className="flex justify-center items-center flex-wrap">
+            <Pagination className="relative bottom-7">
+              <PaginationContent>
+                {currentPageNumber > 1 && (
+                  <PaginationItem>
+                    <PaginationPrevious
+                      className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                      onClick={() => handlePageChange(currentPageNumber - 1)}
+                    />
+                  </PaginationItem>
                 )}
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      )}
+                {renderPagination()}
+                <PaginationItem>
+                  {currentPageNumber < totalPages && (
+                    <PaginationNext
+                      className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                      onClick={() => handlePageChange(currentPageNumber + 1)}
+                    />
+                  )}
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+      </div>
     </>
   );
 };

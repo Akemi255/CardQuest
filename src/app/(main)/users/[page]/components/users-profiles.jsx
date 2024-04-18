@@ -134,8 +134,8 @@ const UsersProfiles = () => {
 
   return (
     <>
-      <div className="content-users p-4 mb-14">
-        <div className="container mx-auto">
+      <div className="p-4 mb-14">
+        <div className="mx-auto">
           {!loading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
               {users.map((user) => (
