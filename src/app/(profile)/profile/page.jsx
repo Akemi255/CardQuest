@@ -1,5 +1,6 @@
 "use client";
 
+import CharacterCard from "@/components/Cards/CharacterCard";
 import React from "react";
 import useSWR from "swr";
 
@@ -17,13 +18,24 @@ export default function page() {
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div className="">loading...</div>;
 
-  console.log(data);
+  // console.log(data);
 
   return (
-    <div className="text-white">
-      {data.map(() => (
-        <p className="text-white">asd</p>
-      ))}
+    <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
+      {data.map((card, index) => {
+        // console.log(card.content);
+        return (
+          <CharacterCard
+            key={index}
+            index={index}
+            character={card.content}
+            getColorForRarity={"border-red-800"}
+            // saveCharacter={saveCharacter}
+            // existingCards={existingCards}
+            // loading={loading}
+          />
+        );
+      })}
     </div>
   );
 }
