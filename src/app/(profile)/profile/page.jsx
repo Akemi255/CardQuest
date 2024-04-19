@@ -8,21 +8,31 @@ const fetcher = async (...args) =>
   await fetch(...args).then((res) => res.json());
 
 export default function page() {
+  const userID = "654952e10ef0a1ea2aaac3a9";
   const email = "gus1465@aol.com";
 
+  const { data: user } = useSWR(
+    `https://api-rest-card-quest.vercel.app/api/users/getProfileById/${userID}`,
+    fetcher
+  );
+
+  // console.log("feth first");
+  // console.log(user);
+
   const { data, error, isLoading } = useSWR(
-    `https://api-rest-card-quest.vercel.app/api/cards/findUserCards/${email}`,
+    () =>
+      `https://api-rest-card-quest.vercel.app/api/cards/findUserCards/${user.user.email}`,
     fetcher
   );
 
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div className="">loading...</div>;
 
-  // console.log(data);
+  console.log(data);
 
   return (
     <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
-      {data.map((card, index) => {
+      {data?.map((card, index) => {
         // console.log(card.content);
         return (
           <CharacterCard
