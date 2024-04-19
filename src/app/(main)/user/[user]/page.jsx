@@ -4,6 +4,7 @@ const page = () => {
   return (
     <>
       <ExploreProfile />
+      <p className="text-white">adadadad</p>
     </>
   );
 };
