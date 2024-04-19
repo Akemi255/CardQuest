@@ -1,41 +1,57 @@
 "use client";
-
-import CharacterCard from "@/components/Cards/CharacterCard";
-import React from "react";
+import { useState } from "react";
+import { ClipLoader } from "react-spinners";
 import useSWR from "swr";
+
+import RenderUserCards from "@/components/Cards/RenderUserCards";
+import { SetEmail } from "@/helpers/SetEmail";
+
+import { Input } from "@/components/ui/input";
 
 const fetcher = async (...args) =>
   await fetch(...args).then((res) => res.json());
 
-export default function page() {
-  const email = "gus1465@aol.com";
+export default function Page() {
+  const email = SetEmail();
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, error, isLoading } = useSWR(
-    `https://api-rest-card-quest.vercel.app/api/cards/findUserCards/${email}`,
+  const isEmailValid =
+    typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const { data, isLoading } = useSWR(
+    isEmailValid
+      ? `https://api-rest-card-quest.vercel.app/api/cards/findUserCards/${encodeURIComponent(
+          email
+        )}`
+      : null,
     fetcher
   );
 
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div className="">loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center mt-[200px] overflow-hidden">
+        <ClipLoader color={"#ffffff"} size={150} />
+      </div>
+    );
 
-  // console.log(data);
+  const filteredCards = data?.filter((card) =>
+    card?.content.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
-      {data.map((card, index) => {
-        // console.log(card.content);
-        return (
-          <CharacterCard
-            key={index}
-            index={index}
-            character={card.content}
-            // getColorForRarity={"border-red-800"}
-            // saveCharacter={saveCharacter}
-            // existingCards={existingCards}
-            // loading={loading}
-          />
-        );
-      })}
+    <div className="flex flex-col items-center">
+      <Input
+        type="text"
+        placeholder="Search by name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mt-3 px-2 py-1 mr-3 rounded-md border border-gray-300 w-full sm:w-1/2"
+      />
+
+      <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
+        {filteredCards?.map((card, index) => (
+          <RenderUserCards key={index} index={index} character={card.content} />
+        ))}
+      </div>
     </div>
   );
 }

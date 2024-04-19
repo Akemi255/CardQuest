@@ -10,14 +10,7 @@ import plataCoin from "../../../public/assets/coins/plata-coin.png";
 import epicoCoin from "../../../public/assets/coins/epico-coin.png";
 import miticoCoin from "../../../public/assets/coins/mitico-coin.png";
 
-const CharacterCard = ({
-  character,
-  index,
-  getColorForRarity,
-  saveCharacter,
-  existingCards,
-  loading,
-}) => {
+const RenderUserCards = ({ character, index }) => {
   const imgCoins = (params) => {
     switch (params) {
       case "border-comun":
@@ -81,55 +74,10 @@ const CharacterCard = ({
               priority={false}
             />
           </div>
-
-          {character.saved ? (
-            <button
-              className="absolute bottom-0 boton-guardar self-end rounded-full text-white cursor-not-allowed flex items-center justify-center"
-              disabled={loading}
-            >
-              <AiFillLike />
-            </button>
-          ) : (
-            <button
-              className="absolute bottom-0 boton-guardar self-end text-white rounded-full flex items-center justify-center"
-              onClick={() => saveCharacter(character, index)}
-              disabled={loading}
-            >
-              <Image
-                src="/assets/corazon.png"
-                alt="corazon"
-                priority={false}
-                width={24}
-                height={24}
-              />
-            </button>
-          )}
-
-          {/* {existingCards[index] && (
-            <div
-              className={`text-xs relative top-5 ${
-                existingCards[index] ? "bg-green-400 " : "bg-blue-500"
-              } text-white py-1 px-2 rounded flex items-center justify-center`}
-              disabled={loading}
-            >
-              {existingCards[index]
-                ? `Esta carta ya la tienes`
-                : "Guardar en el perfil"}
-            </div>
-          )} */}
-          {/* {true && (
-            <div
-              className={`text-xs relative top-5 ${
-                true ? "bg-green-400 " : "bg-blue-500"
-              } text-white py-1 px-2 rounded flex items-center justify-center`}
-            >
-              {true ? `Esta carta ya la tienes` : "Guardar en el perfil"}
-            </div>
-          )} */}
         </div>
       </div>
     </div>
   );
 };
 
-export default CharacterCard;
+export default RenderUserCards;

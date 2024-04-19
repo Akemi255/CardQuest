@@ -1,4 +1,6 @@
 "use client";
+
+import useSWR from "swr";
 import { useEffect, useState } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -20,11 +22,12 @@ import { Separator } from "@/components/ui/separator";
 import { Search } from "./SearchInput";
 import { SetEmail } from "@/helpers/SetEmail";
 
+const fetcher = async (...args) =>
+  await fetch(...args).then((res) => res.json());
+
 export default function SearchBar() {
   const [mounted, setIsMounted] = useState(false);
-  const [profileData, setProfileData] = useState("");
-  const [loadingImage, setLoadingImage] = useState(true);
-  const email = SetEmail();
+  let email = SetEmail();
   const { signOut } = useClerk();
   const router = useRouter();
 
@@ -40,45 +43,28 @@ export default function SearchBar() {
 
   useEffect(() => {
     setIsMounted(true);
-    if (typeof email === "string") {
-      const fetchProfile = async () => {
-        try {
-          const response = await fetch(
-            "https://api-rest-card-quest.vercel.app/api/users/profile",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ email }),
-            }
-          );
+  }, []);
 
-          if (!response.ok) {
-            throw new Error("Failed to fetch profile");
-          }
+  const isEmailValid =
+    typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-          const data = await response.json();
-          setProfileData(data.user);
-          setLoadingImage(false);
-        } catch (error) {
-          console.error("Error fetching profile:", error);
-        }
-      };
-
-      fetchProfile();
-    }
-  }, [email]);
+  const { data, isLoading } = useSWR(
+    isEmailValid
+      ? `https://api-rest-card-quest.vercel.app/api/users/ProfileWithEmail/${encodeURIComponent(
+          email
+        )}`
+      : null,
+    fetcher
+  );
 
   return (
     <>
       {mounted && (
         <div className="flex w-full items-center p-4 gap-4 bg-blackBackground border-border-grey">
           <Avatar className="flex md:hidden h-8 w-8 m-auto">
-            <AvatarImage src={profileData.image} alt="@shadcn" />
+            <AvatarImage src={data?.image} alt="avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-
           <Search />
           <DrawerTrigger>
             <Button variant="outline" className="md:hidden p-2">
@@ -91,7 +77,7 @@ export default function SearchBar() {
             className="bg-background-surface-200 text-[13px]  border-border-button w-auto h-auto hidden md:flex flex-row justify-start items-center gap-2 py-1 px-2 rounded-full text-primary-foreground-morelighter hover:text-primary-foreground-morelighter border"
           >
             <Gem className="h-4 w-4 text-white" />
-            <span className="-mb-[1px]">{profileData.coins}</span>
+            <span className="-mb-[1px]">{data?.coins}</span>
           </div>
           <div className="hidden md:flex flex-row items-center gap-4">
             <Popover>
@@ -100,23 +86,38 @@ export default function SearchBar() {
                   variant="outline"
                   className="hover:bg-background-surface-200 bg-background-surface-200 border-border-button w-[240px] flex flex-row justify-start h-auto p-0 text-primary-foreground-light hover:text-primary-foreground-morelighter border "
                 >
-                  {loadingImage ? (
+                  {isLoading ? (
                     <ClipLoader
                       color={"#ffffff"}
-                      loading={loadingImage}
+                      loading={isLoading}
                       size={20}
                     />
                   ) : (
                     <>
                       <div className="flex h-10 w-10 justify-center items-center">
                         <Avatar className="h-9 w-9 relative right-1 ">
-                          <Image src={profileData.image} fill alt="Avatar" />
+                          {data?.image ? (
+                            <Image
+                              src={data?.image}
+                              alt="Avatar"
+                              width={40}
+                              height={40}
+                            />
+                          ) : (
+                            <div className="h-screen flex items-center justify-center bg-black bg-opacity-50 overflow-hidden">
+                              <ClipLoader
+                                color={"#ffffff"}
+                                loading={isLoading}
+                                size={20}
+                              />
+                            </div>
+                          )}
                         </Avatar>
                       </div>
                       <div className="flex-col flex w-auto text-start">
-                        <p className="text-[13px] ">{profileData.name}</p>
+                        <p className="text-[13px] ">{data?.name}</p>
                         <p className="text-xs text-clip overflow-hidden">
-                          {profileData.email}
+                          {data?.email}
                         </p>
                       </div>
                     </>
