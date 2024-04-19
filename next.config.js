@@ -6,6 +6,7 @@ const nextConfig = {
       "via.placeholder.com",
       "i.postimg.cc",
       "cdn.myanimelist.net",
+      "i.imgur.com",
     ],
   },
 };

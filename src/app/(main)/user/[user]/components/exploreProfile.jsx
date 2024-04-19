@@ -71,13 +71,15 @@ const ExploreProfile = () => {
         <div className="relative z-10 flex flex-col grow justify-center pt-10">
           <div className="flex flex-row gap-4 items-center sm:justify-start justify-center ">
             <Avatar className="lg:h-36 lg:w-36 h-16 w-16">
-              <Image
-                src={profileData.image}
-                width={500}
-                height={500}
-                alt="Avatar"
-                onLoad={() => setLoadingImage(false)}
-              />
+              {profileData?.image && (
+                <Image
+                  src={profileData.image}
+                  width={500}
+                  height={500}
+                  alt="Avatar"
+                  onLoad={() => setLoadingImage(false)}
+                />
+              )}
             </Avatar>
             <div className="flex flex-col text-white">
               <div>
