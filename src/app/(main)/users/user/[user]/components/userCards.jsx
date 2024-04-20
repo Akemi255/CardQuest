@@ -35,7 +35,7 @@ const UserCards = ({ data }) => {
             />
           ))
         ) : (
-          <h1 className="flex justify-center items-center mt-6 text-sm md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-300">
+          <h1 className="flex justify-center items-center mt-6 text-sm md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-500">
             This user has no cards
           </h1>
         )}

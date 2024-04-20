@@ -180,7 +180,7 @@ const page = () => {
             {!loading && !messageNotFound && (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 {data.map((user) => (
-                  <Link key={user._id} href={`/user/${user._id}`}>
+                  <Link key={user._id} href={`/users/user/${user._id}`}>
                     <div
                       key={user._id}
                       className="bg-black h-60 cursor-pointer border border-slate-900 rounded-3xl shadow-md transition duration-300 transform hover:scale-105 relative flex flex-col justify-center"

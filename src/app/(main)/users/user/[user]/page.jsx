@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { toast } from "react-toastify";
 
 import ExploreProfile from "./components/exploreProfile";
 import UserCards from "./components/userCards";
