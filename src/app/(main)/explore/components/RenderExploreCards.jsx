@@ -38,12 +38,14 @@ const RenderExploreCards = ({ character, index }) => {
         return "border-comun";
       case "raro":
         return "border-raro";
-      case "plata":
+      case "oro":
         return "border-oro";
+      case "plata":
+        return "border-plata";
       case "epico":
-        return "border-epic";
+        return "border-epico";
       case "mitico":
-        return "border-mitic";
+        return "border-mitico";
       default:
         return "border-comun";
     }
@@ -65,7 +67,7 @@ const RenderExploreCards = ({ character, index }) => {
           priority={false}
         />
 
-        {/* {character.images && character.images.jpg && (
+        {character.images && character.images.jpg && (
           <Image
             src={character.images.jpg.image_url}
             alt={character.name}
@@ -74,7 +76,7 @@ const RenderExploreCards = ({ character, index }) => {
             priority={false}
             className="w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime"
           />
-        )} */}
+        )}
 
         <div className="info-like relative">
           <div className="text-center mt-[5px] personaje-anime">
