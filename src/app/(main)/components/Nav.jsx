@@ -40,32 +40,7 @@ const Links = [
     icon: WalletCards,
     variant: "default",
     separator: true,
-    subMenu: [
-      {
-        title: "Swap",
-        href: "/swap",
-        label: "128",
-        icon: ArrowLeftRight,
-        variant: "default",
-        subMenu: null,
-      },
-      {
-        title: "Swap Card",
-        href: "/swap-card",
-        label: "128",
-        icon: ArrowLeftRight,
-        variant: "default",
-        subMenu: null,
-      },
-      {
-        title: "The Choosen",
-        href: "/choosen",
-        label: "128",
-        icon: CircleDot,
-        variant: "default",
-        subMenu: null,
-      },
-    ],
+    subMenu: null,
   },
   {
     title: "Card Ranking",
