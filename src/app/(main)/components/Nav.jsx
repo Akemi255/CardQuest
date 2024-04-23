@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import {
   PackageOpen,
@@ -7,11 +6,6 @@ import {
   PackageSearch,
   FileBarChart,
   WalletCards,
-  Settings,
-  ArrowLeftRight,
-  CircleDot,
-  Store,
-  User,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -40,32 +34,7 @@ const Links = [
     icon: WalletCards,
     variant: "default",
     separator: true,
-    subMenu: [
-      {
-        title: "Swap",
-        href: "/swap",
-        label: "128",
-        icon: ArrowLeftRight,
-        variant: "default",
-        subMenu: null,
-      },
-      {
-        title: "Swap Card",
-        href: "/swap-card",
-        label: "128",
-        icon: ArrowLeftRight,
-        variant: "default",
-        subMenu: null,
-      },
-      {
-        title: "The Choosen",
-        href: "/choosen",
-        label: "128",
-        icon: CircleDot,
-        variant: "default",
-        subMenu: null,
-      },
-    ],
+    subMenu: null,
   },
   {
     title: "Card Ranking",
@@ -78,7 +47,7 @@ const Links = [
   },
   {
     title: "Explore",
-    href: "/explore",
+    href: "/explore/1",
     label: "128",
     icon: PackageSearch,
     variant: "default",
@@ -177,6 +146,9 @@ export default function Nav() {
                         link.href.startsWith("/users/")
                         ? "bg-background-surface-200 text-primary-foreground-morelighter"
                         : path === link.href
+                        ? "bg-background-surface-200 text-primary-foreground-morelighter"
+                        : path.startsWith("/explore") &&
+                          link.href.startsWith("/explore") // Modifiqué la comparación para que coincida con "/explore" seguido de cualquier número
                         ? "bg-background-surface-200 text-primary-foreground-morelighter"
                         : "transparent",
                       false && "cursor-not-allowed opacity-80"
