@@ -12,7 +12,6 @@ import Logout from "./Logout";
 import { IoCloseCircle } from "react-icons/io5";
 import Link from "next/link";
 import UserIcon from "./user-icon";
-import Settings from "../UserProfile/Settings";
 import { FaHome } from "react-icons/fa";
 
 const Menu = () => {

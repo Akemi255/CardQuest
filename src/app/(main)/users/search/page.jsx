@@ -169,7 +169,7 @@ const page = () => {
 
   return (
     <>
-      {messageNotFound && (
+      {messageNotFound && !loading && (
         <h1 className="flex justify-center items-center mt-6 text-2xl md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-300">
           Not Results for {searchQuery}
         </h1>

@@ -1,6 +1,6 @@
 "use client";
 import useSWR from "swr";
-import { useParams, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 
@@ -127,10 +127,13 @@ export default function Page() {
       </div>
     );
 
+  if (parseInt(page) < 1 || currentPage > parseInt(data?.totalPages)) {
+    return notFound();
+  }
   return (
     <div>
       <div className="flex flex-col items-center">
-        <SearchInput className="mt-2" />
+        <SearchInput className="mt-4" />
 
         <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
           {data?.cards?.map((card, index) => (
