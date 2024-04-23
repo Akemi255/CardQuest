@@ -3,12 +3,12 @@ import "/public/css/home.css";
 
 import Image from "next/image";
 
-import comunCoin from "../../../../../public/assets/coins/comun-coin.png";
-import raroCoin from "../../../../../public/assets/coins/raro-coin.png";
-import oroCoin from "../../../../../public/assets/coins/oro-coin.png";
-import plataCoin from "../../../../../public/assets/coins/plata-coin.png";
-import epicoCoin from "../../../../../public/assets/coins/epico-coin.png";
-import miticoCoin from "../../../../../public/assets/coins/mitico-coin.png";
+import comunCoin from "../../../../../../public/assets/coins/comun-coin.png";
+import raroCoin from "../../../../../../public/assets/coins/raro-coin.png";
+import oroCoin from "../../../../../../public/assets/coins/oro-coin.png";
+import plataCoin from "../../../../../../public/assets/coins/plata-coin.png";
+import epicoCoin from "../../../../../../public/assets/coins/epico-coin.png";
+import miticoCoin from "../../../../../../public/assets/coins/mitico-coin.png";
 
 const RenderExploreCards = ({ character, index }) => {
   const imgCoins = (params) => {

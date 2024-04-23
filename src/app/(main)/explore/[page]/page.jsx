@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 
-import RenderExploreCards from "../components/RenderExploreCards";
+import RenderExploreCards from "./components/RenderExploreCards";
 import { SetEmail } from "@/helpers/SetEmail";
 
 import {
@@ -16,6 +16,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { SearchInput } from "../components/SearchInput";
 
 const fetcher = async (...args) =>
   await fetch(...args).then((res) => res.json());
@@ -129,6 +130,8 @@ export default function Page() {
   return (
     <div>
       <div className="flex flex-col items-center">
+        <SearchInput className="mt-2" />
+
         <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
           {data?.cards?.map((card, index) => (
             <RenderExploreCards key={index} index={index} character={card} />
