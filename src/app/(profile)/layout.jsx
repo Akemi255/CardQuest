@@ -167,9 +167,9 @@ export default function Layout({ children }) {
                     <span className="text-sm">{data?.following?.length}</span>
                     <span className="text-sm hidden lg:block ">Following</span>
                   </div>
-                  <div className="flex flex-row gap-2 text-white">
+                  <div className="flex flex-row gap-2 text-white relative right-2">
                     <Eye className="h-5 w-5" />
-                    <span className="text-sm">3452</span>
+                    <span className="text-sm">{data?.views?.length ?? 0}</span>
                   </div>
                 </div>
               </div>

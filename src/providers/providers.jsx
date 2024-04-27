@@ -15,7 +15,6 @@ const Providers = ({ children }) => {
         shallowRouting
       />
       <ToastContainer position="bottom-right" autoClose={3000} />
-      <Checkauth />
     </>
   );
 };

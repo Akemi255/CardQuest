@@ -16,6 +16,7 @@ import { checkIfMe } from "../helpers/checkIfMe";
 import { checkIfFollowing } from "../helpers/checkIfFollowing";
 import { fetchProfile } from "../helpers/fetchProfile";
 import { handleFollow } from "../helpers/handleFollow";
+import { createView } from "../helpers/createView";
 
 const ExploreProfile = () => {
   const { user } = useParams();
@@ -27,6 +28,7 @@ const ExploreProfile = () => {
   const [isItMe, setIsItMe] = useState(false);
   const [followData, setFollowData] = useState(null);
   const [notFound, setNotFound] = useState(false);
+  const [views, setViews] = useState();
 
   useEffect(() => {
     if (typeof email === "string") {
@@ -35,6 +37,7 @@ const ExploreProfile = () => {
         fetchFollowDataById(user, setFollowData);
         checkIfFollowing(email, user, setIsFollowing);
         checkIfMe(user, email, setIsItMe);
+        createView(email, user, setViews);
       }
     }
   }, [user, email]);
@@ -161,7 +164,7 @@ const ExploreProfile = () => {
               </Button>
             )}
 
-            <div className="flex flex-row sm:justify-end justify-center gap-3 sm:ml-auto">
+            <div className="flex flex-row sm:justify-end justify-center gap-3 sm:ml-auto relative right-2">
               <div className="flex flex-row gap-2 text-white">
                 <span className="text-sm">{followData?.followingCount}</span>
                 <span className="text-sm lg:block ">Following</span>
@@ -172,7 +175,7 @@ const ExploreProfile = () => {
               </div>
               <div className="sm:flex flex-row gap-2 text-white hidden">
                 <Eye className="h-5 w-5" />
-                <span className="text-sm">3452</span>
+                <span className="text-sm">{views}</span>
               </div>
             </div>
           </div>
