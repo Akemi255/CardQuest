@@ -1,6 +1,4 @@
 import { AiFillLike } from "react-icons/ai";
-import "/public/css/home.css";
-
 import Image from "next/image";
 
 import comunCoin from "../../../../../../public/assets/coins/comun-coin.png";
@@ -49,21 +47,24 @@ const RenderExploreCards = ({ character, index }) => {
     }
   };
 
+  const grayscaleClass = character?.blanco_negro ? "" : "grayscale";
+
   return (
-    <div key={index} className="flex relative">
+    <div key={index} className={`flex relative ${grayscaleClass}`}>
       <div
         className={`${borderClass(
           character?.rareza
-        )} flex flex-col justify-start cartas items-center `}
+        )} flex flex-col justify-start cartas items-center`}
       >
-        <Image
-          src={`/assets/${borderClass(character?.rareza)}.png`}
-          alt="border"
-          className="borderGeneral flex items-center"
-          width={500}
-          height={500}
-          priority={false}
-        />
+        <div className={`borderGeneral flex items-center ${grayscaleClass}`}>
+          <Image
+            src={`/assets/${borderClass(character?.rareza)}.png`}
+            alt="border"
+            width={500}
+            height={500}
+            priority={false}
+          />
+        </div>
 
         {character?.images && character?.images.jpg && (
           <Image
@@ -72,11 +73,11 @@ const RenderExploreCards = ({ character, index }) => {
             width={500}
             height={500}
             priority={false}
-            className="w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime"
+            className={`w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime ${grayscaleClass}`}
           />
         )}
 
-        <div className="info-like relative">
+        <div className={`info-like relative ${grayscaleClass}`}>
           <div className="text-center mt-[5px] personaje-anime">
             <p className="text-[11px] font-bold">{character?.name}</p>
             {character?.anime && character?.anime[0] && (
