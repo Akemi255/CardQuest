@@ -1,12 +1,7 @@
-export const createView = async (
-  viewerEmail,
-  targetUserId,
-  setViews,
-  setError
-) => {
+export const createView = async (viewerEmail, targetUserId, setViews) => {
   try {
     const response = await fetch(
-      `https://api-rest-card-quest.vercel.app/api/views/${viewerEmail}/${targetUserId}`
+      `https://api-rest-card-quest.vercel.app/api/views/createView/${viewerEmail}/${targetUserId}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

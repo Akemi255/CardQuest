@@ -177,7 +177,7 @@ const UsersProfiles = () => {
                         </p>
 
                         <p className="lg:mr-3 md:mr-0 text-[#d973cc] font-bold flex items-center gap-2">
-                          <Eye /> {user.followers.length}
+                          <Eye /> {user?.views?.length ?? 0}
                         </p>
                       </div>
                     </div>
