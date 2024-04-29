@@ -1,5 +1,6 @@
 import { AiFillLike } from "react-icons/ai";
 import Image from "next/image";
+import "/public/css/home.css";
 
 import comunCoin from "../../../../../../public/assets/coins/comun-coin.png";
 import raroCoin from "../../../../../../public/assets/coins/raro-coin.png";
@@ -56,15 +57,14 @@ const RenderExploreCards = ({ character, index }) => {
           character?.rareza
         )} flex flex-col justify-start cartas items-center`}
       >
-        <div className={`borderGeneral flex items-center ${grayscaleClass}`}>
-          <Image
-            src={`/assets/${borderClass(character?.rareza)}.png`}
-            alt="border"
-            width={500}
-            height={500}
-            priority={false}
-          />
-        </div>
+        <Image
+          src={`/assets/${borderClass(character?.rareza)}.png`}
+          alt="border"
+          width={500}
+          height={500}
+          priority={false}
+          className="borderGeneral flex items-center"
+        />
 
         {character?.images && character?.images.jpg && (
           <Image

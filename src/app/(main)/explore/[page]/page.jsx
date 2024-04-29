@@ -130,6 +130,7 @@ export default function Page() {
   if (parseInt(page) < 1 || currentPage > parseInt(data?.totalPages)) {
     return notFound();
   }
+
   return (
     <div>
       <div className="flex flex-col items-center">
