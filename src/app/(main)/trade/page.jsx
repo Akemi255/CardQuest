@@ -1,3 +1,7 @@
+"use client";
+
+import MarketSection from "@/components/market/MarketSection";
+import StartingTrade from "@/components/market/StartingTrade";
 import { Input } from "@/components/ui/input";
 import React from "react";
 
@@ -19,6 +23,7 @@ export default function page() {
           </span>
           <Input className="max-w-xs bg-black"></Input>
         </div>
+        <div></div>
       </div>
     </div>
   );

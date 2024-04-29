@@ -29,7 +29,7 @@ const Links = [
   },
   {
     title: "Trade",
-    href: "/one",
+    href: "/trade",
     label: "128",
     icon: WalletCards,
     variant: "default",
