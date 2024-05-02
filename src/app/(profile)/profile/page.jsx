@@ -30,7 +30,9 @@ export default function Page() {
     fetcher,
     {
       onSuccess: (data) => {
-        setUserCards(data);
+        if (Array.isArray(data)) {
+          setUserCards(data);
+        }
         setIsLoading(false);
       },
     }
