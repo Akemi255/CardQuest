@@ -1,5 +1,9 @@
 import { AiFillLike } from "react-icons/ai";
+import { Heart } from "lucide-react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 import "/public/css/home.css";
 
 import comunCoin from "../../../../../../public/assets/coins/comun-coin.png";
@@ -9,7 +13,15 @@ import plataCoin from "../../../../../../public/assets/coins/plata-coin.png";
 import epicoCoin from "../../../../../../public/assets/coins/epico-coin.png";
 import miticoCoin from "../../../../../../public/assets/coins/mitico-coin.png";
 
-const RenderExploreCards = ({ character, index }) => {
+const RenderExploreCards = ({ character, index, email }) => {
+  const [isFilled, setIsFilled] = useState(false);
+
+  useEffect(() => {
+    if (character?.favoritedBy?.includes(email)) {
+      setIsFilled(true);
+    }
+  }, [character, email]);
+
   const imgCoins = (params) => {
     switch (params) {
       case "border-comun":
@@ -45,6 +57,28 @@ const RenderExploreCards = ({ character, index }) => {
         return "border-mitico";
       default:
         return "border-comun";
+    }
+  };
+
+  const handleLikeClick = async () => {
+    try {
+      const response = await fetch(
+        `https://api-rest-card-quest.vercel.app/api/apiCards/addCardToFavorites/${character._id}/${email}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (response.ok) {
+        setIsFilled(!isFilled);
+        toast.success("Card liked successfully");
+      }
+
+      if (response.status === 401) {
+        toast.error("You have liked this card");
+      }
+    } catch (error) {
+      console.error("Error al guardar la carta:", error);
     }
   };
 
@@ -97,6 +131,16 @@ const RenderExploreCards = ({ character, index }) => {
             />
           </div>
         </div>
+      </div>
+
+      <div className="absolute bottom-2 right-2">
+        <Heart
+          onClick={handleLikeClick}
+          size={33}
+          className={`z-10 rounded-full cursor-pointer absolute bottom-[25px] right-3 p-2 hover:bg-red-600 ${
+            isFilled ? "fill-red-500" : "stroke-current text-white"
+          }`}
+        />
       </div>
     </div>
   );

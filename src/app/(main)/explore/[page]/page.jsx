@@ -138,7 +138,12 @@ export default function Page() {
 
         <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
           {data?.cards?.map((card, index) => (
-            <RenderExploreCards key={index} index={index} character={card} />
+            <RenderExploreCards
+              key={index}
+              index={index}
+              character={card}
+              email={email}
+            />
           ))}
         </div>
       </div>

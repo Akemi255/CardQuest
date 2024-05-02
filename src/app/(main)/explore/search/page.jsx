@@ -200,7 +200,12 @@ const Page = () => {
           {/* Renderizar datos */}
           <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
             {data.cards.map((item, index) => (
-              <RenderExploreCards key={index} index={index} character={item} />
+              <RenderExploreCards
+                key={index}
+                index={index}
+                character={item}
+                email={email}
+              />
             ))}
           </div>
 
