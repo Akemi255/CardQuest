@@ -17,10 +17,11 @@ export default function Page() {
   const email = SetEmail();
   const [searchTerm, setSearchTerm] = useState("");
   const [userCards, setUserCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const isEmailValid =
     typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const { data, isLoading } = useSWR(
+  const { data } = useSWR(
     isEmailValid
       ? `https://api-rest-card-quest.vercel.app/api/cards/findUserCards/${encodeURIComponent(
           email
@@ -30,19 +31,9 @@ export default function Page() {
     {
       onSuccess: (data) => {
         setUserCards(data);
+        setIsLoading(false);
       },
     }
-  );
-
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center mt-[200px] overflow-hidden">
-        <ClipLoader color={"#ffffff"} size={150} />
-      </div>
-    );
-
-  const filteredCards = userCards.filter((card) =>
-    card?.content.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleDeleteCard = async (mal_id) => {
@@ -59,7 +50,6 @@ export default function Page() {
 
       if (response.ok) {
         toast.success("Card deleted successfully");
-        // Actualiza el estado local de las cartas eliminando la carta eliminada
         setUserCards(
           userCards.filter((card) => card.content.mal_id !== mal_id)
         );
@@ -69,6 +59,13 @@ export default function Page() {
       toast.error("Something went wrong");
     }
   };
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center mt-[200px] overflow-hidden">
+        <ClipLoader color={"#ffffff"} size={150} />
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-center">
@@ -80,16 +77,28 @@ export default function Page() {
         className="mt-3 px-2 py-1 mr-3 rounded-md border border-gray-300 w-full sm:w-1/2"
       />
 
-      <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
-        {filteredCards.map((card, index) => (
-          <ProfileCards
-            key={index}
-            index={index}
-            character={card.content}
-            onDeleteCard={handleDeleteCard}
-          />
-        ))}
-      </div>
+      {userCards.length === 0 ? (
+        <h1 className="flex justify-center items-center mt-6 text-sm md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-500">
+          This user has no cards
+        </h1>
+      ) : (
+        <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
+          {userCards
+            .filter((card) =>
+              card?.content.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+            )
+            .map((card, index) => (
+              <ProfileCards
+                key={index}
+                index={index}
+                character={card.content}
+                onDeleteCard={handleDeleteCard}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 }
