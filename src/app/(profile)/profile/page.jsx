@@ -3,10 +3,10 @@ import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import useSWR from "swr";
 
-import RenderUserCards from "@/components/Cards/RenderUserCards";
 import { SetEmail } from "@/helpers/SetEmail";
 
 import { Input } from "@/components/ui/input";
+import ProfileCards from "./components/ProfileCards";
 
 const fetcher = async (...args) =>
   await fetch(...args).then((res) => res.json());
@@ -49,7 +49,7 @@ export default function Page() {
 
       <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
         {filteredCards?.map((card, index) => (
-          <RenderUserCards key={index} index={index} character={card.content} />
+          <ProfileCards key={index} index={index} character={card.content} />
         ))}
       </div>
     </div>
