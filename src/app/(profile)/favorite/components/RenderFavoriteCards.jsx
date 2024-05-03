@@ -5,14 +5,14 @@ import { toast } from "react-toastify";
 
 import "/public/css/home.css";
 
-import comunCoin from "../../../../../../public/assets/coins/comun-coin.png";
-import raroCoin from "../../../../../../public/assets/coins/raro-coin.png";
-import oroCoin from "../../../../../../public/assets/coins/oro-coin.png";
-import plataCoin from "../../../../../../public/assets/coins/plata-coin.png";
-import epicoCoin from "../../../../../../public/assets/coins/epico-coin.png";
-import miticoCoin from "../../../../../../public/assets/coins/mitico-coin.png";
+import comunCoin from "../../../../../public/assets/coins/comun-coin.png";
+import raroCoin from "../../../../../public/assets/coins/raro-coin.png";
+import oroCoin from "../../../../../public/assets/coins/oro-coin.png";
+import plataCoin from "../../../../../public/assets/coins/plata-coin.png";
+import epicoCoin from "../../../../../public/assets/coins/epico-coin.png";
+import miticoCoin from "../../../../../public/assets/coins/mitico-coin.png";
 
-const RenderExploreCards = ({ character, index, email }) => {
+const RenderFavoriteCards = ({ character, index, email, onDeleteCard }) => {
   const [isFilled, setIsFilled] = useState(false);
 
   useEffect(() => {
@@ -76,16 +76,15 @@ const RenderExploreCards = ({ character, index, email }) => {
       if (response.status === 202) {
         setIsFilled(!isFilled);
         toast.success("This Card has been removed from your favorites");
+        onDeleteCard(character._id);
       }
     } catch (error) {
       console.error("Error al guardar la carta:", error);
     }
   };
 
-  const grayscaleClass = character?.blanco_negro ? "" : "grayscale";
-
   return (
-    <div key={index} className={`flex relative ${grayscaleClass}`}>
+    <div key={index} className={`flex relative`}>
       <div
         className={`${borderClass(
           character?.rareza
@@ -107,11 +106,11 @@ const RenderExploreCards = ({ character, index, email }) => {
             width={500}
             height={500}
             priority={false}
-            className={`w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime ${grayscaleClass}`}
+            className={`w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime`}
           />
         )}
 
-        <div className={`info-like relative ${grayscaleClass}`}>
+        <div className={`info-like relative`}>
           <div className="text-center mt-[5px] personaje-anime">
             <p className="text-[11px] font-bold">{character?.name}</p>
             {character?.anime && character?.anime[0] && (
@@ -143,4 +142,4 @@ const RenderExploreCards = ({ character, index, email }) => {
   );
 };
 
-export default RenderExploreCards;
+export default RenderFavoriteCards;
