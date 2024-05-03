@@ -69,13 +69,14 @@ const RenderExploreCards = ({ character, index, email }) => {
         }
       );
 
-      if (response.ok) {
+      if (response.status === 200) {
         setIsFilled(!isFilled);
         toast.success("Card liked successfully");
       }
 
-      if (response.status === 401) {
-        toast.error("You have liked this card");
+      if (response.status === 202) {
+        setIsFilled(!isFilled);
+        toast.success("This Card has been removed from your favorites");
       }
     } catch (error) {
       console.error("Error al guardar la carta:", error);
@@ -131,13 +132,10 @@ const RenderExploreCards = ({ character, index, email }) => {
             />
           </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-2 right-2">
         <Heart
           onClick={handleLikeClick}
           size={33}
-          className={`z-10 rounded-full cursor-pointer absolute bottom-[25px] right-3 p-2 hover:bg-red-600 ${
+          className={`z-10 rounded-full cursor-pointer relative left-[100px] bottom-6 p-2 hover:bg-red-600 ${
             isFilled ? "fill-red-500" : "stroke-current text-white"
           }`}
         />
