@@ -28,7 +28,7 @@ export default function Page() {
   };
 
   const apiUrl = isEmailValid
-    ? `http://localhost:3003/api/apiCards/getFavoriteApiCards/${encodeURIComponent(
+    ? `https://api-rest-card-quest.vercel.app/api/apiCards/getFavoriteApiCards/${encodeURIComponent(
         email
       )}?page=${page}`
     : null;
