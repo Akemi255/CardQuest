@@ -1,88 +1,27 @@
-"use client";
+import RankingTable from "./components/RankingTable";
 
-import React, { useState, useEffect } from "react";
+export const revalidate = 0;
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+const getData = async () => {
+  try {
+    const response = await fetch(
+      `https://api-rest-card-quest.vercel.app/api/users/getUsersRank?page=1`
+    );
+    const data = await response.json();
 
-import UserTable from "./components/UserTable";
-import fetchRanking from "./data/fetchRanking";
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 export default async function page() {
-  // const rankings = await fetchRanking();
-
-  // console.log(rankings);
-
-  const [usersData, setUsersData] = useState(null);
-  // const email = getEmail();
-
-  const getUsersData = async () => {
-    try {
-      const response = await fetch(
-        "https://api-rest-card-quest.vercel.app/api/users/getUsersRank"
-      );
-
-      if (!response.ok) {
-        throw new Error("Error al obtener los datos del usuario");
-      }
-
-      const data = await response.json();
-      setUsersData(data);
-      console.log(usersData);
-    } catch (error) {
-      console.error("Error al obtener los datos del usuario:", error);
-    }
-  };
-
-  useEffect(() => {
-    getUsersData();
-  }, []);
+  const usersData = await getData();
 
   return (
-    <div className="bg-[#171928] h-auto w-full overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <Table className="text-white [&_.text-muted-foreground]:text-white">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Ranking</TableHead>
-              <TableHead>User Name</TableHead>
-              <TableHead>Card</TableHead>
-              <TableHead className="text-right">Points</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {usersData ? (
-              usersData.map((user, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium">{index + 1}</TableCell>
-                    <TableCell>
-                      <UserTable
-                        username={user.user.name}
-                        userUrl={"https://www.google.com"}
-                        imageUrl={user.user.image}
-                      />
-                    </TableCell>
-                    <TableCell>{user.totalCards}</TableCell>
-                    <TableCell className="text-right">
-                      {user.totalPoints}
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <div></div>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+    <RankingTable
+      usersData={usersData.usersRank}
+      totalPages={usersData.totalPages}
+    />
   );
 }
