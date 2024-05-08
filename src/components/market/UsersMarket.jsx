@@ -1,127 +1,185 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { FiSearch } from "react-icons/fi";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Eye, User } from "lucide-react";
-import { Button } from "../ui/button";
+import Image from "next/image";
+import { useParams, useRouter, notFound } from "next/navigation";
 
-const UsersMarket = () => {
+import { Eye } from "lucide-react";
+import { UserRound } from "lucide-react";
+
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
+
+const UsersProfiles = () => {
+  const router = useRouter();
+  const { page } = useParams();
+
   const [users, setUsers] = useState([]);
-  const [visibleUsers, setVisibleUsers] = useState(20);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(parseInt(page) || 1);
+  const [totalPages, setTotalPages] = useState();
   const [loading, setLoading] = useState(true);
+  const maxPagesToShow = 5;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://api-rest-card-quest.vercel.app/api/users/getAllUsers"
+          `https://api-rest-card-quest.vercel.app/api/users/getAllUsers/${currentPage}`
         );
-        const data = await response.json();
-        setUsers(data.users);
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data.users);
+          setTotalPages(data.totalPages);
+        } else {
+          console.error("Error fetching data:", response.statusText);
+        }
       } catch (error) {
-        console.error("Error al obtener datos de usuario:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100
-      ) {
-        setVisibleUsers((prevVisibleUsers) => prevVisibleUsers + 12);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    router.push(`/trade/${newPage}`);
+  };
+
+  const renderPagination = (totalPages) => {
+    const pageButtons = [];
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    if (endPage - startPage + 1 < maxPagesToShow) {
+      endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+      startPage = Math.max(1, endPage - maxPagesToShow + 1);
+    }
+
+    if (startPage > 1) {
+      pageButtons.push(
+        <PaginationItem key={1}>
+          <PaginationLink
+            className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+            onClick={() => handlePageChange(1)}
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    if (startPage > 2) {
+      pageButtons.push(
+        <PaginationItem key="ellipsis_start">
+          <PaginationEllipsis className="text-white" />
+        </PaginationItem>
+      );
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageButtons.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            className={`pagination-button bg-[#36017a] text-white hover:bg-[#24064a] from-gray-500 cursor-pointer${
+              currentPage === i ? "active-pagination-button bg-[#24064a] " : ""
+            }`}
+            onClick={() => handlePageChange(i)}
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    if (endPage < totalPages) {
+      if (totalPages - endPage > 1) {
+        pageButtons.push(
+          <PaginationItem key="ellipsis_end">
+            <PaginationEllipsis className="text-white" />
+          </PaginationItem>
+        );
       }
-    };
 
-    window.addEventListener("scroll", handleScroll);
+      pageButtons.push(
+        <PaginationItem key={totalPages}>
+          <PaginationLink
+            className="bg-[#36017a] text-white hover:bg-[#24064a] cursor-pointer from-gray-500"
+            onClick={() => handlePageChange(totalPages)}
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    return pageButtons;
+  };
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name && user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Redireccionamiento a notFound solo si la página no está dentro del rango válido
+  if (parseInt(page) < 1 || page > parseInt(totalPages)) {
+    return notFound();
+  }
 
   return (
     <>
-      <div className="bg-background2 py-4 rounded-lg shadow-md">
-        <div className="container mx-auto px-0 ">
-          {/* <h1 className="w-full text-center text-lg font-bold mb-2 text-white">
-            Selecciona un usuario para iniciar el intercambio
-          </h1>
-
-          <div className="flex items-center justify-center">
-            <input
-              type="text"
-              className="w-1/2 px-4 py-2 border rounded-l bg-gray-800 text-white"
-              placeholder="Buscar usuarios"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button className="px-4 py-2 rounded-r">
-              <FiSearch size={25} />
-            </button>
-          </div> */}
-
+      <div className="p-4 mb-14">
+        <div className="mx-auto">
           {!loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 ">
-              {filteredUsers.slice(0, visibleUsers).map((user) => (
-                <Link key={user._id} href={`/mercado/${user._id}`}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              {users.map((user) => (
+                <Link key={user._id} href={`/trade/${page}/${user._id}`}>
                   <div
                     key={user._id}
-                    className="bg-black cursor-pointer border border-slate-900 rounded-md shadow-md transition duration-300 transform hover:scale-105 relative"
+                    className="bg-black h-60 cursor-pointer border border-slate-900 rounded-3xl shadow-md transition duration-300 transform hover:scale-105 relative flex flex-col justify-center"
                   >
-                    <div className="relative h-32 mb-4">
-                      <img
+                    <div className="relative mb-4">
+                      <Image
                         src={user.banner}
                         alt="Banner"
-                        className="w-full h-full object-cover rounded-md"
+                        className="w-full h-32 object-cover rounded-t-3xl"
+                        width={500}
+                        height={500}
                       />
-                      <Avatar className="w-20 h-20 object-cover border-[5px] border-black rounded-full absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-                        <AvatarImage src={user.image} alt="@shadcn" />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                      {/* <img
-                        src={user.image}
-                        alt="Foto de Perfil"
-                        className="w-16 h-16 object-cover rounded-full absolute -bottom-8 left-1/2 transform -translate-x-1/2"
-                      /> */}
+                      <div className=" absolute top-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <Image
+                          src={user.image}
+                          alt="Foto de Perfil"
+                          width={500}
+                          height={500}
+                          className="w-28 h-28 object-cover rounded-full"
+                        />
+                      </div>
                     </div>
-                    <div className="flex flex-col justify-between p-4">
-                      <p className="text-lg text-white font-semibold mt-6 text-center capitalize">
+
+                    <div className="py-1 mt-2 ">
+                      <p className="text-white text-center relative top-[25px]">
                         {user.name}
                       </p>
-                      {/* <p className="text-gray-500 text-center">
-                        Follower: {user.following.length} | Viewer:{" "}
-                        {user.followers.length}
-                      </p> */}
-                      <div className="flex w-full items-center justify-between mb-2">
-                        <div className="flex flex-row gap-3 text-blue-400">
-                          <User className="h-5 w-5" />
-                          <span>1234</span>
-                          {/* <span>Following</span> */}
-                        </div>
-                        <div className="flex flex-row gap-3 items-center text-pink-300">
-                          <span>12313</span>
-                          <Eye className="h-5 w-5" />
-                        </div>
-                      </div>
+                      <div className="flex justify-between mt-6">
+                        <p className="lg:ml-3 md:ml-0 text-[#316686] font-bold flex items-center lg:text-lg md:text-xs">
+                          <UserRound
+                            size={15}
+                            className="relative bottom-[0.2px]"
+                          />
+                          {user.following.length} Following
+                        </p>
 
-                      {/* <p className="text-white text-center">{user.bio}</p> */}
-                      <Button className="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 text-white bg-[#43B581]">
-                        Browse Profile
-                      </Button>
+                        <p className="lg:mr-3 md:mr-0 text-[#d973cc] font-bold flex items-center gap-2">
+                          <Eye /> {user?.views?.length ?? 0}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -130,8 +188,34 @@ const UsersMarket = () => {
           )}
         </div>
       </div>
+
+      {!loading && totalPages > 1 && (
+        <div className=" flex justify-center items-center flex-wrap">
+          <Pagination className="relative bottom-7">
+            <PaginationContent>
+              {currentPage > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious
+                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                  />
+                </PaginationItem>
+              )}
+              {renderPagination(totalPages)}
+              <PaginationItem>
+                {currentPage < totalPages && (
+                  <PaginationNext
+                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                  />
+                )}
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </>
   );
 };
 
-export default UsersMarket;
+export default UsersProfiles;

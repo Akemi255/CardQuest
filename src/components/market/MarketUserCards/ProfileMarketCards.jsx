@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import "/public/css/home.css";
+
+import Image from "next/image";
+
+import comunCoin from "../../../../public/assets/coins/comun-coin.png";
+import raroCoin from "../../../../public/assets/coins/raro-coin.png";
+import oroCoin from "../../../../public/assets/coins/oro-coin.png";
+import plataCoin from "../../../../public/assets/coins/plata-coin.png";
+import epicoCoin from "../../../../public/assets/coins/epico-coin.png";
+import miticoCoin from "../../../../public/assets/coins/mitico-coin.png";
+
+import { Button } from "@/components/ui/button";
 
 export const ProfileMarketCards = ({
   character,
   id,
   onCardAddedToTrade,
   isSelected,
-  setSelectedCards,
+  index,
 }) => {
   const [isCardSelected, setIsCardSelected] = useState(isSelected);
 
@@ -14,79 +26,88 @@ export const ProfileMarketCards = ({
     setIsCardSelected((prevIsSelected) => !prevIsSelected);
   };
 
-  const getColorForRarity = (rareza) => {
-    const lowerCasedRareza = (rareza || "").toLowerCase();
-
-    switch (lowerCasedRareza) {
-      case "comun":
-        return "border-red-800";
-      case "plata":
-        return "border-gray-300";
-      case "oro":
-        return "border-yellow-500";
-      case "raro":
-        return "border-green-500";
-      case "epico":
-        return "border-indigo-600";
-      case "mitico":
-        return "border-pink-500";
+  const imgCoins = (params) => {
+    switch (params) {
+      case "border-comun":
+        return comunCoin;
+      case "border-raro":
+        return raroCoin;
+      case "border-oro":
+        return oroCoin;
+      case "border-plata":
+        return plataCoin;
+      case "border-epic":
+        return epicoCoin;
+      case "border-mitic":
+        return miticoCoin;
       default:
-        return "border-blue-500";
+        return miticoCoin;
     }
   };
 
   return (
-    <div
-      key={id}
-      className="flex justify-center items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4"
-    >
-      <div className="flex flex-col justify-center items-center w-full">
+    <div>
+      <div
+        key={index}
+        className={`flex relative ${isCardSelected ? "opacity-50" : ""}`}
+      >
         <div
-          className={`${character.borderColorClass} border-animado bg-white rounded-lg shadow-md overflow-hidden transition duration-300 transform hover:shadow-xl hover:scale-105 cursor-pointer h-full flex flex-col justify-center items-center`}
+          className={`${character.borderColorClass} flex flex-col justify-start cartas items-center `}
         >
+          <Image
+            src={`/assets/${character.borderColorClass}.png`}
+            alt="border"
+            className="borderGeneral flex items-center"
+            width={500}
+            height={500}
+            priority={false}
+          />
+
           {character.images && character.images.jpg && (
-            <img
+            <Image
               src={character.images.jpg.image_url}
               alt={character.name}
-              className="w-full h-48 sm:h-64 object-cover hover:shadow-lg"
+              width={500}
+              height={500}
+              priority={false}
+              className="w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime"
             />
           )}
 
-          <div className="p-4 text-center">
-            <h3 className="text-lg sm:text-xl font-bold">{character.name}</h3>
-            {character.anime && character.anime[0] && (
-              <p>Anime: {character.anime[0].anime.title}</p>
-            )}
-            <p className="flex items-center justify-center mt-2">
-              <span
-                className={`w-1/4 border-b-2 ${getColorForRarity(
-                  character.rareza
-                )}`}
-              ></span>
+          <div className="info-like relative">
+            <div className="text-center mt-[5px] personaje-anime">
+              <p className="text-[11px] font-bold">{character.name}</p>
+              {character.anime && character.anime[0] && (
+                <p className="text-[9px]">{character.anime[0].anime.title}</p>
+              )}
+            </div>
 
-              <span className="mx-2">{character.rareza}</span>
-              <span
-                className={`w-1/4 border-b-2 ${getColorForRarity(
-                  character.rareza
-                )}`}
-              ></span>
-            </p>
-            <p> Monedas: {character?.monedas}</p>
-            <button
-              onClick={handleToggleTradeStatus}
-              className={`mt-2 ${
-                isCardSelected
-                  ? "bg-red-500 text-white hover:bg-red-700"
-                  : "bg-slate-600 text-white hover:bg-slate-800"
-              } rounded-md focus:outline-none`}
-              style={{ height: isCardSelected ? "45px" : "45px" }}
-            >
-              {isCardSelected
-                ? "Eliminar de intercambio"
-                : "Agregar carta a intercambio"}
-            </button>
+            <div className="flex flex-row gap-1 items-center">
+              <span className="font-medium">{character.monedas}</span>
+
+              <Image
+                src={imgCoins(character.borderColorClass)}
+                width={24}
+                height={24}
+                alt="coin"
+                priority={false}
+              />
+            </div>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col items-center">
+        <Button
+          onClick={handleToggleTradeStatus}
+          className={`mb-2 ${
+            isCardSelected
+              ? "bg-red-500 text-white hover:bg-red-700"
+              : "bg-slate-600 text-white hover:bg-slate-800"
+          } rounded-md focus:outline-none px-4 py-2 `}
+          style={{ height: isCardSelected ? "45px" : "45px" }}
+        >
+          {isCardSelected ? "Eliminate from trade" : "Add card to trade"}
+        </Button>
       </div>
     </div>
   );

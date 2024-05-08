@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { OfferedReceivedCards } from "./MarketUserCards/OfferedReceivedCards";
-import { FiSearch } from "react-icons/fi";
-import { getEmail } from "@/helpers/getEmail";
-import { ProfileMarketCards } from "./MarketUserCards/ProfileMarketCards";
-import { fetchUserCards } from "@/helpers/FavCards/fetchUserCards";
-import { TargetReceivedCards } from "./MarketUserCards/TargetReceivedCards";
-import { ToastContainer, toast } from "react-toastify";
-import { OfferedAwaitingCards } from "./MarketUserCards/OfferedAwaitingCards";
+"use client";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
-const AwaitingTrade = (AwaitingRequest) => {
-  const id = AwaitingRequest.AwaitingRequest;
-  const email = getEmail();
-  const [tradeData, setTradeData] = useState(null);
-  const [searchTermOffered, setSearchTermOffered] = useState("");
-  const [searchTermReceived, setSearchTermReceived] = useState("");
-  const [groupBy, setGroupBy] = useState("recientes");
-  const [loading, setLoading] = useState(true);
-  const [userCards, setUserCards] = useState([]);
-  const [visibleOfferedCards, setVisibleOfferedCards] = useState(20);
-  const [visibleReceivedCards, setVisibleReceivedCards] = useState(20);
+import RenderUserCards from "../Cards/RenderUserCards";
+
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+
+const AwaitingTrade = ({ id, tradeData }) => {
+  const router = useRouter();
+  const [searchTermLeft, setSearchTermLeft] = useState("");
+  const [searchTermRight, setSearchTermRight] = useState("");
+
   const [isRequestSent, setIsRequestSent] = useState(false);
 
   const handleSendRequestClick = async () => {
@@ -28,13 +22,11 @@ const AwaitingTrade = (AwaitingRequest) => {
         return;
       }
 
-      // Obtener las cartas ofrecidas por el solicitante y el usuario objetivo
       const requesterCards =
         tradeData?.tradeRequest?.requester?.cardsOffered || [];
       const targetUserCards =
         tradeData?.tradeRequest?.targetUser?.cardsOffered || [];
 
-      // Realizar la solicitud POST
       const response = await fetch(
         "https://api-rest-card-quest.vercel.app/api/trade/acceptTradeRequest",
         {
@@ -51,152 +43,59 @@ const AwaitingTrade = (AwaitingRequest) => {
       );
 
       if (response.ok) {
-        const data = await response.json();
-        toast.success("Intercambio completado exitosamente");
+        await response.json();
+        toast.success("Trade completed successfully");
         setIsRequestSent(true);
-        // Esperar 2 segundos antes de redirigir
-      setTimeout(() => {
-        window.location.href = "/mercado";
-      }, 5000);
+        setTimeout(() => {
+          router.push("/trade");
+        }, 200);
       } else {
-        toast.error("Ha ocurrido un error en el envío de cartas")
+        toast.error("Ha ocurrido un error en el envío de cartas");
       }
     } catch (error) {
       toast.error("Ups... ha ocurrido un error");
+      console.log("a");
     }
   };
-
-  //obtener el usuario que hace la solicitud
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `https://api-rest-card-quest.vercel.app/api/trade/getTradeRequests/${id}`
-        );
-        const data = await response.json();
-        setTradeData(data);
-        
-      } catch (error) {
-        console.error("Error fetching trade data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [AwaitingRequest]);
-
-  // Filtrar cartas de la derecha en tiempo real
-  const filteredUserCards =
-    tradeData?.tradeRequest?.targetUser?.cardsOffered?.filter(
-      (card) =>
-        card.content.name
-          .toLowerCase()
-          .includes(searchTermOffered.toLowerCase()) ||
-        card.content.anime.some((anime) =>
-          anime.anime.title
-            .toLowerCase()
-            .includes(searchTermOffered.toLowerCase())
-        )
-    );
-
-  // Filtrar cartas de la derecha en tiempo real
-  const filteredCards =
-    tradeData?.tradeRequest?.requester?.cardsOffered?.filter(
-      (card) =>
-        card.content.name
-          .toLowerCase()
-          .includes(searchTermReceived.toLowerCase()) ||
-        card.content.anime.some((anime) =>
-          anime.anime.title
-            .toLowerCase()
-            .includes(searchTermReceived.toLowerCase())
-        )
-    );
-
-  useEffect(() => {
-    const handleOfferedScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.offsetHeight - 100 &&
-        !loading
-      ) {
-        setVisibleOfferedCards(
-          (prevVisibleOfferedCards) => prevVisibleOfferedCards + 12
-        );
-      }
-    };
-
-    window.addEventListener("scroll", handleOfferedScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleOfferedScroll);
-    };
-  }, [loading]);
-
-  useEffect(() => {
-    const handleReceivedScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.offsetHeight - 100 &&
-        !loading
-      ) {
-        setVisibleReceivedCards(
-          (prevVisibleReceivedCards) => prevVisibleReceivedCards + 12
-        );
-      }
-    };
-
-    window.addEventListener("scroll", handleReceivedScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleReceivedScroll);
-    };
-  }, [loading]);
 
   return (
     <>
       <h1 className="flex justify-center items-center text-2xl font-bold text-white mt-4">
         {tradeData?.tradeRequest?.requester?.userId?.name && (
-          <p>{`Presione aceptar para concluir el intercambio con ${tradeData.tradeRequest.targetUser.userId.name}`}</p>
+          <p>{`Press accept to end the trade with ${tradeData.tradeRequest.targetUser.userId.name}`}</p>
         )}
       </h1>
       <div className="flex justify-center items-center mt-2">
-        <button
+        <Button
           onClick={handleSendRequestClick}
-          className="bg-slate-600 px-4 py-2 text-white rounded-md hover:bg-slate-800 text-2xl font-bold  cursor-pointer relative transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0"
+          className="bg-slate-800 px-4 py-2 text-white rounded-md hover:hover:bg-black text-2xl font-bold  cursor-pointer relative transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0"
         >
-          Aceptar
-        </button>
+          Accept
+        </Button>
       </div>
-      <div className="flex flex-col md:flex-row mt-8">
+      <div className="flex flex-col md:flex-row mt-5">
         {/* Sección izquierda */}
-        <div className="w-full md:w-1/2 p-4 bg-gray-700 shadow-md rounded-md">
+        <div className="w-full md:w-1/2 p-4 shadow-md rounded-md">
           <h1 className="flex justify-center items-center text-2xl font-bold text-white">
-            <p>Cartas que recibe</p>
+            <p>Cards you received</p>
           </h1>
-          <div className="flex flex-col md:flex-row items-center mx-auto mt-7">
-            <div className="flex items-center md:relative mb-4 md:mb-0 mx-auto">
-              <input
-                type="text"
-                value={searchTermOffered}
-                onChange={(e) => setSearchTermOffered(e.target.value)}
-                className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
-                placeholder="Buscar cartas..."
-              />
-              <button className="px-2 py-2 rounded-r">
-                <FiSearch size={25} />
-              </button>
-            </div>
-          </div>
-
-          {!loading && filteredUserCards.length > 0 && (
-            <div className="flex flex-wrap mt-5">
-              {filteredUserCards
-                .slice(0, visibleOfferedCards)
+          <Input
+            type="text"
+            className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
+            placeholder="Find cards..."
+            value={searchTermLeft}
+            onChange={(e) => setSearchTermLeft(e.target.value)}
+          />
+          {tradeData?.tradeRequest?.targetUser?.cardsOffered?.length > 0 && (
+            <div className="flex flex-wrap mt-5 gap-[20px]">
+              {tradeData.tradeRequest.targetUser.cardsOffered
+                .filter((card) =>
+                  card?.content?.name
+                    .toLowerCase()
+                    .includes(searchTermLeft.toLowerCase())
+                )
                 .map((card, index) => (
-                  <OfferedAwaitingCards
+                  <RenderUserCards
                     key={index}
                     character={card.content}
                     index={index}
@@ -208,31 +107,29 @@ const AwaitingTrade = (AwaitingRequest) => {
         </div>
 
         {/* Sección derecha */}
-        <div className="w-full md:w-1/2 mt-8 md:mt-0 p-4 bg-gray-700 shadow-md rounded-md">
+        <div className="w-full md:w-1/2 p-4 shadow-md rounded-md">
           <h1 className="flex justify-center items-center text-2xl font-bold text-white">
-            <p>Cartas que ofrece</p>
+            <p>Cards you offered</p>
           </h1>
-          <div className="flex flex-col md:flex-row items-center mx-auto mt-7">
-            <div className="flex items-center md:relative mb-4 md:mb-0 mx-auto">
-              <input
-                type="text"
-                value={searchTermReceived}
-                onChange={(e) => setSearchTermReceived(e.target.value)}
-                className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
-                placeholder="Buscar cartas..."
-              />
-              <button className="px-2 py-2 rounded-r">
-                <FiSearch size={25} />
-              </button>
-            </div>
-          </div>
 
-          {!loading && filteredCards.length > 0 && (
-            <div className="flex flex-wrap mt-5">
-              {filteredCards
-                .slice(0, visibleReceivedCards)
+          <Input
+            type="text"
+            className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
+            placeholder="Find cards..."
+            value={searchTermRight}
+            onChange={(e) => setSearchTermRight(e.target.value)}
+          />
+
+          {tradeData?.tradeRequest?.requester?.cardsOffered?.length > 0 && (
+            <div className="flex flex-wrap mt-5 gap-[20px]">
+              {tradeData.tradeRequest.requester.cardsOffered
+                .filter((card) =>
+                  card?.content?.name
+                    .toLowerCase()
+                    .includes(searchTermRight.toLowerCase())
+                )
                 .map((card, index) => (
-                  <OfferedAwaitingCards
+                  <RenderUserCards
                     key={index}
                     character={card.content}
                     index={index}

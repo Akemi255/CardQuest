@@ -1,37 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { OfferedReceivedCards } from "./MarketUserCards/OfferedReceivedCards";
-import { FiSearch } from "react-icons/fi";
-import { getEmail } from "@/helpers/getEmail";
-import { ProfileMarketCards } from "./MarketUserCards/ProfileMarketCards";
-import { fetchUserCards } from "@/helpers/FavCards/fetchUserCards";
-import { TargetReceivedCards } from "./MarketUserCards/TargetReceivedCards";
-import { ToastContainer, toast } from "react-toastify";
+"use client";
+import useSWR from "swr";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { useRouter } from "next/navigation";
 
-const ReceivedTrade = (ReceivedRequest) => {
-  const id = ReceivedRequest.ReceivedRequest;
-  const email = getEmail();
-  const [tradeData, setTradeData] = useState(null);
-  const [searchTermOffered, setSearchTermOffered] = useState("");
-  const [searchTermReceived, setSearchTermReceived] = useState("");
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+
+import { ProfileMarketCards } from "./MarketUserCards/ProfileMarketCards";
+import { getEmail } from "@/helpers/getEmail";
+import RenderUserCards from "../Cards/RenderUserCards";
+
+const fetcher = async (...args) =>
+  await fetch(...args).then((res) => res.json());
+
+const ReceivedTrade = ({ id, tradeData }) => {
   const [addedCards, setAddedCards] = useState([]);
-  const [groupBy, setGroupBy] = useState("recientes");
-  const [loading, setLoading] = useState(true);
-  const [userCards, setUserCards] = useState([]);
-  const [visibleOfferedCards, setVisibleOfferedCards] = useState(20);
-  const [visibleReceivedCards, setVisibleReceivedCards] = useState(20);
   const [isRequestSent, setIsRequestSent] = useState(false);
-  const [selectedCards, setSelectedCards] = useState([]);
+  const [searchTermLeft, setSearchTermLeft] = useState("");
+  const [searchTermRight, setSearchTermRight] = useState("");
+
+  const email = getEmail();
+  const router = useRouter();
+
+  const isEmailValid =
+    typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const { data: userCards, error: userCardsError } = useSWR(
+    isEmailValid
+      ? `https://api-rest-card-quest.vercel.app/api/cards/findUserCards/${encodeURIComponent(
+          email
+        )}`
+      : null,
+    fetcher
+  );
+
+  if (!userCards && !userCardsError)
+    return (
+      <div className="flex justify-center items-center mt-[200px] overflow-hidden">
+        <ClipLoader color={"#ffffff"} size={150} />
+      </div>
+    );
 
   const handleCardAddedToTrade = (cardId) => {
     setAddedCards((prevAddedCards) => {
-      // Verificar si la carta ya está en la lista
       if (prevAddedCards.includes(cardId)) {
-        // Eliminar la carta si ya está en la lista
         const updatedCards = prevAddedCards.filter((id) => id !== cardId);
         return updatedCards;
       }
-  
-      // Agregar la nueva carta a la lista
+
       const newAddedCards = [...prevAddedCards, cardId];
       return newAddedCards;
     });
@@ -39,18 +56,18 @@ const ReceivedTrade = (ReceivedRequest) => {
 
   const handleSendRequestClick = async () => {
     try {
+      if (isRequestSent) {
+        toast.error("La solicitud ya ha sido enviada.");
+        return;
+      }
 
-        if (isRequestSent) {
-            toast.error("La solicitud ya ha sido enviada.");
-            return;
-          }
+      if (addedCards.length === 0) {
+        toast.error(
+          "Selecciona al menos una carta antes de enviar la petición."
+        );
+        return;
+      }
 
-          if (addedCards.length === 0) {
-            toast.error("Selecciona al menos una carta antes de enviar la petición.");
-            return;
-          }
-          
-      // Realizar la solicitud POST
       const response = await fetch(
         "https://api-rest-card-quest.vercel.app/api/trade/editTradeRequest",
         {
@@ -66,13 +83,13 @@ const ReceivedTrade = (ReceivedRequest) => {
       );
 
       if (response.ok) {
-        const data = await response.json();
-        toast.success("Solicitud de intercambio enviada exitosamente");
+        await response.json();
+        toast.success("Trade request sent successfully");
         setIsRequestSent(true);
-        // Esperar 2 segundos antes de redirigir
+
         setTimeout(() => {
-          window.location.href = "/mercado";
-        }, 5000);
+          router.push("/trade");
+        }, 200);
       } else {
         console.error("Error en la solicitud:", response.status);
       }
@@ -81,145 +98,49 @@ const ReceivedTrade = (ReceivedRequest) => {
     }
   };
 
-  useEffect(() => {
-    const fetchUserCardsForOffering = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchUserCards(email, groupBy);
-        setUserCards(data);
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserCardsForOffering();
-  }, [email, groupBy]);
-
-  // Filtrar cartas de la derecha en tiempo real
-   const filteredUserCards = userCards.filter(
-    (card) =>
-      card?.content?.name?.toLowerCase().includes(searchTermOffered.toLowerCase()) ||
-      card?.content?.anime?.some((anime) =>
-        anime.anime.title.toLowerCase().includes(searchTermOffered.toLowerCase())
-      )
-  );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://api-rest-card-quest.vercel.app/api/trade/getTradeRequests/${id}`
-        );
-        const data = await response.json();
-        setTradeData(data);
-      } catch (error) {
-        console.error("Error fetching trade data:", error);
-      }
-    };
-
-    fetchData();
-  }, [ReceivedRequest]);
-
-  // Filtrar cartas de la izquierda en tiempo real
-  const filteredCards =
-  tradeData?.tradeRequest?.requester?.cardsOffered?.filter(
-    (card) =>
-      card.content.name.toLowerCase().includes(searchTermReceived.toLowerCase()) ||
-      card.content.anime.some((anime) =>
-        anime.anime.title.toLowerCase().includes(searchTermReceived.toLowerCase())
-      )
-  );
-
-  useEffect(() => {
-    const handleOfferedScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.offsetHeight - 100 &&
-        !loading
-      ) {
-        setVisibleOfferedCards(
-          (prevVisibleOfferedCards) => prevVisibleOfferedCards + 12
-        );
-      }
-    };
-
-    window.addEventListener("scroll", handleOfferedScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleOfferedScroll);
-    };
-  }, [loading]);
-
-  useEffect(() => {
-    const handleReceivedScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.offsetHeight - 100 &&
-        !loading
-      ) {
-        setVisibleReceivedCards(
-          (prevVisibleReceivedCards) => prevVisibleReceivedCards + 12
-        );
-      }
-    };
-
-    window.addEventListener("scroll", handleReceivedScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleReceivedScroll);
-    };
-  }, [loading]);
-
   return (
     <>
       <h1 className="flex justify-center items-center text-2xl font-bold text-white mt-4">
-        {tradeData?.tradeRequest?.requester?.userId?.name && (
-          <p>{`Ha recibido una petición de intercambio de ${tradeData.tradeRequest.requester.userId.name}`}</p>
-        )}
+        You received a trade request from {""}
+        {tradeData?.tradeRequest?.requester?.userId.name}
       </h1>
       <div className="flex justify-center items-center mt-2">
-        <button
+        <Button
           onClick={handleSendRequestClick}
-          className="bg-slate-600 px-4 py-2 text-white rounded-md hover:bg-slate-800 text-2xl font-bold  cursor-pointer relative transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0"
+          className="bg-slate-800 px-4 py-2 text-white rounded-md hover:hover:bg-black text-2xl font-bold  cursor-pointer relative transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0"
         >
           Enviar petición
-        </button>
+        </Button>
       </div>
-      <div className="flex flex-col md:flex-row mt-8">
+      <div className="flex flex-col md:flex-row mt-5">
         {/* Sección izquierda */}
-        <div className="w-full md:w-1/2 p-4 bg-gray-700 shadow-md rounded-md">
+        <div className="w-full md:w-1/2 p-4 shadow-md rounded-md">
           <h1 className="flex justify-center items-center text-2xl font-bold text-white">
             <p>Seleccione las cartas que va a ofrecer</p>
           </h1>
-          <div className="flex flex-col md:flex-row items-center mx-auto mt-7">
-            <div className="flex items-center md:relative mb-4 md:mb-0 mx-auto">
-              <input
-                type="text"
-                value={searchTermOffered}
-                onChange={(e) => setSearchTermOffered(e.target.value)}
-                className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
-                placeholder="Buscar cartas..."
-              />
-              <button className="px-2 py-2 rounded-r">
-                <FiSearch size={25} />
-              </button>
-            </div>
-          </div>
-
-          {!loading && filteredUserCards.length > 0 && (
-            <div className="flex flex-wrap mt-5">
-              {filteredUserCards
-                .slice(0, visibleOfferedCards)
+          <Input
+            type="text"
+            className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
+            placeholder="Find cards..."
+            value={searchTermLeft}
+            onChange={(e) => setSearchTermLeft(e.target.value)}
+          />
+          {!userCardsError && userCards && userCards.length > 0 && (
+            <div className="flex flex-wrap mt-5 gap-[20px]">
+              {userCards
+                .filter((card) =>
+                  card?.content?.name
+                    .toLowerCase()
+                    .includes(searchTermLeft.toLowerCase())
+                )
                 .map((card, index) => (
-                  <TargetReceivedCards
-                  key={card._id}
-                character={card.content}
-                id={card._id}
-                onCardAddedToTrade={handleCardAddedToTrade}
-                isSelected={selectedCards.includes(card._id)}
-                setSelectedCards={setSelectedCards}
+                  <ProfileMarketCards
+                    index={index}
+                    key={card._id}
+                    character={card.content}
+                    id={card._id}
+                    onCardAddedToTrade={handleCardAddedToTrade}
+                    isSelected={addedCards.includes(card._id)}
                   />
                 ))}
             </div>
@@ -227,31 +148,29 @@ const ReceivedTrade = (ReceivedRequest) => {
         </div>
 
         {/* Sección derecha */}
-        <div className="w-full md:w-1/2 mt-8 md:mt-0 p-4 bg-gray-700 shadow-md rounded-md">
+        <div className="w-full md:w-1/2 p-4 shadow-md rounded-md">
           <h1 className="flex justify-center items-center text-2xl font-bold text-white">
             <p>Cartas que recibe</p>
           </h1>
-          <div className="flex flex-col md:flex-row items-center mx-auto mt-7">
-            <div className="flex items-center md:relative mb-4 md:mb-0 mx-auto">
-              <input
-                type="text"
-                value={searchTermReceived}
-                onChange={(e) => setSearchTermReceived(e.target.value)}
-                className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
-                placeholder="Buscar cartas..."
-              />
-              <button className="px-2 py-2 rounded-r">
-                <FiSearch size={25} />
-              </button>
-            </div>
-          </div>
 
-          {filteredCards && filteredCards.length > 0 && (
-            <div className="flex flex-wrap mt-5">
-              {filteredCards
-                .slice(0, visibleReceivedCards)
+          <Input
+            type="text"
+            className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
+            placeholder="Find cards..."
+            value={searchTermRight}
+            onChange={(e) => setSearchTermRight(e.target.value)}
+          />
+
+          {tradeData?.tradeRequest?.requester?.cardsOffered && (
+            <div className="flex flex-wrap mt-5 gap-[20px]">
+              {tradeData.tradeRequest.requester.cardsOffered
+                .filter((card) =>
+                  card?.content?.name
+                    .toLowerCase()
+                    .includes(searchTermRight.toLowerCase())
+                )
                 .map((card, index) => (
-                  <OfferedReceivedCards
+                  <RenderUserCards
                     key={index}
                     character={card.content}
                     index={index}
