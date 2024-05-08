@@ -103,7 +103,7 @@ export const ProfileMarketCards = ({
             isCardSelected
               ? "bg-red-500 text-white hover:bg-red-700"
               : "bg-slate-600 text-white hover:bg-slate-800"
-          } rounded-md focus:outline-none px-4 py-2 `}
+          } rounded-md focus:outline-none px-4 py-2 relative bottom-2`}
           style={{ height: isCardSelected ? "45px" : "45px" }}
         >
           {isCardSelected ? "Eliminate from trade" : "Add card to trade"}

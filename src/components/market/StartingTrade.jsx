@@ -12,15 +12,20 @@ import { getEmail } from "@/helpers/getEmail";
 import "react-toastify/dist/ReactToastify.css";
 import { ClipLoader } from "react-spinners";
 
-const fetcher = async (...args) =>
-  await fetch(...args).then((res) => res.json());
+const fetcher = async (...args) => {
+  const response = await fetch(...args);
+  const data = await response.json();
+
+  if (Array.isArray(data)) {
+    return data;
+  }
+};
 
 const StartingTrade = ({ user, data: UserData }) => {
   const userName = UserData?.name;
   const userEmail = UserData?.email;
   const router = useRouter();
 
-  const [userCards, setUserCards] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isRequestSent, setIsRequestSent] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -29,20 +34,13 @@ const StartingTrade = ({ user, data: UserData }) => {
 
   const isEmailValid =
     typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const { data, isLoading } = useSWR(
+  const { data: userCards, isLoading } = useSWR(
     isEmailValid
       ? `https://api-rest-card-quest.vercel.app/api/cards/findUserCards/${encodeURIComponent(
           email
         )}`
       : null,
-    fetcher,
-    {
-      onSuccess: (data) => {
-        if (Array.isArray(data)) {
-          setUserCards(data);
-        }
-      },
-    }
+    fetcher
   );
 
   if (isLoading)
@@ -113,52 +111,54 @@ const StartingTrade = ({ user, data: UserData }) => {
 
   return (
     <>
-      <div className="w-full p-4 shadow-md rounded-md">
-        <h1 className="flex justify-center items-center text-2xl font-bold text-white">
-          {userName && <p>{`Ha iniciado un intercambio con ${userName}`}</p>}
-        </h1>
-        <h1 className="flex justify-center items-center text-2xl font-bold text-white">
-          <p>Seleccione las cartas que va a ofrecer</p>
-        </h1>
-        <div className="flex justify-center items-center mt-2">
-          <Button
-            onClick={handleSendRequestClick}
-            className="bg-slate-800 px-4 py-2 text-white rounded-md hover:bg-black text-2xl font-bold  cursor-pointer relative transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0"
-          >
-            Enviar petición
-          </Button>
-        </div>
-        <div className="flex items-center md:relative mt-2  md:mb-0">
-          <Input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
-            placeholder="Find cards..."
-          />
-        </div>
-
-        {userCards.length > 0 && (
-          <div className="flex flex-wrap gap-[20px] justify-center mt-3 mb-[50px]">
-            {userCards
-              .filter((card) =>
-                card?.content?.name
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase())
-              )
-              .map((card, index) => (
-                <ProfileMarketCards
-                  index={index}
-                  key={card._id}
-                  character={card.content}
-                  id={card._id}
-                  onCardAddedToTrade={handleCardAddedToTrade}
-                  isSelected={selectedCards.includes(card._id)}
-                />
-              ))}
+      {!isLoading && (
+        <div className="w-full p-4 shadow-md rounded-md">
+          <h1 className="flex justify-center items-center text-2xl font-bold text-white">
+            {userName && <p>{`Ha iniciado un intercambio con ${userName}`}</p>}
+          </h1>
+          <h1 className="flex justify-center items-center text-2xl font-bold text-white">
+            <p>Seleccione las cartas que va a ofrecer</p>
+          </h1>
+          <div className="flex justify-center items-center mt-2">
+            <Button
+              onClick={handleSendRequestClick}
+              className="bg-slate-800 px-4 py-2 text-white rounded-md hover:bg-black text-2xl font-bold  cursor-pointer relative transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0"
+            >
+              Enviar petición
+            </Button>
           </div>
-        )}
-      </div>
+          <div className="flex items-center md:relative mt-2  md:mb-0">
+            <Input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-2 py-2 border rounded-l bg-gray-800 text-white"
+              placeholder="Find cards..."
+            />
+          </div>
+
+          {userCards.length > 0 && (
+            <div className="flex flex-wrap gap-[20px] justify-center mt-3 mb-[50px]">
+              {userCards
+                .filter((card) =>
+                  card?.content?.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                )
+                .map((card, index) => (
+                  <ProfileMarketCards
+                    index={index}
+                    key={card._id}
+                    character={card.content}
+                    id={card._id}
+                    onCardAddedToTrade={handleCardAddedToTrade}
+                    isSelected={selectedCards.includes(card._id)}
+                  />
+                ))}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };
