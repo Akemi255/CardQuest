@@ -20,9 +20,11 @@ const RankingTable = ({ usersData, totalPages }) => {
   const email = SetEmail();
   const [page, setPage] = useState(1);
   const [loadedUsers, setLoadedUsers] = useState(usersData || []);
+  const [loading, setLoading] = useState(false);
 
   const loadNewPage = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         `https://api-rest-card-quest.vercel.app/api/users/getUsersRank?page=${
           page + 1
@@ -34,6 +36,8 @@ const RankingTable = ({ usersData, totalPages }) => {
       setLoadedUsers([...loadedUsers, ...newUsers]);
     } catch (error) {
       throw new Error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,8 +82,14 @@ const RankingTable = ({ usersData, totalPages }) => {
         </Table>
         {page < totalPages && (
           <div className="text-center mb-4">
-            <Button onClick={loadNewPage} className="hover:bg-black">
-              Load more
+            <Button
+              onClick={loadNewPage}
+              className={`hover:bg-black ${
+                loading ? "bg-gray-600 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Load more"}
             </Button>
           </div>
         )}
