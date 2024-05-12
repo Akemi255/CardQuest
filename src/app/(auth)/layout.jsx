@@ -8,7 +8,7 @@ export const metadata = {
 export default function AuthenticationPage({ children }) {
   return (
     <div className="relative h-screen overflow-hidden">
-      <div className="bg-[url('https://i.postimg.cc/mrxypwDt/login-background.jpg')] bg-center bg-cover container relative px-0 h-screen  flex flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-8 lg:px-0 ">
+      <div className="bg-[url('/assets/login-background.jpg')] bg-center bg-cover container relative px-0 h-screen  flex flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-8 lg:px-0 ">
         <div
           style={{ backgroundColor: "rgba(25, 30, 43, 0.97)" }}
           className="lg:p-10 col-span-3 h-full w-full flex border-r border-[color:hsl(_0%,_0%,_18%)]"
