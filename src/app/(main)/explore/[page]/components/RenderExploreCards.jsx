@@ -1,4 +1,5 @@
-import { Heart } from "lucide-react";
+import { Heart, HeartOff } from "lucide-react";
+
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -134,7 +135,7 @@ const RenderExploreCards = ({ character, index, email }) => {
         <Heart
           onClick={handleLikeClick}
           size={33}
-          className={`z-10 rounded-full cursor-pointer relative left-[100px] bottom-6 p-2 hover:bg-red-600 ${
+          className={`z-10 rounded-full bg-red-500 cursor-pointer absolute bottom-[30px] right-7 p-2 hover:bg-red-600 scale-75 md:scale-100 -mb-2 md:mb-1  -mr-4 md:mr-0  ${
             isFilled ? "fill-red-500" : "stroke-current text-white"
           }`}
         />

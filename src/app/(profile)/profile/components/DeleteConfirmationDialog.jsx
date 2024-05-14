@@ -17,7 +17,7 @@ const DeleteConfirmationDialog = ({ isOpen, onClose, onConfirm }) => {
       <AlertDialogTrigger asChild>
         <Trash
           size={30}
-          className="z-10 cursor-pointer absolute bottom-[30px] right-7 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
+          className="z-10 cursor-pointer absolute bottom-[30px] right-7 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 scale-75 md:scale-100 -mb-2 md:mb-1  -mr-4 md:mr-0"
         />
       </AlertDialogTrigger>
       <AlertDialogContent>
