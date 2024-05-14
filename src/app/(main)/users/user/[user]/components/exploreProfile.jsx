@@ -72,7 +72,7 @@ const ExploreProfile = () => {
           </div>
         )}
         <div className="relative z-10 flex flex-col grow justify-center pt-10">
-          <div className="flex flex-row gap-4 items-center sm:justify-start justify-center ">
+          <div className="ml-[70px] flex flex-row gap-4 items-center sm:justify-start justify-center ">
             <Avatar className="lg:h-36 lg:w-36 h-16 w-16">
               {profileData?.image && (
                 <Image
@@ -90,7 +90,7 @@ const ExploreProfile = () => {
               </div>
               <div>
                 <span className="text-lg text-gray-400 sm:flex hidden">
-                  {profileData.email}
+                  {profileData.bio}
                 </span>
               </div>
             </div>
@@ -102,7 +102,7 @@ const ExploreProfile = () => {
             !profileData.twitter && <br />}
 
           <div className="flex flex-row sm:justify-end justify-center">
-            <div className="flex flex-row flex-wrap gap-4 text-white mr-2">
+            <div className="flex flex-row flex-wrap gap-4 text-white mr-2 sm:mr-8">
               {profileData.spotify && (
                 <a
                   href={profileData.spotify}
@@ -164,7 +164,7 @@ const ExploreProfile = () => {
               </Button>
             )}
 
-            <div className="flex flex-row sm:justify-end justify-center gap-3 sm:ml-auto relative right-2">
+            <div className="sm:mr-8 flex flex-row sm:justify-end justify-center gap-3 sm:ml-auto relative right-2">
               <div className="flex flex-row gap-2 text-white">
                 <span className="text-sm">{followData?.followingCount}</span>
                 <span className="text-sm lg:block ">Following</span>

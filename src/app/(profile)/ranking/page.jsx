@@ -17,7 +17,6 @@ const getData = async () => {
 
 export default async function page() {
   const usersData = await getData();
-
   return (
     <RankingTable
       usersData={usersData.usersRank}

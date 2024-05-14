@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   Table,
@@ -21,6 +22,7 @@ const RankingTable = ({ usersData, totalPages }) => {
   const [page, setPage] = useState(1);
   const [loadedUsers, setLoadedUsers] = useState(usersData || []);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const loadNewPage = async () => {
     try {
@@ -41,6 +43,10 @@ const RankingTable = ({ usersData, totalPages }) => {
     }
   };
 
+  const handleRowClick = (userId) => {
+    router.push(`/users/user/${userId}`);
+  };
+
   return (
     <div className="bg-[#171928] h-auto w-full overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -55,7 +61,11 @@ const RankingTable = ({ usersData, totalPages }) => {
           </TableHeader>
           <TableBody>
             {loadedUsers.map((user, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                onClick={() => handleRowClick(user.user._id)}
+                className="cursor-pointer"
+              >
                 <TableCell className="font-medium">{index + 1}</TableCell>
                 <TableCell>
                   <div className="flex items-center">

@@ -71,7 +71,7 @@ const UsersProfiles = () => {
       pageButtons.push(
         <PaginationItem key={1}>
           <PaginationLink
-            className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+            className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
             onClick={() => handlePageChange(1)}
           >
             1
@@ -92,7 +92,7 @@ const UsersProfiles = () => {
       pageButtons.push(
         <PaginationItem key={i}>
           <PaginationLink
-            className={`pagination-button bg-[#36017a] text-white hover:bg-[#24064a] from-gray-500 cursor-pointer${
+            className={`pagination-button bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white from-gray-500 cursor-pointer${
               currentPage === i ? "active-pagination-button bg-[#24064a] " : ""
             }`}
             onClick={() => handlePageChange(i)}
@@ -115,7 +115,7 @@ const UsersProfiles = () => {
       pageButtons.push(
         <PaginationItem key={totalPages}>
           <PaginationLink
-            className="bg-[#36017a] text-white hover:bg-[#24064a] cursor-pointer from-gray-500"
+            className="bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500"
             onClick={() => handlePageChange(totalPages)}
           >
             {totalPages}
@@ -196,7 +196,7 @@ const UsersProfiles = () => {
               {currentPage > 1 && (
                 <PaginationItem>
                   <PaginationPrevious
-                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
                     onClick={() => handlePageChange(currentPage - 1)}
                   />
                 </PaginationItem>
@@ -205,7 +205,7 @@ const UsersProfiles = () => {
               <PaginationItem>
                 {currentPage < totalPages && (
                   <PaginationNext
-                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
                     onClick={() => handlePageChange(currentPage + 1)}
                   />
                 )}

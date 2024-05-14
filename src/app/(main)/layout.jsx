@@ -1,12 +1,10 @@
 "use client";
-
 import { useEffect, useState } from "react";
 
 import MyDrawer from "./components/MyDrawer";
-import Nav from "./components/Nav";
 import SearchBar from "./components/SearchBar";
 
-export default function layout({ children }) {
+export default function Layout({ children }) {
   const [mounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -16,11 +14,8 @@ export default function layout({ children }) {
   return (
     <>
       {mounted && (
-        <div className="grid flex-1 md:grid-cols-[240px_1fr] h-screen">
-          <aside className="hidden md:flex w-[240px] flex-col bg-background2 border-r border-[#2E2E2E]">
-            <Nav />
-          </aside>
-          <main className="flex w-full flex-1 flex-col overflow-hidden bg-background2  h-max md:h-auto">
+        <div className="grid flex-1 md:grid-cols-[1fr] h-screen">
+          <main className="flex w-full flex-1 flex-col overflow-hidden bg-background2">
             <SearchBar />
             <div className="overflow-y-scroll h-full">{children}</div>
           </main>

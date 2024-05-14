@@ -102,7 +102,7 @@ export const ProfileMarketCards = ({
           className={`mb-2 ${
             isCardSelected
               ? "bg-red-500 text-white hover:bg-red-700"
-              : "bg-slate-600 text-white hover:bg-slate-800"
+              : "bg-[#43B581] text-white hover:bg-[#348b64]"
           } rounded-md focus:outline-none px-4 py-2 relative bottom-2`}
           style={{ height: isCardSelected ? "45px" : "45px" }}
         >

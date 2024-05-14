@@ -114,17 +114,17 @@ const StartingTrade = ({ user, data: UserData }) => {
       {!isLoading && (
         <div className="w-full p-4 shadow-md rounded-md">
           <h1 className="flex justify-center items-center text-2xl font-bold text-white">
-            {userName && <p>{`Ha iniciado un intercambio con ${userName}`}</p>}
+            {userName && <p>{`Trade with ${userName}`}</p>}
           </h1>
           <h1 className="flex justify-center items-center text-2xl font-bold text-white">
-            <p>Seleccione las cartas que va a ofrecer</p>
+            <p>Select the cards you offer</p>
           </h1>
           <div className="flex justify-center items-center mt-2">
             <Button
               onClick={handleSendRequestClick}
               className="bg-slate-800 px-4 py-2 text-white rounded-md hover:bg-black text-2xl font-bold  cursor-pointer relative transition duration-300 ease-in-out  focus:outline-none focus:shadow-outline-blue mb-4 md:mb-0"
             >
-              Enviar petición
+              Send
             </Button>
           </div>
           <div className="flex items-center md:relative mt-2  md:mb-0">

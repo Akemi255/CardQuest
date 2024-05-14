@@ -100,7 +100,7 @@ const page = () => {
       pageButtons.push(
         <PaginationItem key={1}>
           <PaginationLink
-            className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+            className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
             onClick={() => handlePageChange(1)}
           >
             1
@@ -121,7 +121,7 @@ const page = () => {
       pageButtons.push(
         <PaginationItem key={i}>
           <PaginationLink
-            className={`pagination-button bg-[#36017a] text-white hover:bg-[#24064a] from-gray-500 cursor-pointer${
+            className={`pagination-button bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white from-gray-500 cursor-pointer${
               currentPageNumber === i
                 ? "active-pagination-button bg-[#24064a] "
                 : ""
@@ -146,7 +146,7 @@ const page = () => {
       pageButtons.push(
         <PaginationItem key={totalPages}>
           <PaginationLink
-            className="bg-[#36017a] text-white hover:bg-[#24064a] cursor-pointer from-gray-500"
+            className="bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500"
             onClick={() => handlePageChange(totalPages)}
           >
             {totalPages}
@@ -237,7 +237,7 @@ const page = () => {
                 {currentPageNumber > 1 && (
                   <PaginationItem>
                     <PaginationPrevious
-                      className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                      className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
                       onClick={() => handlePageChange(currentPageNumber - 1)}
                     />
                   </PaginationItem>
@@ -246,7 +246,7 @@ const page = () => {
                 <PaginationItem>
                   {currentPageNumber < totalPages && (
                     <PaginationNext
-                      className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                      className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
                       onClick={() => handlePageChange(currentPageNumber + 1)}
                     />
                   )}

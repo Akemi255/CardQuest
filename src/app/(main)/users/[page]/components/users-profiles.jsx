@@ -71,7 +71,7 @@ const UsersProfiles = () => {
       pageButtons.push(
         <PaginationItem key={1}>
           <PaginationLink
-            className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+            className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
             onClick={() => handlePageChange(1)}
           >
             1
@@ -92,7 +92,7 @@ const UsersProfiles = () => {
       pageButtons.push(
         <PaginationItem key={i}>
           <PaginationLink
-            className={`pagination-button bg-[#36017a] text-white hover:bg-[#24064a] from-gray-500 cursor-pointer${
+            className={`pagination-button bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white from-gray-500 cursor-pointer${
               currentPage === i ? "active-pagination-button bg-[#24064a] " : ""
             }`}
             onClick={() => handlePageChange(i)}
@@ -115,7 +115,7 @@ const UsersProfiles = () => {
       pageButtons.push(
         <PaginationItem key={totalPages}>
           <PaginationLink
-            className="bg-[#36017a] text-white hover:bg-[#24064a] cursor-pointer from-gray-500"
+            className="bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500"
             onClick={() => handlePageChange(totalPages)}
           >
             {totalPages}
@@ -137,12 +137,12 @@ const UsersProfiles = () => {
       <div className="p-4 mb-14">
         <div className="mx-auto">
           {!loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 gap-x-2">
               {users.map((user) => (
                 <Link key={user._id} href={`/users/user/${user._id}`}>
                   <div
                     key={user._id}
-                    className="bg-black h-60 cursor-pointer border border-slate-900 rounded-3xl shadow-md transition duration-300 transform hover:scale-105 relative flex flex-col justify-center"
+                    className="bg-black h-60  lg:w-[360px] mx-auto cursor-pointer border border-slate-900 rounded-3xl shadow-md transition duration-300 transform hover:scale-105 relative flex flex-col justify-center"
                   >
                     <div className="relative mb-4">
                       <Image
@@ -152,7 +152,7 @@ const UsersProfiles = () => {
                         width={500}
                         height={500}
                       />
-                      <div className=" absolute top-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <div className="absolute top-[120px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                         <Image
                           src={user.image}
                           alt="Foto de Perfil"
@@ -176,7 +176,7 @@ const UsersProfiles = () => {
                           {user.following.length} Following
                         </p>
 
-                        <p className="lg:mr-3 md:mr-0 text-[#d973cc] font-bold flex items-center gap-2">
+                        <p className="lg:mr-6 md:mr-0 text-[#d973cc] font-bold flex items-center gap-2">
                           <Eye /> {user?.views?.length ?? 0}
                         </p>
                       </div>
@@ -190,13 +190,13 @@ const UsersProfiles = () => {
       </div>
 
       {!loading && totalPages > 1 && (
-        <div className=" flex justify-center items-center flex-wrap">
+        <div className="flex justify-center items-center flex-wrap">
           <Pagination className="relative bottom-7">
             <PaginationContent>
               {currentPage > 1 && (
                 <PaginationItem>
                   <PaginationPrevious
-                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
                     onClick={() => handlePageChange(currentPage - 1)}
                   />
                 </PaginationItem>
@@ -205,7 +205,7 @@ const UsersProfiles = () => {
               <PaginationItem>
                 {currentPage < totalPages && (
                   <PaginationNext
-                    className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+                    className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
                     onClick={() => handlePageChange(currentPage + 1)}
                   />
                 )}

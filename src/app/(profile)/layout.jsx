@@ -42,10 +42,7 @@ export default function Layout({ children }) {
   );
 
   return (
-    <div className="grid flex-1 md:grid-cols-[240px_1fr] h-screen">
-      <aside className="hidden md:flex w-[240px] flex-col bg-background2 border-r border-[#2E2E2E]">
-        <Nav />
-      </aside>
+    <div className="grid flex-1 md:grid-cols-[1fr] h-screen">
       <main className="flex w-full flex-1 flex-col overflow-hidden bg-background2 h-max md:h-auto">
         <SearchBar />
         <div className="overflow-y-auto overflow-x-hidden relative">
@@ -66,7 +63,7 @@ export default function Layout({ children }) {
               />
             )}
             <div className="relative z-10 flex flex-col grow justify-center pt-10">
-              <div className="flex flex-row gap-4 items-center sm:justify-start justify-center ">
+              <div className="ml-[70px] flex flex-row gap-4 items-center sm:justify-start justify-center ">
                 <Avatar className="lg:h-36 lg:w-36 h-16 w-16 ">
                   {data?.image && (
                     <Image
@@ -86,14 +83,14 @@ export default function Layout({ children }) {
                   </div>
                   <div>
                     <span className="text-lg text-gray-400 sm:flex hidden">
-                      {data?.email}
+                      {data?.bio}
                     </span>
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-row sm:justify-end justify-center">
-                <div className="flex flex-row flex-wrap gap-4 text-white mr-2">
+                <div className="flex flex-row flex-wrap gap-4 text-white sm:mr-8">
                   {data?.spotify && (
                     <a
                       href={data?.spotify}
@@ -138,7 +135,7 @@ export default function Layout({ children }) {
               </div>
 
               <div className="flex flex-row sm:justify-between justify-center pb-2">
-                <div className="flex flex-row gap-4">
+                <div className="sm:ml-[70px] flex flex-row gap-4">
                   <ProfileButton
                     icon={<User className="h-5 w-5 mr-1" />}
                     href={"/profile"}
@@ -161,7 +158,7 @@ export default function Layout({ children }) {
                   />
                 </div>
 
-                <div className="sm:flex flex-row gap-4 items-center hidden">
+                <div className="sm:mr-8 sm:flex flex-row gap-4 items-center hidden">
                   <div className="flex flex-row gap-2 text-white">
                     <UserCheck className="h-5 w-5" />
                     <span className="text-sm">{data?.following?.length}</span>

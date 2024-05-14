@@ -1,13 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import { SetEmail } from "@/helpers/SetEmail";
 import { ClipLoader } from "react-spinners";
 import RenderFavoriteCards from "./components/RenderFavoriteCards";
 import { Button } from "@/components/ui/button";
 
-const fetcher = async (...args) =>
-  await fetch(...args).then((res) => res.json());
+const fetcher = async (url) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error("Failed to fetch");
+  }
+  return res.json();
+};
 
 export default function Page() {
   const email = SetEmail();
@@ -40,37 +45,41 @@ export default function Page() {
     mutate: mutateData,
   } = useSWR(apiUrl, fetcher);
 
-  const favoriteCardsData = responseData?.favoriteApiCards || [];
+  const favoriteCardsData = Array.isArray(responseData?.favoriteApiCards)
+    ? responseData.favoriteApiCards
+    : [];
   const totalPages = responseData?.totalPages || 0;
 
   const handleDeleteCard = async (cardId) => {
     const updatedData = favoriteCardsData.filter((card) => card._id !== cardId);
-    await mutateData({ favoriteApiCards: updatedData, totalPages });
+    await mutateData({ ...responseData, favoriteApiCards: updatedData }, false);
   };
 
-  if (error)
+  if (error) {
     return (
       <h1 className="flex justify-center items-center mt-6 text-sm md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-500">
         Something went wrong
       </h1>
     );
+  }
 
-  if (!favoriteCardsData.length || isValidating)
+  if (isValidating) {
     return (
       <div className="flex justify-center items-center mt-[200px] overflow-hidden">
         <ClipLoader color={"#ffffff"} size={150} />
       </div>
     );
+  }
 
   return (
     <div>
-      {favoriteCardsData?.length === 0 ? (
+      {favoriteCardsData.length === 0 ? (
         <h1 className="flex justify-center items-center mt-6 text-sm md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-500">
           There are no favorite cards
         </h1>
       ) : (
         <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
-          {favoriteCardsData?.map((card, index) => (
+          {favoriteCardsData.map((card, index) => (
             <RenderFavoriteCards
               key={index}
               index={index}

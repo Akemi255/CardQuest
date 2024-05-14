@@ -11,9 +11,9 @@ export default function AuthenticationPage({ children }) {
       <div className="bg-[url('/assets/login-background.jpg')] bg-center bg-cover container relative px-0 h-screen  flex flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-8 lg:px-0 ">
         <div
           style={{ backgroundColor: "rgba(25, 30, 43, 0.97)" }}
-          className="lg:p-10 col-span-3 h-full w-full flex border-r border-[color:hsl(_0%,_0%,_18%)]"
+          className="lg:p-10 col-span-3 h-full w-full flex border-r border-[color:hsl(_0%,_0%,_18%)] "
         >
-          <div className="lg:mx-auto mx-0 flex justify-between py-10 items-center flex-col space-y-6  w-full md:w-24 lg:w-full md:justify-between md:py-0">
+          <div className="lg:mx-auto mx-0 flex justify-between py-10 items-center flex-col space-y-6  w-full md:w-full lg:w-full md:justify-between md:py-0">
             <div className="relative z-20 flex md:hidden items-center justify-start w-full text-lg font-medium text-white  px-10 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

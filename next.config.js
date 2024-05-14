@@ -8,6 +8,7 @@ const nextConfig = {
       "cdn.myanimelist.net",
       "i.imgur.com",
     ],
+    unoptimized: true,
   },
 };
 

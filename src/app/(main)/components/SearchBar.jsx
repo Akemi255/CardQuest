@@ -61,16 +61,13 @@ export default function SearchBar() {
     <>
       {mounted && (
         <div className="flex w-full items-center p-4 gap-4 bg-blackBackground border-border-grey">
-          <Avatar className="flex md:hidden h-8 w-8 m-auto">
-            <AvatarImage src={data?.image} alt="avatar" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Search />
           <DrawerTrigger>
-            <Button variant="outline" className="md:hidden p-2">
+            <Button variant="outline" className=" p-2">
               <Menu />
             </Button>
           </DrawerTrigger>
+
+          <Search />
 
           <div
             variant="outline"
@@ -79,12 +76,12 @@ export default function SearchBar() {
             <Gem className="h-4 w-4 text-white" />
             <span className="-mb-[1px]">{data?.coins}</span>
           </div>
-          <div className="hidden md:flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-4">
             <Popover>
               <PopoverTrigger asChild className="border-none">
                 <Button
                   variant="outline"
-                  className="hover:bg-background-surface-200 bg-background-surface-200 border-border-button w-[240px] flex flex-row justify-start h-auto p-0 text-primary-foreground-light hover:text-primary-foreground-morelighter border "
+                  className="w-full hover:bg-background-surface-200 bg-background-surface-200 border-border-button  flex flex-row justify-start h-auto p-0 text-primary-foreground-light hover:text-primary-foreground-morelighter border "
                 >
                   {isLoading ? (
                     <ClipLoader
@@ -114,18 +111,15 @@ export default function SearchBar() {
                           )}
                         </Avatar>
                       </div>
-                      <div className="flex-col flex w-auto text-start">
+                      <div className="flex-col sm:flex w-auto text-start hidden">
                         <p className="text-[13px] ">{data?.name}</p>
-                        <p className="text-xs text-clip overflow-hidden">
-                          {data?.email}
-                        </p>
                       </div>
                     </>
                   )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent
-                className="w-[240px] bg-background-surface-200 text-white bottom-7 p-1 data-[state=open]:data-[side=bottom]:!left-5 border border-border-overlay shadow-lg border-spacing-3 "
+                className="w-[140px] bg-background-surface-200 text-white bottom-7 p-1 data-[state=open]:data-[side=bottom]:!left-5 border border-border-overlay shadow-lg border-spacing-3 "
                 sideOffset={8}
                 align="end"
               >

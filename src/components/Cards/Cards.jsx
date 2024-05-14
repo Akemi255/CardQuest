@@ -11,6 +11,7 @@ import { sendReportOfficial } from "./sendReportOfficial";
 import { useState, useEffect } from "react";
 import { RotateCw } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const Cards = () => {
   const [isClient, setIsClient] = useState(false);
@@ -419,9 +420,11 @@ const Cards = () => {
           </div>
         )}
         <div className="flex justify-around container mb-10 md:mb-0 mt-4">
-          <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
-            Inventory
-          </Button>
+          <Link href="/profile">
+            <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
+              Inventory
+            </Button>
+          </Link>
           <Button
             className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover"
             onClick={() => {

@@ -101,8 +101,8 @@ const Page = () => {
           <PaginationLink
             className={`${
               1 === currentPageNumber
-                ? "bg-[#24064a] text-white cursor-pointer"
-                : "bg-[#36017a] text-white hover:bg-[#24064a] cursor-pointer"
+                ? "bg-[#24064a] text-white cursor-pointer hover:text-white"
+                : "bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white cursor-pointer"
             }`}
             onClick={() => handlePageChange(1)}
           >
@@ -126,8 +126,8 @@ const Page = () => {
           <PaginationLink
             className={`${
               i === currentPageNumber
-                ? "bg-[#24064a] text-white cursor-pointer"
-                : "bg-[#36017a] text-white hover:bg-[#24064a] cursor-pointer"
+                ? "bg-[#24064a] text-white cursor-pointer hover:bg-[#24064a] hover:text-white"
+                : "bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white cursor-pointer"
             }`}
             onClick={() => handlePageChange(i)}
           >
@@ -152,7 +152,7 @@ const Page = () => {
             className={`${
               (data.totalPages || 0) === currentPageNumber
                 ? "bg-[#24064a] text-white cursor-pointer"
-                : "bg-[#36017a] text-white hover:bg-[#24064a] cursor-pointer"
+                : "bg-[#36017a] text-white hover:bg-[#24064a] hover:text-white cursor-pointer"
             }`}
             onClick={() => handlePageChange(data.totalPages || 0)}
           >
@@ -172,14 +172,14 @@ const Page = () => {
           {currentPageNumber > 1 && (
             <PaginationPrevious
               onClick={() => handlePageChange(currentPageNumber - 1)}
-              className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+              className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
             />
           )}
           {renderPagination()}
           {currentPageNumber < (data.totalPages || 0) && (
             <PaginationNext
               onClick={() => handlePageChange(currentPageNumber + 1)}
-              className="bg-[#36017a] hover:bg-[#24064a] cursor-pointer from-gray-500 text-white"
+              className="bg-[#36017a] hover:bg-[#24064a] hover:text-white cursor-pointer from-gray-500 text-white"
             />
           )}
         </PaginationContent>
