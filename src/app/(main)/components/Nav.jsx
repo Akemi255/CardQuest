@@ -73,7 +73,10 @@ export default function Nav() {
     <div className="flex flex-col gap-2 bg-background2 h-full !bg-[#252736]">
       <div className="flex flex-col gap-4 p-2 py-4 text-center justify-center align-middle items-center">
         <Avatar className="h-20 w-20 ">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage
+            src={"https://i.postimg.cc/J4nxL43B/logo.webp"}
+            alt="@shadcn"
+          />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <span className="mt-[10.5px] text-white text-base">
