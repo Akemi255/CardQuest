@@ -14,6 +14,7 @@ import { Form } from "@/components/ui/form";
 
 import { getProfileData } from "./helpers/getProfileData";
 import { dataURItoBlob } from "./helpers/data-to-blob";
+import Image from "next/image";
 
 const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
 
@@ -62,6 +63,7 @@ const ProfileForm = () => {
     resolver: zodResolver(formSchema),
   });
   const [showForm, setShowForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Default Form Values
   useEffect(() => {
@@ -78,6 +80,24 @@ const ProfileForm = () => {
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Verificar el tipo de archivo
+      const fileType = file.type;
+      if (
+        !["image/jpeg", "image/jpg", "image/png", "image/gif"].includes(
+          fileType
+        )
+      ) {
+        toast.error("The profile image must be jpg, jpeg, png, or gif");
+        return; // Cancelar la carga de la imagen
+      }
+
+      // Verificar el tamaño del archivo
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB en bytes
+        toast.error("The profile image must be smaller than 5MB");
+        return; // Cancelar la carga de la imagen
+      }
+
       const reader = new FileReader();
       reader.onload = () => {
         setProfileImage(reader.result);
@@ -89,6 +109,24 @@ const ProfileForm = () => {
   const handleBannerImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Verificar el tipo de archivo
+      const fileType = file.type;
+      if (
+        !["image/jpeg", "image/jpg", "image/png", "image/gif"].includes(
+          fileType
+        )
+      ) {
+        toast.error("The banner image must be jpg, jpeg, png, or gif");
+        return; // Cancelar la carga de la imagen
+      }
+
+      // Verificar el tamaño del archivo
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB en bytes
+        toast.error("The banner image must be smaller than 5MB");
+        return; // Cancelar la carga de la imagen
+      }
+
       const reader = new FileReader();
       reader.onload = () => {
         setBannerImage(reader.result);
@@ -99,6 +137,7 @@ const ProfileForm = () => {
 
   const onSubmit = async (formData) => {
     if (email) {
+      setIsLoading(true);
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
       formDataToSend.append("nick", formData.nick);
@@ -132,15 +171,20 @@ const ProfileForm = () => {
 
         if (response.ok) {
           toast.success("User updated");
-        } else {
-          const data = await response.json();
-          console.error("Error al actualizar el usuario:", data.message);
+        }
+        if (response.status == 403) {
+          toast.error("The image must be smaller than 5MB");
+        }
+        if (response.status == 500) {
+          toast.error("The image must be smaller than 5MB");
         }
       } catch (error) {
         console.error(
           "Error al realizar la solicitud de actualización:",
           error
         );
+      } finally {
+        setIsLoading(false);
       }
     } else {
       console.log(
@@ -150,7 +194,7 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className="bg-[#252736]">
+    <div className="bg-[#161827]">
       <div className="mx-auto px-4">
         {showForm && (
           <Form {...formSchema}>
@@ -160,10 +204,12 @@ const ProfileForm = () => {
             >
               <div className="bg-gray-300 h-[100px] lg:w-1/2 w-1/2 rounded shadow-lg relative top-12 cursor-pointer overflow-hidden banner-edit">
                 {bannerImage ? (
-                  <img
+                  <Image
                     src={bannerImage}
                     alt="Banner Preview"
                     className="object-cover w-full h-full cursor-pointer"
+                    width={500}
+                    height={500}
                   />
                 ) : (
                   <span className="absolute top-[45px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl color-insert">
@@ -185,10 +231,12 @@ const ProfileForm = () => {
               >
                 <div className="w-24 h-24 rounded-full shadow-lg relative cursor-pointer overflow-hidden">
                   {profileImage ? (
-                    <img
+                    <Image
                       src={profileImage}
                       alt="Profile Preview"
                       className="object-cover w-full h-full cursor-pointer"
+                      width={500}
+                      height={500}
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-300 flex justify-center items-center cursor-pointer">
@@ -286,8 +334,9 @@ const ProfileForm = () => {
                 <Button
                   type="submit"
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                  disabled={isLoading}
                 >
-                  Save changes
+                  {isLoading ? "Loading..." : "Save changes"}
                 </Button>
               </div>
             </form>
