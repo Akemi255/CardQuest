@@ -173,7 +173,9 @@ const ProfileForm = () => {
 
         if (response.ok) {
           toast.success("User updated");
-          router.push("/profile");
+          setTimeout(() => {
+            window.location.href = "/profile";
+          }, 1000);
         }
         if (response.status == 403) {
           toast.error("The image must be smaller than 5MB");

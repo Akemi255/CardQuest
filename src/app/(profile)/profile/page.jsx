@@ -76,7 +76,7 @@ export default function Page() {
         placeholder="Search by name"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mt-3 px-2 py-1 mr-3 rounded-md border border-gray-300 w-full sm:w-1/2"
+        className="mt-3 rounded-md border border-gray-300 w-4/5 sm:w-1/2"
       />
 
       {userCards.length === 0 ? (

@@ -70,11 +70,11 @@ const RankingTable = ({ usersData, totalPages }) => {
                 <TableCell>
                   <div className="flex items-center">
                     <UserTable
-                      username={user.user.name}
+                      username={user?.user.name}
                       userUrl={"https://www.google.com"}
-                      imageUrl={user.user.image}
+                      imageUrl={user?.user.image}
                     />
-                    {user.user.email === email && (
+                    {user?.user.email === email && (
                       <Badge
                         variant="outline"
                         className="ml-2 hidden sm:flex text-white bg-black border-none"
@@ -84,8 +84,10 @@ const RankingTable = ({ usersData, totalPages }) => {
                     )}
                   </div>
                 </TableCell>
-                <TableCell>{user.totalCards}</TableCell>
-                <TableCell className="text-right">{user.totalPoints}</TableCell>
+                <TableCell>{user?.user?.cards?.length}</TableCell>
+                <TableCell className="text-right">
+                  {user?.totalPoints}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
