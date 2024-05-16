@@ -98,7 +98,6 @@ const RenderFavoriteCards = ({ character, index, email, onDeleteCard }) => {
           priority={false}
           className="borderGeneral flex items-center"
         />
-
         {character?.images && character?.images.jpg && (
           <Image
             src={character?.images.jpg.image_url}
@@ -109,7 +108,6 @@ const RenderFavoriteCards = ({ character, index, email, onDeleteCard }) => {
             className={`w-full h-48 sm:h-64 object-cover hover:shadow-lg mx-auto imagenAnime`}
           />
         )}
-
         <div className={`info-like relative`}>
           <div className="text-center mt-[5px] personaje-anime">
             <p className="text-[11px] font-bold">{character?.name}</p>
@@ -133,8 +131,8 @@ const RenderFavoriteCards = ({ character, index, email, onDeleteCard }) => {
         <Heart
           onClick={handleLikeClick}
           size={33}
-          className={`z-10 rounded-full cursor-pointer relative left-[100px] bottom-6 p-2 hover:bg-red-600 ${
-            isFilled ? "fill-red-500" : "stroke-current text-white"
+          className={`z-10 rounded-full text-red-500 cursor-pointer absolute bottom-[30px] right-7 p-2 hover:text-red-600 scale-75 md:scale-100 -mb-2 md:mb-1 -mr-4 md:mr-0 ${
+            isFilled ? "fill-current" : "stroke-current"
           }`}
         />
       </div>

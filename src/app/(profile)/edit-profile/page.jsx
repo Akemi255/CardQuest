@@ -15,6 +15,7 @@ import { Form } from "@/components/ui/form";
 import { getProfileData } from "./helpers/getProfileData";
 import { dataURItoBlob } from "./helpers/data-to-blob";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
 
@@ -64,6 +65,7 @@ const ProfileForm = () => {
   });
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   // Default Form Values
   useEffect(() => {
@@ -171,6 +173,7 @@ const ProfileForm = () => {
 
         if (response.ok) {
           toast.success("User updated");
+          router.push("/profile");
         }
         if (response.status == 403) {
           toast.error("The image must be smaller than 5MB");

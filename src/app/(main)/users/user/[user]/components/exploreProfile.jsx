@@ -146,10 +146,14 @@ const ExploreProfile = () => {
             </div>
           </div>
 
-          <div className="flex flex-row sm:justify-between justify-center pb-2">
+          <div className="flex flex-row sm:justify-between justify-center pb-2 mt-2">
             {!isItMe && (
               <Button
-                className="sm:ml-6 hover:bg-gray-700 relative bottom-2 right-2"
+                className="
+      sm:ml-[70px] mr-2 hover:bg-gray-700 relative bottom-2 right-2 
+      text-sm sm:text-base  // Tamaño de texto más pequeño en móviles
+      px-2 py-1 sm:px-4 sm:py-2  // Padding más pequeño en móviles
+    "
                 onClick={() =>
                   handleFollow(
                     user,
