@@ -15,9 +15,9 @@ export default function Layout({ children }) {
     <>
       {mounted && (
         <div className="grid flex-1 md:grid-cols-[1fr] h-screen">
-          <main className="flex w-full flex-1 flex-col overflow-hidden bg-background2">
+          <main className="flex w-full flex-1 flex-col bg-background2">
             <SearchBar />
-            <div className="overflow-y-scroll h-full">{children}</div>
+            <div className="h-full">{children}</div>
           </main>
           <MyDrawer />
         </div>

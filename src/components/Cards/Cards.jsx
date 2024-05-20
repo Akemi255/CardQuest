@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { RotateCw } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import CharacterDrop from "./CharacterDrop";
 
 const Cards = () => {
   const [isClient, setIsClient] = useState(false);
@@ -397,50 +398,25 @@ const Cards = () => {
 
   return (
     <>
-      <div className="h-full  ">
+      <div>
         {showRetryMessage && (
           <div className="bg-yellow-200 text-yellow-800 rounded-lg p-4 my-4">
             <p>{`Límite de intentos superados, regrese en 24 horas.`}</p>
           </div>
         )}
 
-        {characterData.length > 0 && (
-          <div className="flex flex-wrap gap-[20px] justify-center mt-7 mb-[50px]">
-            {characterData.map((character, index) => (
-              <CharacterCard
-                key={index}
-                character={character}
-                index={index}
-                getColorForRarity={getColorForRarity}
-                saveCharacter={saveCharacter}
-                existingCards={existingCards}
-                loading={loading}
-              />
-            ))}
-          </div>
-        )}
-        <div className="flex justify-around container mb-10 md:mb-0 mt-4">
-          <Link href="/profile">
-            <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
-              Inventory
-            </Button>
-          </Link>
-          <Button
-            className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover"
-            onClick={() => {
-              CleanArray();
-              fetchCharacterData();
-            }}
-          >
-            <RotateCw className="h-5 w-5" />
-          </Button>
-          <Button className="text-[13px] bg-background3 hover:bg-background-surface-200 border-[1px] text-primary-foreground border-border-button hover:border-border-button-hover">
-            Auto-Spin
-          </Button>
-        </div>
-        <br />
-
-        {/* <div className="text-center text-white px-4 rounded intentos">{`Intentos restantes: ${remainingAttempts}`}</div> */}
+        <main>
+          <CharacterDrop
+            characterData={characterData}
+            getColorForRarity={getColorForRarity}
+            saveCharacter={saveCharacter}
+            existingCards={existingCards}
+            loading={loading}
+            CleanArray={CleanArray}
+            fetchCharacterData={fetchCharacterData}
+            remainingAttempts={remainingAttempts}
+          />
+        </main>
       </div>
     </>
   );

@@ -2,13 +2,13 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 
 import "react-toastify/dist/ReactToastify.css";
-import { Inter } from "next/font/google";
+import { Raleway } from "next/font/google";
 
 import Providers from "@/providers/providers";
 import { Drawer } from "@/components/ui/drawer";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Raleway({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Harem: Project Maid",
